@@ -15,13 +15,17 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
     const fetchWords = async () => {
         await fetch('api/get_random_words')
             .then(response => response.json())
-            .then(data => setListOfAudio(data));
+            .then(data => { setListOfAudio(data), console.log(data) })
+            .catch((err) => console.log(err))
+        console.log('this get request fetch words got hit')
     }
 
     const fetchSentences = async () => {
         await fetch('api/get_random_sentences')
             .then(response => response.json())
-            .then(data => setListOfAudio(data));
+            .then(data => { setListOfAudio(data), console.log(data) })
+            .catch((err) => console.log(err))
+        console.log('this get request fetch sentences got hit')
     }
 
     const compareModel = async (file) => {
@@ -36,7 +40,9 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
             })
         })
             .then(response => response.json())
-            .then(data => setDiffResponse(data));
+            .then(data => { setDiffResponse(data), console.log(data) })
+            .catch((err) => console.log(err))
+        console.log('this post request got hit.')
     }
 
     useEffect(() => {

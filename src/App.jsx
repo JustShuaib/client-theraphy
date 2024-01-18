@@ -8,6 +8,7 @@ function App() {
   // const fetchedObjects = []
   const [currentExercise, setCurrentExercise] = useState('')
   const [listOfAudio, SetListOfAudio] = useState('')
+  
   // useEffect(() => {
   //   console.log(listOfAudio)
   // }, [listOfAudio])

@@ -75,7 +75,7 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
                 //  {/* lesson body */}
                 (
                     <div>
-                        <Recorder compareModel={compareModel} currentExercise={currentExercise} />
+                        {/* <Recorder compareModel={compareModel} currentExercise={currentExercise} /> */}
                         {diffResponse && <DiffUse diffInput={diffResponse} />}
                     </div>
                 )

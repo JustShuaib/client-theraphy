@@ -7,19 +7,19 @@ import { Panel } from './components/panel'
 function App() {
   // const fetchedObjects = []
   const [currentExercise, setCurrentExercise] = useState('')
-  const [listOfAudio, SetListOfAudio] = useState('')
-  
-  // useEffect(() => {
-  //   console.log(listOfAudio)
-  // }, [listOfAudio])
+  const [listOfAudio, SetListOfAudio] = useState([])
+
 
   return (
     <div className='w-auto h-auto'>
       <div className='relative flex flex-row w-screen h-screen'>
+
         {/* exercise Panel */}
         <Panel setExercise={setCurrentExercise} listOfAudio={listOfAudio} />
+
         {/* lesson screen */}
         <Lesson currentExercise={currentExercise} SetListOfAudio={SetListOfAudio} />
+
         {/* history screen */}
         {/* <History /> */}
         <div className='p-4 text-white bg-[#6366F1] w-[50rem]'>

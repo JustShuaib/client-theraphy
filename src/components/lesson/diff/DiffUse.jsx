@@ -33,7 +33,7 @@ const DiffUse = ({ diffInput }) => {
     } else {
       playAudio(probeerRef);
     }
-  }, []); // This effect runs once on component mount
+  }, [correctText, transcribedText]); // This effect runs once on component mount
 
   return (
     <div className='pt-4 text-3xl'>

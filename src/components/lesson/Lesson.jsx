@@ -14,19 +14,30 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
 
     const fetchWords = async () => {
         await fetch('api/get_random_words')
-            .then(response => response.json())
-            .then(data => { setListOfAudio(data), console.log(data) })
+            .then(response => response.map((item) => {
+                setListOfAudio(prevState => [...prevState, item])
+            }))
+            .then(data => { console.log(data) })
             .catch((err) => console.log(err))
-        console.log('this get request fetch words got hit')
     }
 
     const fetchSentences = async () => {
         await fetch('api/get_random_sentences')
-            .then(response => response.json())
-            .then(data => { setListOfAudio(data), console.log(data) })
+            .then(response => response.map((item) => {
+                setListOfAudio(prevState => [...prevState, item])
+            }))
+            .then(data => { console.log(data) })
             .catch((err) => console.log(err))
-        console.log('this get request fetch sentences got hit')
     }
+    
+    
+    // const fetchSentences = async () => {
+    //     await fetch('api/get_random_sentences')
+    //         .then(response => response.json())
+    //         .then(data => { setListOfAudio(data), console.log(data) })
+    //         .catch((err) => console.log(err))
+    //     console.log('this get request fetch sentences got hit')
+    // }
 
     const compareModel = async (file) => {
         await fetch('api/compare_sentences', {
@@ -65,7 +76,7 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
                 (
                     <div>
                         <Recorder compareModel={compareModel} currentExercise={currentExercise} />
-                        <DiffUse diffInput={diffResponse} />
+                        {diffResponse && <DiffUse diffInput={diffResponse} />}
                     </div>
                 )
             }

@@ -33,6 +33,7 @@ const Words = () => {
   console.log(info)
 
 
+
   return (
     <div className="px-12 py-4">
       <Recorder setAudioBase64={audioToBase64} />

@@ -23,29 +23,27 @@ const Words = () => {
     console.log(base64String)
   }
 
-
   useEffect(() => {
     // sets the new audio reference when a new exercise is chosen.
     customArray.map((item) => {
       if (currentExercise === item.id) {
         setExerciseName(item.name)
-        console.log(exerciseName)
-        
+        // console.log(currentExercise)
         setDemoAudio(item.audio)
-          // console.log(item.audio)
+        // console.log(item.audio)
       }
     })
   }
     , [currentExercise, customArray])
 
-
-  const audioToBase64 = (audioBlob) => {
-    fileReader.readAsDataURL(audioBlob)
+  const audioToBase64 = async (audioBlob) => {
+    await fileReader.readAsDataURL(audioBlob)
+    // send to backend
+    await sendPostRequest()
   };
 
 
-  // send to backend
-  
+
   // function to send a POST request
   const sendPostRequest = async () => {
     try {
@@ -57,8 +55,8 @@ const Words = () => {
         },
         body: JSON.stringify({
           // Add any data you want to send in the request body
-          name: 'valuew',
-          key2: 'value2',
+          name: exerciseName,
+          key2: audioBase64,
         }),
       });
 
@@ -73,9 +71,9 @@ const Words = () => {
       console.error('Error sending POST request:', error);
     }
   };
- 
 
-  
+
+
   // fetch words
   const info = useQuery({
     queryKey: ['words'],
@@ -89,7 +87,7 @@ const Words = () => {
       return data
     }
   })
-  
+
   useEffect(() => {
     if (info.isSuccess && info.data) {
       const datum = info.data

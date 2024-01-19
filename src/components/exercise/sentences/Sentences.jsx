@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Recorder from "../recorder/Recorder"
 import { useQuery } from "@tanstack/react-query";
+import { Panel } from "../panel";
 
 const Sentences = () => {
 
@@ -33,12 +34,14 @@ const Sentences = () => {
 
   return (
     <div className="px-12 py-4">
+      <Panel setExercise={setCurrentExercise} arrayResponse={customArray} />
       <div className="w-5/6 px-12 py-4">
-        <Recorder setAudioBase64={audioToBase64} />
+        <Recorder setAudioBase64={audioToBase64} demoAudio={demoAudio} />
       </div>
+      {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">
         <div className="pt-4 pb-12 pl-6">
-          <h3 className="pb-4 text-3xl">Correct word/Sentence:</h3>
+          <h3 className="pb-4 text-3xl">Correct Sentence:</h3>
           <div className="px-4 text-lg bg-gray-800 rounded-md w-fit">
             {/* {correct-sentences} */}
             You are Patient
@@ -46,7 +49,7 @@ const Sentences = () => {
         </div>
         {
           'wrong' && <div className="pl-6">
-            <h3 className="pb-4 text-3xl">Wrong word/Sentence:</h3>
+            <h3 className="pb-4 text-3xl">Wrong Sentence:</h3>
             <div className="px-4 text-lg bg-gray-800 rounded-md w-fit">
               {/* {correct-sentences} */}
               You are Patient

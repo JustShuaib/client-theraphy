@@ -20,7 +20,7 @@ const Onboarding = () => {
             {/* revamped UI */}
 
             <div className='text-center text-white'>
-                <h3 className='text-5xl antialiased font-semibold text-white'>Speech Theraphy</h3>
+                <h3 className='text-5xl antialiased font-semibold text-white'>logopedie</h3>
                 <p className='pt-4 text-xl font-semibold'>Pick an exercise to continue:</p>
             </div>
             <PickLesson />

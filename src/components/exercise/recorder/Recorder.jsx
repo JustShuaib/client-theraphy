@@ -30,16 +30,17 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
   }, [audioBlob, sendAudio, setAudioBase64])
 
   const grantMic = () => {
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
-        const audioStream = new MediaStream(stream)
-        // console.log(audioStream.active)
-        setRecording(audioStream)
-      })
-      .catch(error => {
-        console.error('Error accessing media devices.', error);
-        alert('App does not have mic access')
-      });
+    if (navigator.mediaDevices)
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then((stream) => {
+          const audioStream = new MediaStream(stream)
+          // console.log(audioStream.active)
+          setRecording(audioStream)
+        })
+        .catch(error => {
+          console.error('Error accessing media devices.', error);
+          alert('App does not have mic access')
+        });
 
   }
 

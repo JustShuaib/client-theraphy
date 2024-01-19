@@ -41,7 +41,6 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
           console.error('Error accessing media devices.', error);
           alert('App does not have mic access')
         });
-
   }
 
   const startRecording = async () => {

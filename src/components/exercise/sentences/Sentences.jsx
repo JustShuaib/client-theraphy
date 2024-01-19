@@ -35,19 +35,19 @@ const Sentences = () => {
   }
     , [currentExercise, customArray])
 
-  
-    const audioToBase64 = async (audioBlob) => {
-      await fileReader.readAsDataURL(audioBlob)
-      // send to backend
-      const response = await sendPostRequest()
-      .then(()=>
+
+  const audioToBase64 = async (audioBlob) => {
+    await fileReader.readAsDataURL(audioBlob)
+    // send to backend
+    const response = await sendPostRequest()
+      .then(() =>
         setPostResponse(response)
       )
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       }
       )
-    };
+  };
 
 
   // function to send a POST request
@@ -105,17 +105,16 @@ const Sentences = () => {
 
 
   return (
-    <div className="px-12 py-4">
+    <div className="flex flex-row w-full">
       <Panel setExercise={setCurrentExercise} arrayResponse={customArray} />
       <div className="w-5/6 px-12 py-4">
         <Recorder setAudioBase64={audioToBase64} demoAudio={demoAudio} />
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">
-        <DiffUse diffInput={postResponse}/>
+        <DiffUse diffInput={postResponse} />
       </div>
     </div>
-
   )
 }
 

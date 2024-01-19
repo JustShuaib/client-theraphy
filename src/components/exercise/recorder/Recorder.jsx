@@ -100,7 +100,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
           onClick={() => { setHovered(false), setButtonState('not speaking'), discardRecording() }}
           draggable={false}
           className='absolute z-10 bottom-[6rem] rounded-full w-fit h-fit text-white select-none'>
-          <img alt="cancel button" srcSet="./cancel-icon.svg" />
+          <img alt="cancel button" srcSet="/cancel-icon.svg" />
         </motion.div>
         <motion.div
           initial={{ x: 0, y: -50 }}

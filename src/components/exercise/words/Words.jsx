@@ -5,6 +5,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { Panel } from '../panel'
+import DiffUse from "../diff/DiffUse"
 
 const Words = () => {
   const [currentExercise, setCurrentExercise] = useState()
@@ -13,6 +14,8 @@ const Words = () => {
   const [demoAudio, setDemoAudio] = useState()
 
   const [exerciseName, setExerciseName] = useState()
+
+  const [postResponse, setPostResponse] = useState()
   const fileReader = new FileReader();
 
   fileReader.onloadend = function () {
@@ -39,7 +42,14 @@ const Words = () => {
   const audioToBase64 = async (audioBlob) => {
     await fileReader.readAsDataURL(audioBlob)
     // send to backend
-    await sendPostRequest()
+    const response = await sendPostRequest()
+    .then(()=>
+      setPostResponse(response)
+    )
+    .catch((err)=>{
+      console.log(err)
+    }
+    )
   };
 
 
@@ -66,12 +76,13 @@ const Words = () => {
 
       // Handle the response as needed
       const responseData = await response.json();
-      console.log('POST request response:', responseData);
+      const data = responseData.data
+      return data
+      // console.log('POST request response:', responseData);
     } catch (error) {
       console.error('Error sending POST request:', error);
     }
   };
-
 
 
   // fetch words
@@ -105,22 +116,7 @@ const Words = () => {
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">
-        <div className="pt-4 pb-12 pl-6">
-          <h3 className="pb-4 text-3xl">Correct word/Sentence:</h3>
-          <div className="px-4 text-lg bg-gray-800 rounded-md w-fit">
-            {/* {correct-sentences} */}
-            You are Patient
-          </div>
-        </div>
-        {
-          'wrong' && <div className="pl-6">
-            <h3 className="pb-4 text-3xl">Wrong word/Sentence:</h3>
-            <div className="px-4 text-lg bg-gray-800 rounded-md w-fit">
-              {/* {correct-sentences} */}
-              You are Patient
-            </div>
-          </div>
-        }
+        <DiffUse diffInput={postResponse}/>
       </div>
     </div>
   )

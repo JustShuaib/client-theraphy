@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Recorder from "../recorder/Recorder"
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Panel } from "../panel";
 import DiffUse from "../diff/DiffUse";
 
@@ -11,7 +11,6 @@ const Sentences = () => {
   const [demoAudio, setDemoAudio] = useState()
   const [postResponse, setPostResponse] = useState()
 
-  const [info, setInfo] = useState('')
   const [exerciseName, setExerciseName] = useState()
   const fileReader = new FileReader();
 
@@ -22,21 +21,7 @@ const Sentences = () => {
     setAudioBase64(base64String);
     console.log(base64String)
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchSentences();
-        setInfo(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
   
-    fetchData(); 
-    
-  },[])
-
   useEffect(() => {
     // sets the new audio reference when a new exercise is chosen.
     customArray.map((item) => {
@@ -76,7 +61,7 @@ const Sentences = () => {
         body: JSON.stringify({
           // Add any data you want to send in the request body
           name: exerciseName,
-          key2: audioBase64,
+          audio: audioBase64,
         }),
       });
 
@@ -96,38 +81,38 @@ const Sentences = () => {
 
 
 
-  // // fetch words
-  // const info = useQuery({
-  //   queryKey: ['sentences'],
-  //   queryFn: async () => {
-  //     const response = await fetch('api/get_random_sentences')
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok')
-  //     }
-  //     const jsonResponse = await response.json()
-  //     const data = jsonResponse.data
-  //     return data
-  //   }
-  // })
+  // fetch words
+  const info = useQuery({
+    queryKey: ['sentences'],
+    queryFn: async () => {
+      const response = await fetch('api/get_random_sentences')
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      const jsonResponse = await response.json()
+      const data = jsonResponse.data
+      return data
+    }
+  })
 
   
-  const fetchSentences = async () => {
-    try {
-      const response = await fetch('api/get_random_words');
+  // const fetchSentences = async () => {
+  //   try {
+  //     const response = await fetch('api/get_random_words');
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
 
-      const jsonResponse = await response.json();
-      const info = jsonResponse.data;
-      return info;
-    } catch (error) {
-      console.error('Error fetching random words:', error);
-      // Handle the error or throw it again based on your requirements
-      throw error;
-    }
-  };
+  //     const jsonResponse = await response.json();
+  //     const info = jsonResponse.data;
+  //     return info;
+  //   } catch (error) {
+  //     console.error('Error fetching random words:', error);
+  //     // Handle the error or throw it again based on your requirements
+  //     throw error;
+  //   }
+  // };
 
 
   useEffect(() => {

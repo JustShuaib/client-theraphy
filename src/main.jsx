@@ -2,9 +2,18 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { Words } from './components/words'
-import { Sentences } from './components/sentences'
+import { Words } from './components/exercise/words'
+import { Onboarding } from './components/onboarding'
 import './index.css'
+import { Exercise } from './components/exercise'
+import Sentences from './components/exercise/sentences/Sentences'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -12,12 +21,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/woorden',
-        element: <Words />
+        path: '/',
+        element: <Onboarding />
       },
       {
-        path: '/zinnen',
-        element: <Sentences />
+        path: '/exercise',
+        element: <Exercise />,
+        children: [
+          {
+            path: '/exercise/zinnen',
+            element: <Sentences />
+          },
+          {
+            path: '/exercise/woorden',
+            element: <Words />
+          }
+        ]
       }
     ]
   }
@@ -25,6 +44,8 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <App /> */}
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>,
 )

@@ -6,7 +6,7 @@ const PickLesson = ({ setExerciseType, fetchWords, fetchSentences }) => {
   return (
     <div>
       <div className='flex flex-row justify-between pt-20 mx-auto w-fit gap-x-24'>
-        <Link draggable={false} to='/woorden'>
+        <Link draggable={false} to='/exercise/woorden'>
           <motion.div
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.05 }}
@@ -16,7 +16,7 @@ const PickLesson = ({ setExerciseType, fetchWords, fetchSentences }) => {
           </motion.div>
 
         </Link>
-        <Link draggable={false} to='/zinnen'>
+        <Link draggable={false} to='/exercise/zinnen'>
           <motion.div
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.05 }}

@@ -39,22 +39,22 @@ const Lesson = ({ currentExercise, setListOfAudio }) => {
     //     console.log('this get request fetch sentences got hit')
     // }
 
-    const compareModel = async (file) => {
-        await fetch('api/compare_sentences', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'name': currentExercise.name,
-                'audio': file,
-            })
-        })
-            .then(response => response.json())
-            .then(data => { setDiffResponse(data), console.log(data) })
-            .catch((err) => console.log(err))
-        console.log('this post request got hit.')
-    }
+    // const compareModel = async (file) => {
+    //     await fetch('api/compare_sentences', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             'name': currentExercise.name,
+    //             'audio': file,
+    //         })
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => { setDiffResponse(data), console.log(data) })
+    //         .catch((err) => console.log(err))
+    //     console.log('this post request got hit.')
+    // }
 
     useEffect(() => {
         console.log(diffResponse)

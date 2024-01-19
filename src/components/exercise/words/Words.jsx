@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Recorder from "../recorder/Recorder"
 import {
   useQuery,
@@ -7,18 +7,19 @@ import {
 const Words = () => {
   const [audioBase64, setAudioBase64] = useState()
 
-
   const fileReader = new FileReader();
-
+  
   fileReader.onloadend = function () {
     // The result will be a data URL representing the audio in Base64
     const base64String = fileReader.result.split(',')[1];
-
     // Now you can use 'base64String' as needed
-    console.log(base64String);
+    setAudioBase64(base64String);
+  }
+  const audioToBase64 = (audioBlob) => {
+    fileReader.readAsDataURL(audioBlob)
   };
 
-
+  
   const info = useQuery({
     queryKey: ['words'],
     queryFn: async () => {
@@ -29,16 +30,18 @@ const Words = () => {
       return response.json()
     }
   })
+  console.log(info)
+
 
   return (
     <div className="px-12 py-4">
-      <Recorder setAudioBase64={setAudioBase64} />
+      <Recorder setAudioBase64={audioToBase64} />
       <button onClick={() => { console.log(info.data.data), console.log('the new' + info.data + " loading: " + info.isLoading + " status: " + info.status) }}>
         click me
       </button>
-      {(info.data.data).map((item) => {
+      {/* {(info.data.data).map((item) => {
         return <div key={item.id}>{item}</div>
-      })}
+      })} */}
       <div></div>
     </div>
   )

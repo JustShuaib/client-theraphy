@@ -6,7 +6,7 @@ import { DiffUse } from './diff'
 
 const Lesson = ({ currentExercise, setListOfAudio }) => {
     const [exerciseType, setExerciseType] = useState('')
-    const [diffResponse, setDiffResponse] = useState('')
+    // const [diffResponse, setDiffResponse] = useState('')
 
     // useEffect(() => {
     //     setExerciseType('')

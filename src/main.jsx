@@ -11,7 +11,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-
+import { dummyArray } from './utils/dummyArray'
 // Create a client
 const queryClient = new QueryClient()
 
@@ -30,11 +30,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/exercise/zinnen',
-            element: <Sentences />
+            element: <Sentences dummyArray={dummyArray}/>
           },
           {
             path: '/exercise/woorden',
-            element: <Words />
+            element: <Words dummyArray={dummyArray}/>
           }
         ]
       }

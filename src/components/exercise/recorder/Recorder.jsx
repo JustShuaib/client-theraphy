@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const Recorder = ({setAudioBase64}) => {
+const Recorder = ({ setAudioBase64, demoAudio }) => {
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
 
@@ -10,6 +10,8 @@ const Recorder = ({setAudioBase64}) => {
   const [recordingURL, setRecordingURL] = useState('')
   const [recorderMedia, setRecorderMedia] = useState(null)
   const constraints = { 'audio': true }
+  const [sendAudio, setSendAudio] = useState('')
+  const [audioBlob, setAudioBlob] = useState()
 
   useEffect(() => {
     buttonState === "not speaking" ? setHovered(false) : setHovered(true)
@@ -19,6 +21,13 @@ const Recorder = ({setAudioBase64}) => {
   useEffect(() => {
     grantMic()
   })
+
+  useEffect(() => {
+    if (audioBlob && sendAudio) {
+      setAudioBase64(audioBlob)
+      setSendAudio(!sendAudio)
+    }
+  }, [audioBlob, sendAudio, setAudioBase64])
 
   const grantMic = () => {
     navigator.mediaDevices.getUserMedia(constraints)
@@ -42,6 +51,7 @@ const Recorder = ({setAudioBase64}) => {
     mediaRecorder.addEventListener('dataavailable', event => {
       const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
       const url = URL.createObjectURL(blob);
+      setAudioBlob(blob)
       setRecordingURL(url);
       console.log(recordingURL)
     });
@@ -67,7 +77,7 @@ const Recorder = ({setAudioBase64}) => {
   return (
     <div className="flex flex-col content-center justify-center w-full ">
       <h3 className="pb-2 mx-auto text-2xl">Play Exercise audio</h3>
-      <audio className="m-auto" src={recordingURL} controls></audio>
+      <audio className="m-auto" src={demoAudio} controls></audio>
       {/* <button onClick={grantMic}>grant mic</button> */}
       <div className='relative flex flex-row justify-center w-full pt-5'>
 
@@ -95,7 +105,7 @@ const Recorder = ({setAudioBase64}) => {
         <motion.div
           initial={{ x: 0, y: -50 }}
           animate={{ x: hovered ? 190 : 0 }}
-          onClick={() => { setHovered(false), setButtonState('not speaking'), stopRecording(), setAudioBase64(recorderMedia) }}
+          onClick={() => { setHovered(false), setButtonState('not speaking'), stopRecording(), setSendAudio(true) }}
           draggable={false}
           className='absolute z-10 bottom-[6rem] rounded-full w-fit h-fit text-white select-none'>
           <img alt="accept button" srcSet="/accept-icon.svg" />

@@ -1,12 +1,12 @@
-import { Outlet } from "react-router-dom"
-// import { Panel } from "./panel"
+/* eslint-disable react/prop-types */
+import { Sentences } from "./sentences"
+import { Words } from "./words"
 
-
-const Exercise = () => {
+const Exercise = ({ exerciseType }) => {
 
   return (
     <div className="flex flex-row h-fit">
-      <Outlet />
+      {exerciseType === 'words' ? <Words /> : <Sentences />}
     </div>
   )
 }

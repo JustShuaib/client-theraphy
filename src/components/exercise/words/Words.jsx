@@ -43,13 +43,13 @@ const Words = () => {
     await fileReader.readAsDataURL(audioBlob)
     // send to backend
     const response = await sendPostRequest()
-    .then(()=>
-      setPostResponse(response)
-    )
-    .catch((err)=>{
-      console.log(err)
-    }
-    )
+      .then(() =>
+        setPostResponse(response)
+      )
+      .catch((err) => {
+        console.log(err)
+      }
+      )
   };
 
 
@@ -57,7 +57,7 @@ const Words = () => {
   // function to send a POST request
   const sendPostRequest = async () => {
     try {
-      const response = await fetch('https://d20b8eef-89ec-4ee4-9f8c-e9184f13ed57.mock.pstmn.io/post', {
+      const response = await fetch('api/compare_sentences', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const Words = () => {
   const info = useQuery({
     queryKey: ['words'],
     queryFn: async () => {
-      const response = await fetch('https://d20b8eef-89ec-4ee4-9f8c-e9184f13ed57.mock.pstmn.io/get')
+      const response = await fetch('api/get_random_words')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
@@ -116,7 +116,7 @@ const Words = () => {
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">
-        <DiffUse diffInput={postResponse}/>
+        <DiffUse diffInput={postResponse} />
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { diffWords } from 'diff';
 import { diff } from 'semver';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -10,22 +10,21 @@ import { diff } from 'semver';
 
 //  {diffInput, correct_sentence, wrong_sentence}
 const DiffUse = ({ diffInput }) => {
-  const goedRef = useRef(null);
-  const probeerRef = useRef(null);
-  const [correctText, setCorrectText] = useState(diffInput.correct_sentence)
-  const [transcribedText, setTranscribedText] = useState(diffInput.transcribed_sentence)
-  const [phoneme, setPhoneme] = useState(diffInput.missing_phonemes)
+  const [correctText, setCorrectText] = useState('')
+  const [transcribedText, setTranscribedText] = useState('')
+  const [phoneme, setPhoneme] = useState('')
   // const correctText = diffInput.correct_sentence
   // const transcribedText = diffInput.transcribed_sentence
   // const correctText = 'something'
   // const transcribedText = 'somethinmm'
   const differences = diffWords(correctText, transcribedText);
 
-  useEffect(()=>{
+  useEffect(() => {
+    if(diffInput){
     setCorrectText(diffInput.correct_sentence)
     setTranscribedText(diff.transcribedText)
-    setPhoneme(diffInput.missing_phonemes)
-  },[diffInput])
+    setPhoneme(diffInput.missing_phonemes)}
+  }, [diffInput])
   // const array = [2, -9, 0, 5, 12, -25, 22, 9, 8, 12]
 
   const highlightedText = differences.map((difference, index) => {
@@ -43,17 +42,17 @@ const DiffUse = ({ diffInput }) => {
     console.log(correctText)
     console.log(transcribedText)
     if (areTextsEqual) {
-      playAudio(goedRef);
+      playAudio('goed-gedaan.mp3');
     } else {
-      playAudio(probeerRef);
+      playAudio('probeer-opnieuw.mp3');
     }
   }, [correctText, transcribedText]); // This effect runs once on component mount
 
   return (
     <div className='pt-4 text-3xl'>
       <div className="pt-4 pb-4 pl-6">
-        <h3 className="pb-4 text-3xl">Correct word/Sentence:</h3>
-        <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit">
+        <h3 className="pb-4 text-3xl">Juiste woord/zin:</h3>
+        <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md min-h-6 min-w-64 w-fit">
           {/* {correct-sentences} */}
           {correctText}
         </div>
@@ -62,27 +61,28 @@ const DiffUse = ({ diffInput }) => {
         'wrong' && (
           <div>
             <div className="pl-6">
-              <h3 className="pb-4 text-3xl">Corrections:</h3>
-              <div className="px-4 text-lg bg-gray-800 rounded-md w-fit">
+              <h3 className="pb-4 text-3xl">Correcties:</h3>
+              <div className="px-4 text-lg bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
                 {/* {correct-sentences} */}
                 {highlightedText}
               </div>
               <div className="pt-4">
-                <h3 className="pb-4 text-3xl">Missing Phonemes:</h3>
-                <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit">
+                <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>
+                <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
                   {/* missing phonemes*/}
-                  {phoneme.map((item) => {
-                    return (
-                      <div key={item.name + Math.random()}>
-                        {item}
-                      </div>
-                    )
-                  })}
+                  {phoneme &&
+                    phoneme.map((item) => {
+                      return (
+                        <div key={item.name + Math.random()}>
+                          {item}
+                        </div>
+                      )
+                    })}
                 </div>
               </div>
             </div>
           </div>
-          )}
+        )}
     </div>
   );
 };

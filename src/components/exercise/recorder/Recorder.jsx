@@ -76,7 +76,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
 
   return (
     <div className="flex flex-col content-center justify-center w-full ">
-      <h3 className="pb-2 mx-auto text-2xl">Play Exercise audio</h3>
+      <h3 className="pb-2 mx-auto text-2xl">Speel trainingsaudio af</h3>
       <audio className="m-auto" src={demoAudio} controls></audio>
       {/* <button onClick={grantMic}>grant mic</button> */}
       <div className='relative flex flex-row justify-center w-full pt-5'>

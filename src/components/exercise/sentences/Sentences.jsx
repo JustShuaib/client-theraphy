@@ -53,7 +53,7 @@ const Sentences = () => {
   // function to send a POST request
   const sendPostRequest = async () => {
     try {
-      const response = await fetch('https://d20b8eef-89ec-4ee4-9f8c-e9184f13ed57.mock.pstmn.io/post', {
+      const response = await fetch('api/compare_sentences', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const Sentences = () => {
   const info = useQuery({
     queryKey: ['sentences'],
     queryFn: async () => {
-      const response = await fetch('https://d20b8eef-89ec-4ee4-9f8c-e9184f13ed57.mock.pstmn.io/get')
+      const response = await fetch('api/get_random_sentences')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }

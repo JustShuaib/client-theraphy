@@ -5,7 +5,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { Panel } from '../panel'
-import DiffUse from "../diff/DiffUse"
+import { DiffUse } from "../diff"
 
 const Words = () => {
   const [currentExercise, setCurrentExercise] = useState()

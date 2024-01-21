@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Recorder = ({ setAudioBase64, demoAudio }) => {
+  // controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
 
@@ -79,8 +80,10 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
       <h3 className="pb-2 mx-auto text-2xl">Speel trainingsaudio af</h3>
       <audio className="m-auto" src={demoAudio} controls></audio>
       {/* <button onClick={grantMic}>grant mic</button> */}
-      <div className='relative flex flex-row justify-center w-full pt-5'>
+      <div className='relative flex flex-row justify-center w-full pt-16'>
+        <div className="absolute z-5 w-72 h-72 -bottom-4 bg-[#86A7FC] border-4 border-[#6366F1] rounded-full">
 
+        </div>
         <motion.div
           initial={{ scale: 1 }}
           whileTap={{ scale: 0.95 }}

@@ -23,7 +23,6 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
   const [hovered, setHovered] = useState(false)
 
   const [recording, setRecording] = useState(null)
-  // const [recordingURL, setRecordingURL] = useState('')
   const [recorderMedia, setRecorderMedia] = useState(null)
   const [sendAudio, setSendAudio] = useState('')
   const [audioBlob, setAudioBlob] = useState()
@@ -83,12 +82,6 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
       // stream audio into blob
       const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
       setAudioBlob(blob)
-      // set recording url (url helps to identify the audio file)
-      // but is this necessary?
-      // update: send audio file across states instead then to the backend.
-      // const url = URL.createObjectURL(blob);
-      // setRecordingURL(url);
-      // console.log(recordingURL)
     });
     // start recording media
     mediaRecorder.start();

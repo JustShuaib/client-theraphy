@@ -2,17 +2,41 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+
+// logic
+// 3 step process
+// request for mic permission on page load and start stream - done
+// on button click, start listening to the audio stream and record to blob
+// on done, save blob
+
+// logic for with polyfill
+// 4 step process
+// check for mediarecorder support on page load.
+// request for mic permission and start stream
+// on button click, start listening to the audio stream and record to blob
+// on done, save blob
+
+
 const Recorder = ({ setAudioBase64, demoAudio }) => {
-  // controls what is displayed on the button
+  // Button State controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
 
   const [recording, setRecording] = useState(null)
-  const [recordingURL, setRecordingURL] = useState('')
+  // const [recordingURL, setRecordingURL] = useState('')
   const [recorderMedia, setRecorderMedia] = useState(null)
-  const constraints = { 'audio': true }
   const [sendAudio, setSendAudio] = useState('')
   const [audioBlob, setAudioBlob] = useState()
+
+  // recently added configuration for third-party polyfill library
+  useEffect(() => {
+    if (!window.MediaRecorder) {
+      import('../../../polyfill.js').then(({ default: polyfill }) => {
+        // Optionally, you can execute any code related to the polyfill here
+        console.log('Polyfill loaded:', polyfill);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     buttonState === "not speaking" ? setHovered(false) : setHovered(true)
@@ -20,8 +44,26 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
 
 
   useEffect(() => {
+    const constraints = { 'audio': true }
+    // request for mic acccess on page load
+    const grantMic = () => {
+      if (navigator.mediaDevices)
+        navigator.mediaDevices.getUserMedia(constraints)
+          .then((stream) => {
+            const audioStream = new MediaStream(stream)
+            // use console.log as a quick check only in dev
+            // console.log(audioStream.active)
+            setRecording(audioStream)
+          })
+          .catch(error => {
+            console.error('Error accessing media devices.', error);
+            alert('App does not have mic access')
+          });
+    }
+    // call grant mic function
     grantMic()
-  })
+    
+  }, [])
 
   useEffect(() => {
     if (audioBlob && sendAudio) {
@@ -30,19 +72,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
     }
   }, [audioBlob, sendAudio, setAudioBase64])
 
-  const grantMic = () => {
-    if (navigator.mediaDevices)
-      navigator.mediaDevices.getUserMedia(constraints)
-        .then((stream) => {
-          const audioStream = new MediaStream(stream)
-          // console.log(audioStream.active)
-          setRecording(audioStream)
-        })
-        .catch(error => {
-          console.error('Error accessing media devices.', error);
-          alert('App does not have mic access')
-        });
-  }
+
 
   const startRecording = async () => {
     // 
@@ -50,12 +80,17 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
     // should help make it locateable outside this startRecorder function
     setRecorderMedia(mediaRecorder)
     mediaRecorder.addEventListener('dataavailable', event => {
+      // stream audio into blob
       const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
-      const url = URL.createObjectURL(blob);
       setAudioBlob(blob)
-      setRecordingURL(url);
-      console.log(recordingURL)
+      // set recording url (url helps to identify the audio file)
+      // but is this necessary?
+      // update: send audio file across states instead then to the backend.
+      // const url = URL.createObjectURL(blob);
+      // setRecordingURL(url);
+      // console.log(recordingURL)
     });
+    // start recording media
     mediaRecorder.start();
   }
 
@@ -84,6 +119,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
         <div className="absolute z-5 w-72 h-72 -bottom-4 bg-[#86A7FC] border-4 border-[#6366F1] rounded-full">
 
         </div>
+        {/* recorder button */}
         <motion.div
           initial={{ scale: 1 }}
           whileTap={{ scale: 0.95 }}
@@ -97,6 +133,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
           </p>
           {/* <p className='w-9/12 m-auto text-5xl text-center text-white'>Tik om te spreken</p> */}
         </motion.div>
+
         <motion.div
           initial={{ x: 0, y: 50 }}
           animate={{ x: hovered ? 190 : 0 }}

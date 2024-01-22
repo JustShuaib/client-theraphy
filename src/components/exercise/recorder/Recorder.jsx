@@ -17,14 +17,13 @@ import { motion } from "framer-motion";
 // on done, save blob
 
 
-const Recorder = ({ setAudioBase64}) => {
+const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
   // Button State controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
 
   const [recording, setRecording] = useState(null)
   const [recorderMedia, setRecorderMedia] = useState(null)
-  const [sendAudio, setSendAudio] = useState('')
   const [audioBlob, setAudioBlob] = useState()
 
   // recently added configuration for third-party polyfill library
@@ -66,10 +65,10 @@ const Recorder = ({ setAudioBase64}) => {
 
   useEffect(() => {
     if (audioBlob && sendAudio) {
-      setAudioBase64(audioBlob)
+      setRecordedAudio(audioBlob)
       setSendAudio(!sendAudio)
     }
-  }, [audioBlob, sendAudio, setAudioBase64])
+  }, [audioBlob, sendAudio, setSendAudio, setRecordedAudio])
 
 
 

@@ -10,79 +10,27 @@ import { ExerciseAudio } from "../exerciseAudio"
 
 const Words = () => {
   const [currentExercise, setCurrentExercise] = useState()
-  const [audioBase64, setAudioBase64] = useState()
   // this array stores the response of the get request run on page render; dataType: [{id, name},...]
+  // getResponseArray actually means the Array resulting from the first Get Response, that was bad naming convention on my part.
   const [getResponseArray, setGetResponseArray] = useState([])
+  const [exerciseName, setExerciseName] = useState()
+  const [postResponse, setPostResponse] = useState()
+  const [recordedAudio, setRecordedAudio] = useState()
+  const [sendAudio, setSendAudio] = useState('')
+  // const [fetchDemoAudio, setFetchDemoAudio] = useState('')
+
   const [demoAudio, setDemoAudio] = useState()
 
-  const [exerciseName, setExerciseName] = useState()
-
-  const [postResponse, setPostResponse] = useState()
-  // const fileReader = new FileReader();
-
-  // fileReader.onloadend = function () {
-  //   // The result will be a data URL representing the audio in Base64
-  //   const base64String = fileReader.result.split(',')[1];
-  //   // Now you can use 'base64String' as needed
-  //   setAudioBase64(base64String);
-  //   console.log(base64String)
-  // }
-
+  // updates the current Exercise
   useEffect(() => {
-    // sets the new audio reference when a new exercise is chosen.
-    getResponseArray.map((item) => {
-      if (currentExercise === item.id) {
-        setExerciseName(item.name)
-        // console.log(currentExercise)
-      }
-    })
-  }
-    , [currentExercise, getResponseArray])
-
-  // const audioToBase64 = async (audioBlob) => {
-  //   await fileReader.readAsDataURL(audioBlob)
-  //   // send to backend
-  //   const response = await sendPostRequest()
-  //     .then(() =>
-  //       setPostResponse(response)
-  //     )
-  //     .catch((err) => {
-  //       console.log(err)
-  //     }
-  //     )
-  // };
-
-  // api/compare_sentences
-  // function to send a POST request
-  const sendPostRequest = async () => {
-    try {
-      const response = await fetch('api/compare_sentences', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any other headers as needed
-        },
-        body: JSON.stringify({
-          // Add any data you want to send in the request body
-          name: exerciseName,
-          audio: audioBase64,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      // Handle the response as needed
-      const responseData = await response.json();
-      const data = responseData.data
-      return data
-      // console.log('POST request response:', responseData);
-    } catch (error) {
-      console.error('Error sending POST request:', error);
-    }
-  };
-
+    if (getResponseArray)
+      getResponseArray.map((item) => {
+        if (currentExercise === item.id) {
+          setExerciseName(item.name)
+          console.log(currentExercise)
+        }
+      })
+  }, [currentExercise, getResponseArray])
 
   // fetch words
   const info = useQuery({
@@ -97,7 +45,7 @@ const Words = () => {
       return data
     }
   })
-
+  // store the response of fetch words for use & referencing
   useEffect(() => {
     if (info.isSuccess && info.data) {
       const datum = info.data
@@ -106,13 +54,84 @@ const Words = () => {
   }, [info.data, info.isSuccess, getResponseArray])
 
 
+  //fetch audio for the exercise
+  useEffect(() => {
+    // fetches the new exercise audio when audio is chosen
+    const fetchDemoAudioRequest = async () => {
+      try {
+        const response = await fetch('api/get_audio', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'name': info.name
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Handle the response as needed
+        const responseData = await response.json();
+        const data = responseData.data
+        setDemoAudio(data.audio)
+        return data
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (info !== null) {
+      const res = fetchDemoAudioRequest()
+      setDemoAudio(res.data)
+    }
+  }, [currentExercise, getResponseArray, info])
+
+
+  // POST request to get diff
+  useEffect(() => {
+    const sendPostRequest = async () => {
+      try {
+        const response = await fetch('api/compare_sentences', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: exerciseName,
+            audio: recordedAudio,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        // Handle the response as needed
+        const responseData = await response.json();
+        const data = responseData.data
+        setPostResponse(data)
+        // console.log('POST request response:', responseData);
+        return data
+      } catch (error) {
+        console.error('Error sending POST request:', error);
+      }
+    };
+
+    if (sendAudio)
+      sendPostRequest().then(
+        setSendAudio(!sendAudio)
+      ).then((response) => console.log(response))
+
+  }, [sendAudio, exerciseName, recordedAudio])
+
 
   return (
     <div className="flex flex-row w-full">
       <Panel setExercise={setCurrentExercise} arrayResponse={getResponseArray} />
       <div className="w-5/6 px-12 py-4">
-        <ExerciseAudio demoAudio={demoAudio}/>
-        <Recorder setAudioBase64={audioToBase64} demoAudio={demoAudio} />
+        <ExerciseAudio demoAudio={demoAudio} />
+        <Recorder setRecordedAudio={setRecordedAudio} setSendAudio={setSendAudio} />
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">

@@ -72,9 +72,9 @@ const Words = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        // Handle the response as needed
         const responseData = await response.json();
         const data = responseData.data
+        console.log(data)
         setDemoAudio(data.audio)
         return data
       } catch (err) {

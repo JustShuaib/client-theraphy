@@ -2,30 +2,12 @@
 import { useEffect, useState } from 'react';
 import { diffWords } from 'diff';
 import { diff } from 'semver';
-// import SyntaxHighlighter from 'react-syntax-highlighter';
-// import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-// const correctText = 'The quick brown fox jumps over the lazy dog.';
-// const transcribedText = 'The quick brown fox jumps over the lazy cat.';
-
-//  {diffInput, correct_sentence, wrong_sentence}
 const DiffUse = ({ diffInput }) => {
   const [correctText, setCorrectText] = useState('')
   const [transcribedText, setTranscribedText] = useState('')
   const [phoneme, setPhoneme] = useState('')
-  // const correctText = diffInput.correct_sentence
-  // const transcribedText = diffInput.transcribed_sentence
-  // const correctText = 'something'
-  // const transcribedText = 'somethinmm'
   const differences = diffWords(correctText, transcribedText);
-
-  useEffect(() => {
-    if(diffInput){
-    setCorrectText(diffInput.correct_sentence)
-    setTranscribedText(diff.transcribedText)
-    setPhoneme(diffInput.missing_phonemes)}
-  }, [diffInput])
-  // const array = [2, -9, 0, 5, 12, -25, 22, 9, 8, 12]
 
   const highlightedText = differences.map((difference, index) => {
     const color = difference.added ? 'red' : difference.removed ? '#00C55E' : '#00C55E';
@@ -38,15 +20,20 @@ const DiffUse = ({ diffInput }) => {
   };
 
   useEffect(() => {
-    const areTextsEqual = correctText === transcribedText;
-    console.log(correctText)
-    console.log(transcribedText)
-    if (areTextsEqual) {
-      playAudio('goed-gedaan.mp3');
-    } else {
-      playAudio('probeer-opnieuw.mp3');
+    if (diffInput) {
+      setCorrectText(diffInput.correct_sentence);
+      setTranscribedText(diff.transcribedText);
+      setPhoneme(diffInput.missing_phonemes);
+
+      // Audio playing logic
+      const areTextsEqual = correctText === transcribedText;
+      if (areTextsEqual) {
+        playAudio('goed-gedaan.mp3');
+      } else {
+        playAudio('probeer-opnieuw.mp3');
+      }
     }
-  }, [correctText, transcribedText]); // This effect runs once on component mount
+  }, [diffInput, correctText, transcribedText]);
 
   return (
     <div className='pt-4 text-3xl'>

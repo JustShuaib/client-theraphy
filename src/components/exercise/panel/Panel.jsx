@@ -14,6 +14,7 @@ const Panel = ({ setExercise, arrayResponse }) => {
                         </div>
                     </div>
                 </div>
+                
                 {arrayResponse ?
                     arrayResponse.map((exercise) => {
                         return (

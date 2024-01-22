@@ -61,7 +61,7 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
     }
     // call grant mic function
     grantMic()
-    
+
   }, [])
 
   useEffect(() => {
@@ -109,8 +109,9 @@ const Recorder = ({ setAudioBase64, demoAudio }) => {
       <audio className="m-auto" src={demoAudio} controls></audio>
       {/* <button onClick={grantMic}>grant mic</button> */}
       <div className='relative flex flex-row justify-center w-full pt-16'>
-        <div className="absolute z-5 w-72 h-72 -bottom-4 bg-[#86A7FC] border-4 border-[#6366F1] rounded-full">
 
+        <div className="absolute z-5 w-72 h-72 -bottom-4 bg-[#86A7FC] border-4 border-[#6366F1] rounded-full">
+          {/* Outer Circle Ring */}
         </div>
         {/* recorder button */}
         <motion.div

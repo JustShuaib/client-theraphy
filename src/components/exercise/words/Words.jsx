@@ -52,7 +52,6 @@ const Words = () => {
       )
   };
 
-
   // api/compare_sentences
   // function to send a POST request
   const sendPostRequest = async () => {

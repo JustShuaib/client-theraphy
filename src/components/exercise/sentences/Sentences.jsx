@@ -41,7 +41,7 @@ const Sentences = () => {
       }
       const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      const res = jsonResponse.data
+      const res = jsonResponse
       console.log('response is:' + res)
       return res
     }

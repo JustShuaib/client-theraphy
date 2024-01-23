@@ -8,7 +8,7 @@ import { Panel } from '../panel'
 import { DiffUse } from "../diff"
 import { ExerciseAudio } from "../exerciseAudio"
 
-const Words = () => {
+const Words = ({ exerciseType }) => {
   const [currentExercise, setCurrentExercise] = useState()
   // this array stores the response of the get request run on page render; dataType: [{id, name},...]
   // getResponseArray actually means the Array resulting from the first Get Response, that was bad naming convention on my part.
@@ -35,18 +35,17 @@ const Words = () => {
   const { data, isSuccess, error } = useQuery({
     queryKey: ['words'],
     queryFn: async () => {
-      const response = await fetch('api/get_random_words')
+      const response = exerciseType === "words" ? await fetch('api/get_random_words') : await fetch('api/get_random_sentences')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      const jsonResponse = await JSON.parse(response)
+      const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      const res = jsonResponse.data
-      console.log('response is:' + res)
-      return res
+      return jsonResponse
       //  
     }
   })
+
   if (error)
     console.log(error)
   // store the response of fetch words for use & referencing
@@ -66,7 +65,8 @@ const Words = () => {
         const response = await fetch('api/get_audio', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/octet-stream'
           },
           body: JSON.stringify({
             'name': exerciseName
@@ -76,16 +76,18 @@ const Words = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const responseData = await response.json();
+        const responseData = await response.blob();
         console.log('responseData for fetch audio is:' + responseData)
-        const res = response.data
-        console.log("get audio res: " + res)
-        setDemoAudio(res)
-        return res
+        // create url for the blob data
+        const url = URL.createObjectURL(responseData)
+        console.log("get audio res: " + url)
+        setDemoAudio(url)
+        return url
       } catch (err) {
         console.log(err)
       }
     }
+
     // fetch demoAuio only if info returned is true
     if (isSuccess)
       data.map((item) => {
@@ -102,15 +104,16 @@ const Words = () => {
   useEffect(() => {
     const sendPostRequest = async () => {
       try {
+        const formData = new URLSearchParams();
+        formData.append('name', exerciseName);
+        formData.append('audio', recordedAudio);
+
         const response = await fetch('api/compare_sentences', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify({
-            name: exerciseName,
-            audio: recordedAudio,
-          }),
+          body: formData,
         });
 
         if (!response.ok) {

@@ -33,9 +33,9 @@ const Words = () => {
 
   // fetch words
   const info = useQuery({
-    queryKey: ['sentences'],
+    queryKey: ['words'],
     queryFn: async () => {
-      const response = await fetch('api/get_random_sentences')
+      const response = await fetch('api/get_random_words')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
@@ -49,7 +49,7 @@ const Words = () => {
   // store the response of fetch words for use & referencing
   useEffect(() => {
     if (info.isSuccess && info) {
-      setGetResponseArray(info.data)
+      setGetResponseArray(info)
       console.log("store info, this should be array: " + info.data)
 
     }
@@ -89,8 +89,8 @@ const Words = () => {
       info.map((item) => {
         if (item.name === exerciseName) {
           const res = fetchDemoAudioRequest()
-          setDemoAudio(res.data.audio)
-          console.log('this should be the audio resp' + res.data.audio)
+          setDemoAudio(res.audio)
+          console.log('this should be the audio resp' + res.audio)
         }
       })
   }, [info, exerciseName])

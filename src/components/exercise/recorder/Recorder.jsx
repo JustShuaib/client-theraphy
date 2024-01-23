@@ -67,6 +67,7 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
     if (audioBlob && sendAudio) {
       setRecordedAudio(audioBlob)
       setSendAudio(!sendAudio)
+      console.log("send audio state on rec before invert:" + sendAudio)
     }
   }, [audioBlob, sendAudio, setSendAudio, setRecordedAudio])
 
@@ -89,6 +90,8 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
   const stopRecording = () => {
     if (recorderMedia !== null) {
       recorderMedia.stop()
+      console.log("this is the recorder/recorded media" + recorderMedia)
+      console.log("this is the recorded audio blob" + audioBlob)
     }
     else
       console.log('Recorder media is returning null')

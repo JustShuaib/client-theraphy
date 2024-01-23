@@ -123,6 +123,8 @@ const Words = ({ exerciseType }) => {
         // Handle the response as needed
         const responseData = await response.json();
         setPostResponse(responseData)
+        console.log("this is the recorded audio on words:"+exerciseName+": "+recordedAudio)
+
         // console.log('POST request response:', responseData);
         return responseData
       } catch (error) {

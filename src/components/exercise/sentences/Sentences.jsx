@@ -32,7 +32,7 @@ const Sentences = () => {
   }, [currentExercise, getResponseArray])
 
   // fetch sentences
-  const info = useQuery({
+  const { data, isSuccess, error } = useQuery({
     queryKey: ['sentences'],
     queryFn: async () => {
       const response = await fetch('api/get_random_sentences')
@@ -46,13 +46,15 @@ const Sentences = () => {
       return res
     }
   })
+  if (error)
+    console.log(error)
   // store the response of fetch sentences for use & referencing
   useEffect(() => {
-    if (info.isSuccess && info) {
-      setGetResponseArray(info.data)
-      console.log("store info, this should be array: " + info.data)
+    if (isSuccess && data) {
+      setGetResponseArray(data)
+      console.log("store info: " + data)
     }
-  }, [info, info.isSuccess, getResponseArray])
+  }, [data, isSuccess, getResponseArray])
 
 
   //fetch audio for the exercise
@@ -76,7 +78,7 @@ const Sentences = () => {
         const responseData = await response.json();
         console.log('responseData for fetch audio is:' + responseData)
         const res = response.data
-        console.log("get audio res: "+ res)
+        console.log("res")
         setDemoAudio(res)
         return res
       } catch (err) {
@@ -84,15 +86,15 @@ const Sentences = () => {
       }
     }
     // fetch demoAuio only if info returned is true
-    if (info.isSuccess)
-      info.map((item) => {
+    if (getResponseArray)
+      getResponseArray.map((item) => {
         if (item.name === exerciseName) {
           const res = fetchDemoAudioRequest()
           setDemoAudio(res.data.audio)
           console.log('this should be the audio resp' + res.data.audio)
         }
       })
-  }, [info, exerciseName])
+  }, [exerciseName, getResponseArray])
 
 
 

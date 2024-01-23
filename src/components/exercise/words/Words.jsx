@@ -39,11 +39,12 @@ const Words = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      const jsonResponse = await response.json()
+      const jsonResponse = await JSON.parse(response)
      // if the resulting data is an array of objects
      const res = jsonResponse.data
      console.log('response is:' + res)
      return res
+    //  
     }
   })
   // store the response of fetch words for use & referencing

@@ -18,6 +18,7 @@ const Words = () => {
   const [recordedAudio, setRecordedAudio] = useState()
   const [sendAudio, setSendAudio] = useState('')
   // const [fetchDemoAudio, setFetchDemoAudio] = useState('')
+  const [currentObject, setCurrentObject] = useState()
 
   const [demoAudio, setDemoAudio] = useState()
 
@@ -42,17 +43,15 @@ const Words = () => {
       }
       const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      // console.log('response is:' + jsonResponse)
-
-      // const data = jsonResponse.data
-      // console.log('this is the exact data returned:' + data)
+      console.log('response is:' + jsonResponse)
       return jsonResponse
     }
   })
   // store the response of fetch words for use & referencing
   useEffect(() => {
-    if (info.isSuccess && info.data) {
+    if (info.isSuccess && info) {
       setGetResponseArray(info)
+      console.log(info)
     }
   }, [info, info.isSuccess, getResponseArray])
 
@@ -87,9 +86,10 @@ const Words = () => {
     // fetch demoAuio only if info returned is true
     if (info.isSuccess) {
       const res = fetchDemoAudioRequest()
-      setDemoAudio(res.data)
+      setDemoAudio(res)
+      console.log('this should be the audio resp'+ res)
     }
-  }, [currentExercise, getResponseArray, info])
+  }, [info])
 
 
   // POST request to get diff

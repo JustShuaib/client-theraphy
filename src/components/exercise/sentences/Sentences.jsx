@@ -19,7 +19,7 @@ const Sentences = () => {
   const [sendAudio, setSendAudio] = useState('')
 
   const [demoAudio, setDemoAudio] = useState()
-  
+
   // updates the current Exercise
   useEffect(() => {
     if (getResponseArray)
@@ -41,15 +41,16 @@ const Sentences = () => {
       }
       const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      console.log('response is:' + jsonResponse)
-      return jsonResponse
+      const res = jsonResponse.data
+      console.log('response is:' + res)
+      return res
     }
   })
   // store the response of fetch sentences for use & referencing
   useEffect(() => {
     if (info.isSuccess && info) {
       setGetResponseArray(info)
-      console.log("store info: "+info)
+      console.log("store info: " + info)
     }
   }, [info, info.isSuccess, getResponseArray])
 
@@ -82,11 +83,13 @@ const Sentences = () => {
       }
     }
     // fetch demoAuio only if info returned is true
-    if (info.isSuccess) {
-      const res = fetchDemoAudioRequest()
-      setDemoAudio(res)
-      console.log('this should be the audio resp' + res)
-    }
+    info.map((item) => {
+      if (item.name === exerciseName) {
+        const res = fetchDemoAudioRequest()
+        setDemoAudio(res)
+        console.log('this should be the audio resp' + res)
+      }
+    })
   }, [info, exerciseName])
 
 

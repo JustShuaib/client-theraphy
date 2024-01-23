@@ -33,16 +33,17 @@ const Words = () => {
 
   // fetch words
   const info = useQuery({
-    queryKey: ['words'],
+    queryKey: ['sentences'],
     queryFn: async () => {
-      const response = await fetch('api/get_random_words')
+      const response = await fetch('api/get_random_sentences')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      console.log('fetch words response is:' + jsonResponse)
-      return jsonResponse
+      const res = jsonResponse.data
+      console.log('response is:' + res)
+      return res
     }
   })
   // store the response of fetch words for use & referencing
@@ -82,11 +83,13 @@ const Words = () => {
       }
     }
     // fetch demoAuio only if info returned is true
-    if (info.isSuccess) {
-      const res = fetchDemoAudioRequest()
-      setDemoAudio(res)
-      console.log('this should be the audio resp' + res)
-    }
+    info.map((item) => {
+      if (item.name === exerciseName) {
+        const res = fetchDemoAudioRequest()
+        setDemoAudio(res)
+        console.log('this should be the audio resp' + res)
+      }
+    })
   }, [info, exerciseName])
 
 

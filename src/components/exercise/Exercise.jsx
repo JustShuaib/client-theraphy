@@ -7,7 +7,6 @@ const Exercise = ({ exerciseType }) => {
   return (
     <div className="flex flex-row h-fit">
       {exerciseType === 'words' ? <Words /> : <Sentences />}
-      {console.log(exerciseType)}
     </div>
   )
 }

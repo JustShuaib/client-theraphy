@@ -41,19 +41,20 @@ const Words = () => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
-      console.log('response is:' + jsonResponse)
-      const data = jsonResponse.data
-      console.log('this is the exact data returned:' + data)
-      return data
+      // if the resulting data is an array of objects
+      // console.log('response is:' + jsonResponse)
+
+      // const data = jsonResponse.data
+      // console.log('this is the exact data returned:' + data)
+      return jsonResponse
     }
   })
   // store the response of fetch words for use & referencing
   useEffect(() => {
     if (info.isSuccess && info.data) {
-      const datum = info.data
-      setGetResponseArray(datum)
+      setGetResponseArray(info)
     }
-  }, [info.data, info.isSuccess, getResponseArray])
+  }, [info, info.isSuccess, getResponseArray])
 
 
   //fetch audio for the exercise
@@ -75,10 +76,10 @@ const Words = () => {
           throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        const data = responseData.data
-        console.log(data)
-        setDemoAudio(data.audio)
-        return data
+        console.log('responseData for fetch audio is:' + responseData)
+        console.log(response)
+        setDemoAudio(response.audio)
+        return response.audio
       } catch (err) {
         console.log(err)
       }
@@ -112,10 +113,9 @@ const Words = () => {
 
         // Handle the response as needed
         const responseData = await response.json();
-        const data = responseData.data
-        setPostResponse(data)
+        setPostResponse(responseData)
         // console.log('POST request response:', responseData);
-        return data
+        return responseData
       } catch (error) {
         console.error('Error sending POST request:', error);
       }

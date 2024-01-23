@@ -38,17 +38,15 @@ const Sentences = () => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
-      const data = jsonResponse.data
-      return data
+      return jsonResponse
     }
   })
   // store the response of fetch sentences for use & referencing
   useEffect(() => {
     if (info.isSuccess && info.data) {
-      const datum = info.data
-      setGetResponseArray(datum)
+      setGetResponseArray(info)
     }
-  }, [info.data, info.isSuccess, getResponseArray])
+  }, [info, info.isSuccess, getResponseArray])
 
 
   //fetch audio for the exercise
@@ -70,10 +68,10 @@ const Sentences = () => {
           throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        const data = responseData.data
-        console.log(data)
-        setDemoAudio(data.audio)
-        return data
+        console.log('responseData for fetch audio is:' + responseData)
+        console.log(response)
+        setDemoAudio(response.audio)
+        return response.audio
       } catch (err) {
         console.log(err)
       }

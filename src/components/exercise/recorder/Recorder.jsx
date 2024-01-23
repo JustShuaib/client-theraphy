@@ -64,6 +64,7 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
   }, [])
 
   useEffect(() => {
+    console.log("Outside useeffect: send audio state on rec before invert:" + sendAudio)
     if (audioBlob && sendAudio) {
       setRecordedAudio(audioBlob)
       setSendAudio(!sendAudio)

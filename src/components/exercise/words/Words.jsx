@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import Recorder from "../recorder/Recorder"
 import {
-  useQuery,
+  useQuery
 } from '@tanstack/react-query'
 import { Panel } from '../panel'
 import { DiffUse } from "../diff"
@@ -17,8 +17,6 @@ const Words = () => {
   const [postResponse, setPostResponse] = useState()
   const [recordedAudio, setRecordedAudio] = useState()
   const [sendAudio, setSendAudio] = useState('')
-  // const [fetchDemoAudio, setFetchDemoAudio] = useState('')
-  const [currentObject, setCurrentObject] = useState()
 
   const [demoAudio, setDemoAudio] = useState()
 
@@ -43,7 +41,7 @@ const Words = () => {
       }
       const jsonResponse = await response.json()
       // if the resulting data is an array of objects
-      console.log('response is:' + jsonResponse)
+      console.log('fetch words response is:' + jsonResponse)
       return jsonResponse
     }
   })
@@ -67,7 +65,7 @@ const Words = () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            'name': info.name
+            'name': exerciseName
           })
         })
 
@@ -87,9 +85,9 @@ const Words = () => {
     if (info.isSuccess) {
       const res = fetchDemoAudioRequest()
       setDemoAudio(res)
-      console.log('this should be the audio resp'+ res)
+      console.log('this should be the audio resp' + res)
     }
-  }, [info])
+  }, [info, exerciseName])
 
 
   // POST request to get diff

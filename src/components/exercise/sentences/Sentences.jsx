@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import Recorder from "../recorder/Recorder"
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery
+} from "@tanstack/react-query";
 import { Panel } from "../panel";
 import DiffUse from "../diff/DiffUse";
 import { ExerciseAudio } from "../exerciseAudio";
@@ -14,10 +17,9 @@ const Sentences = () => {
   const [postResponse, setPostResponse] = useState()
   const [recordedAudio, setRecordedAudio] = useState()
   const [sendAudio, setSendAudio] = useState('')
-  // const [fetchDemoAudio, setFetchDemoAudio] = useState('')
 
   const [demoAudio, setDemoAudio] = useState()
-
+  
   // updates the current Exercise
   useEffect(() => {
     if (getResponseArray)
@@ -38,13 +40,16 @@ const Sentences = () => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
+      // if the resulting data is an array of objects
+      console.log('response is:' + jsonResponse)
       return jsonResponse
     }
   })
   // store the response of fetch sentences for use & referencing
   useEffect(() => {
-    if (info.isSuccess && info.data) {
+    if (info.isSuccess && info) {
       setGetResponseArray(info)
+      console.log("store info: "+info)
     }
   }, [info, info.isSuccess, getResponseArray])
 
@@ -60,7 +65,7 @@ const Sentences = () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            'name': info.name
+            'name': exerciseName
           })
         })
 
@@ -76,11 +81,14 @@ const Sentences = () => {
         console.log(err)
       }
     }
-    if (info !== null) {
+    // fetch demoAuio only if info returned is true
+    if (info.isSuccess) {
       const res = fetchDemoAudioRequest()
-      setDemoAudio(res.data)
+      setDemoAudio(res)
+      console.log('this should be the audio resp' + res)
     }
-  }, [currentExercise, getResponseArray, info])
+  }, [info, exerciseName])
+
 
 
   // POST request to get diff
@@ -104,10 +112,9 @@ const Sentences = () => {
 
         // Handle the response as needed
         const responseData = await response.json();
-        const data = responseData.data
-        setPostResponse(data)
+        setPostResponse(responseData)
         // console.log('POST request response:', responseData);
-        return data
+        return responseData
       } catch (error) {
         console.error('Error sending POST request:', error);
       }

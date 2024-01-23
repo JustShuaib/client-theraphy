@@ -68,7 +68,6 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
     console.log("audio blob:" + audioBlob)
     if (audioBlob && sendAudio) {
       setRecordedAudio(audioBlob)
-      setSendAudio(!sendAudio)
       console.log("send audio state on rec before invert:" + sendAudio)
     }
   }, [audioBlob, sendAudio, setSendAudio, setRecordedAudio])

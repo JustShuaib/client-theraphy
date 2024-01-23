@@ -104,7 +104,7 @@ const Words = ({ exerciseType }) => {
   useEffect(() => {
     const sendPostRequest = async () => {
       try {
-        const formData = new URLSearchParams();
+        const formData = new formData();
         formData.append('name', exerciseName);
         formData.append('audio', recordedAudio);
 
@@ -145,7 +145,7 @@ const Words = ({ exerciseType }) => {
       <Panel setExercise={setCurrentExercise} arrayResponse={getResponseArray} />
       <div className="w-5/6 px-12 py-4">
         <ExerciseAudio demoAudio={demoAudio} />
-        <Recorder setRecordedAudio={setRecordedAudio} setSendAudio={setSendAudio} />
+        <Recorder setRecordedAudio={setRecordedAudio} sendAudio={sendAudio} setSendAudio={setSendAudio} />
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">

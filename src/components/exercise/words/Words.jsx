@@ -32,7 +32,7 @@ const Words = () => {
   }, [currentExercise, getResponseArray])
 
   // fetch words
-  const info = useQuery({
+  const { data, isSuccess, error } = useQuery({
     queryKey: ['words'],
     queryFn: async () => {
       const response = await fetch('api/get_random_words')
@@ -40,21 +40,22 @@ const Words = () => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await JSON.parse(response)
-     // if the resulting data is an array of objects
-     const res = jsonResponse.data
-     console.log('response is:' + res)
-     return res
-    //  
+      // if the resulting data is an array of objects
+      const res = jsonResponse.data
+      console.log('response is:' + res)
+      return res
+      //  
     }
   })
+  if (error)
+    console.log(error)
   // store the response of fetch words for use & referencing
   useEffect(() => {
-    if (info.isSuccess && info) {
-      setGetResponseArray(info)
-      console.log("store info, this should be array: " + info.data)
-
+    if (isSuccess && data) {
+      setGetResponseArray(data)
+      console.log("store info: " + data)
     }
-  }, [info, info.isSuccess, getResponseArray])
+  }, [data, isSuccess, getResponseArray])
 
 
   //fetch audio for the exercise
@@ -86,15 +87,15 @@ const Words = () => {
       }
     }
     // fetch demoAuio only if info returned is true
-    if (info.isSuccess)
-      info.map((item) => {
+    if (isSuccess)
+      data.map((item) => {
         if (item.name === exerciseName) {
           const res = fetchDemoAudioRequest()
           setDemoAudio(res.audio)
           console.log('this should be the audio resp' + res.audio)
         }
       })
-  }, [info, exerciseName])
+  }, [data, isSuccess, exerciseName])
 
 
   // POST request to get diff

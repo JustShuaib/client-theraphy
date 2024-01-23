@@ -41,7 +41,9 @@ const Words = () => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
+      console.log('response is:' + jsonResponse)
       const data = jsonResponse.data
+      console.log('this is the exact data returned:' + data)
       return data
     }
   })
@@ -81,7 +83,8 @@ const Words = () => {
         console.log(err)
       }
     }
-    if (info !== null) {
+    // fetch demoAuio only if info returned is true
+    if (info.isSuccess) {
       const res = fetchDemoAudioRequest()
       setDemoAudio(res.data)
     }

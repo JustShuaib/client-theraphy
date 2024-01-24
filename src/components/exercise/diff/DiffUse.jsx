@@ -25,10 +25,10 @@ const DiffUse = ({ diffInput }) => {
       console.log("diffInput : "); console.log(diffInput)
       setCorrectText(diffInput.correct_sentence);
       console.log("correct Sentence : "); console.log(diffInput.correct_sentence)
-      setTranscribedText(diff.transcribedText);
-      console.log("wrong Sentence : "); console.log(diffInput.transcribedText)
+      setTranscribedText(diff.transcribed_sentence);
+      console.log("wrong Sentence : "); console.log(diffInput.transcribed_sentence)
       setPhoneme(diffInput.missing_phonemes);
-      console.log("missing phonemes : "); console.log(diffInput.phoneme)
+      console.log("missing phonemes : "); console.log(diffInput.missing_phonemes)
 
       // Audio playing logic
       const areTextsEqual = (correctText === transcribedText);
@@ -47,7 +47,7 @@ const DiffUse = ({ diffInput }) => {
         <h3 className="pb-4 text-3xl">Juiste woord/zin:</h3>
         <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md min-h-6 min-w-64 w-fit">
           {/* {correct-sentences} */}
-          {correctText}
+          {correctText && highlightedText}
         </div>
       </div>
       {
@@ -57,7 +57,7 @@ const DiffUse = ({ diffInput }) => {
               <h3 className="pb-4 text-3xl">Correcties:</h3>
               <div className="px-4 text-lg bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
                 {/* {correct-sentences} */}
-                {highlightedText}
+                {highlightedText && highlightedText}
               </div>
               <div className="pt-4">
                 <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>

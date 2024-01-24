@@ -14,9 +14,9 @@ const Words = ({ exerciseType }) => {
   // getResponseArray actually means the Array resulting from the first Get Response, that was bad naming convention on my part.
   const [getResponseArray, setGetResponseArray] = useState([])
   const [exerciseName, setExerciseName] = useState()
-  const [postResponse, setPostResponse] = useState()
+  const [diffInput, setDiffInput] = useState()
   const [recordedAudio, setRecordedAudio] = useState()
-  const [sendAudio, setSendAudio] = useState('')
+  // const [sendAudio, setSendAudio] = useState('')
 
   const [demoAudio, setDemoAudio] = useState()
 
@@ -26,13 +26,13 @@ const Words = ({ exerciseType }) => {
       getResponseArray.map((item) => {
         if (currentExercise === item.id) {
           setExerciseName(item.name)
-          console.log(currentExercise)
+          // console.log(currentExercise)
         }
       })
   }, [currentExercise, getResponseArray])
 
   // fetch words
-  const { data, isSuccess, error } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['words'],
     queryFn: async () => {
       const response = exerciseType === "words" ? await fetch('api/get_random_words') : await fetch('api/get_random_sentences')
@@ -40,19 +40,15 @@ const Words = ({ exerciseType }) => {
         throw new Error('Network response was not ok')
       }
       const jsonResponse = await response.json()
-      // if the resulting data is an array of objects
       return jsonResponse
-      //  
     }
   })
 
-  if (error)
-    console.log(error)
   // store the response of fetch words for use & referencing
   useEffect(() => {
     if (isSuccess && data) {
       setGetResponseArray(data)
-      console.log("store info: " + data)
+      // console.log("store info: " + data)
     }
   }, [data, isSuccess, getResponseArray])
 
@@ -77,10 +73,10 @@ const Words = ({ exerciseType }) => {
           throw new Error('Network response was not ok');
         }
         const responseData = await response.blob();
-        console.log('responseData for fetch audio is:' + responseData)
+        // console.log('responseData for fetch audio is:' + responseData)
         // create url for the blob data
         const url = URL.createObjectURL(responseData)
-        console.log("get audio res: " + url)
+        // console.log("get audio res: " + url)
         setDemoAudio(url)
         return url
       } catch (err) {
@@ -94,62 +90,78 @@ const Words = ({ exerciseType }) => {
         if (item.name === exerciseName) {
           const res = fetchDemoAudioRequest()
           setDemoAudio(res.audio)
-          console.log('this should be the audio resp' + res.audio)
+          // console.log('this should be the audio resp' + res.audio)
         }
       })
   }, [data, isSuccess, exerciseName])
 
 
   // POST request to get diff
-  useEffect(() => {
-    const sendPostRequest = async () => {
-      try {
-        const formData = new formData();
-        formData.append('name', exerciseName);
-        formData.append('audio', recordedAudio);
+  const sendPostRequest = async (adio) => {
+    console.log(adio)
+    // Create an audio context
+    // const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        const response = await fetch('api/compare_sentences', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData,
-        });
+    // // Create a FileReader to read the contents of the Blob
+    // const fileReader = new FileReader();
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+    // fileReader.onload = async () => {
+    //   const arrayBuffer = fileReader.result;
 
-        // Handle the response as needed
-        const responseData = await response.json();
-        setPostResponse(responseData)
-        console.log("this is the recorded audio on words:"+exerciseName+": "+recordedAudio)
+    // // Decode the arrayBuffer into an audio buffer
+    // const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    // const channel = audioBuffer.getChannelData(0)
+    // console.log("channel"); console.log(channel)
+    try {
 
-        // console.log('POST request response:', responseData);
-        return responseData
-      } catch (error) {
-        console.error('Error sending POST request:', error);
+      const formData = new FormData();
+      formData.append('name', exerciseName);
+      formData.append('audio', recordedAudio, "generic.wav");
+
+      const boundary = '------WebKitFormBoundaryTuT1Rn4lqAJg8AyK'; // Use your actual boundary
+      const headers = {
+        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+      };
+
+      const response = await fetch('api/compare_sentences', {
+        method: 'POST',
+        headers: headers,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
-    if (sendAudio)
-      sendPostRequest().then(
-        setSendAudio(!sendAudio)
-      ).then((response) => console.log(response))
+      // Handle the response as needed
+      const responseData = await response.json();
+      setDiffInput(responseData)
+      console.log("this is the recorded audio on word:" + exerciseName + ": " + recordedAudio)
+      return responseData
+    } catch (error) {
+      console.error('Error sending POST request:', error);
+    }
+    // the bracket below should be commented out if not used.
+    // }
+    // // Read the contents of the Blob as an ArrayBuffer
+    // fileReader.readAsArrayBuffer(recordedAudio);
+  };
 
-  }, [sendAudio, exerciseName, recordedAudio])
-
+  const sendAudio = (adio) => {
+    const output = sendPostRequest(adio)
+    console.log("this is the output of the get diffInput function, this gets sent to backend: "); console.log(output)
+  }
 
   return (
     <div className="flex flex-row w-full">
       <Panel setExercise={setCurrentExercise} arrayResponse={getResponseArray} />
       <div className="w-5/6 px-12 py-4">
         <ExerciseAudio demoAudio={demoAudio} />
-        <Recorder setRecordedAudio={setRecordedAudio} sendAudio={sendAudio} setSendAudio={setSendAudio} />
+        <Recorder setRecordedAudio={setRecordedAudio} sendAudio={sendAudio} />
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">
-        <DiffUse diffInput={postResponse} />
+        <DiffUse diffInput={diffInput} />
       </div>
     </div>
   )

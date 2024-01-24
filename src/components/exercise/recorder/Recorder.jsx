@@ -16,8 +16,7 @@ import { motion } from "framer-motion";
 // on button click, start listening to the audio stream and record to blob
 // on done, save blob
 
-
-const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
+const Recorder = ({ setRecordedAudio, sendAudio }) => {
   // Button State controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
@@ -26,6 +25,7 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
   const [recorderMedia, setRecorderMedia] = useState(null)
   const [audioBlob, setAudioBlob] = useState()
 
+  const [stopped, setStopped] = useState()
   // recently added configuration for third-party polyfill library
   useEffect(() => {
     if (!window.MediaRecorder) {
@@ -36,21 +36,19 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
     }
   }, []);
 
+  // set button display design
   useEffect(() => {
     buttonState === "not speaking" ? setHovered(false) : setHovered(true)
   }, [buttonState])
 
-
+  // request for mic acccess on page load
   useEffect(() => {
     const constraints = { 'audio': true }
-    // request for mic acccess on page load
     const grantMic = () => {
       if (navigator.mediaDevices)
         navigator.mediaDevices.getUserMedia(constraints)
           .then((stream) => {
             const audioStream = new MediaStream(stream)
-            // use console.log as a quick check only in dev
-            // console.log(audioStream.active)
             setRecording(audioStream)
           })
           .catch(error => {
@@ -60,20 +58,9 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
     }
     // call grant mic function
     grantMic()
-
   }, [])
 
-  useEffect(() => {
-    console.log("Outside useeffect: send audio state on rec before invert:" + sendAudio)
-    console.log("audio blob:" + audioBlob)
-    if (audioBlob && sendAudio) {
-      setRecordedAudio(audioBlob)
-      console.log("send audio state on rec before invert:" + sendAudio)
-    }
-  }, [audioBlob, sendAudio, setSendAudio, setRecordedAudio])
-
-
-
+  // start recording when the record button is clicked
   const startRecording = async () => {
     // 
     const mediaRecorder = new MediaRecorder(recording);
@@ -88,16 +75,36 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
     mediaRecorder.start();
   }
 
+  // logic to send recorded audio
+  // step 1: on click, stop audio recording
+  // step 2: once audio is stopped, trigger sendAudio function (send Audio)
+
+  // stop recording when the check button is clicked
   const stopRecording = () => {
     if (recorderMedia !== null) {
-      recorderMedia.stop()
-      console.log("this is the recorder/recorded media" + recorderMedia)
-      console.log("this is the recorded audio blob" + audioBlob)
+      recorderMedia.stop();
+      setStopped(true)
     }
-    else
+    else {
       console.log('Recorder media is returning null')
+    }
   }
 
+  useEffect(() => {
+    if (audioBlob && stopped) {
+      setRecordedAudio(audioBlob);
+      sendAudio(audioBlob)
+      setStopped(!stopped)
+      console.log("this is the recorded audio blob"); console.log(audioBlob)
+    } else console.log("media is not ready")
+  }, [stopped, audioBlob, sendAudio, setRecordedAudio])
+  
+  // useEffect(() => {
+  //   if (audioBlob)
+  //     console.log("audio blob:" + audioBlob)
+  // }, [audioBlob])
+
+  // discard the recording when the discard button is clicked
   const discardRecording = () => {
     if (recorderMedia !== null) {
       recorderMedia.stop()
@@ -108,9 +115,7 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
 
   return (
     <div className="flex flex-col content-center justify-center w-full ">
-      {/* <button onClick={grantMic}>grant mic</button> */}
       <div className='relative flex flex-row justify-center w-full pt-16'>
-
         <div className="absolute z-5 w-72 h-72 -bottom-4 bg-[#86A7FC] border-4 border-[#6366F1] rounded-full">
           {/* Outer Circle Ring */}
         </div>
@@ -140,7 +145,7 @@ const Recorder = ({ setRecordedAudio, sendAudio, setSendAudio }) => {
         <motion.div
           initial={{ x: 0, y: -50 }}
           animate={{ x: hovered ? 190 : 0 }}
-          onClick={() => { setHovered(false), setButtonState('not speaking'), stopRecording(), setSendAudio(true) }}
+          onClick={() => { setHovered(false), setButtonState('not speaking'), stopRecording() }}
           draggable={false}
           className='absolute z-10 bottom-[6rem] rounded-full w-fit h-fit text-white select-none'>
           <img alt="accept button" srcSet="/accept-icon.svg" />

@@ -20,13 +20,19 @@ const DiffUse = ({ diffInput }) => {
   };
 
   useEffect(() => {
-    if (diffInput) {
+
+    if (diffInput && diffInput !== undefined) {
+      console.log("diffInput : "); console.log(diffInput)
       setCorrectText(diffInput.correct_sentence);
+      console.log("correct Sentence : "); console.log(diffInput.correct_sentence)
       setTranscribedText(diff.transcribedText);
+      console.log("wrong Sentence : "); console.log(diffInput.transcribedText)
       setPhoneme(diffInput.missing_phonemes);
+      console.log("missing phonemes : "); console.log(diffInput.phoneme)
 
       // Audio playing logic
-      const areTextsEqual = correctText === transcribedText;
+      const areTextsEqual = (correctText === transcribedText);
+      console.log("are texts equal: " + areTextsEqual)
       if (areTextsEqual) {
         playAudio('goed-gedaan.mp3');
       } else {

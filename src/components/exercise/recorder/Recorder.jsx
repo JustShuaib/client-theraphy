@@ -62,17 +62,21 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
 
   // start recording when the record button is clicked
   const startRecording = async () => {
-    // 
-    const mediaRecorder = new MediaRecorder(recording);
-    // should help make it locateable outside this startRecorder function
-    setRecorderMedia(mediaRecorder)
-    mediaRecorder.addEventListener('dataavailable', event => {
-      // stream audio into blob
-      const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
-      setAudioBlob(blob)
+    return new Promise((resolve) => {
+      const mediaRecorder = new MediaRecorder(recording);
+      setRecorderMedia(mediaRecorder);
+
+      mediaRecorder.addEventListener('dataavailable', event => {
+        const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
+        setAudioBlob(blob);
+      });
+
+      mediaRecorder.addEventListener('start', () => {
+        resolve(); // Resolve the Promise once recording starts
+      });
+
+      mediaRecorder.start();
     });
-    // start recording media
-    mediaRecorder.start();
   }
 
   // logic to send recorded audio
@@ -98,7 +102,7 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
       console.log("this is the recorded audio blob"); console.log(audioBlob)
     } else console.log("media is not ready")
   }, [stopped, audioBlob, sendAudio, setRecordedAudio])
-  
+
   // useEffect(() => {
   //   if (audioBlob)
   //     console.log("audio blob:" + audioBlob)
@@ -113,6 +117,16 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
       console.log('error deleting media')
   }
 
+  const handleClick = async () => {
+    if (buttonState === 'not speaking') {
+      setButtonState('speaking');
+      await startRecording();
+      setButtonState('finished speaking');
+    } else {
+      console.log('A user should be speaking, wait for them to finish');
+    }
+  };
+
   return (
     <div className="flex flex-col content-center justify-center w-full ">
       <div className='relative flex flex-row justify-center w-full pt-16'>
@@ -123,9 +137,7 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
         <motion.div
           initial={{ scale: 1 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            buttonState === 'not speaking' ? (setButtonState('speaking'), startRecording()) : (console.log('a user should be speaking, wait for him to finish'))
-          }}
+          onClick={handleClick}
           draggable={false}
           className='rounded-full z-20 w-64 h-64 bg-[#6366F1] flex flex-row justify-center content-center select-none'>
           <p className={`text-white m-auto text-5xl w-9/12 text-center`}>

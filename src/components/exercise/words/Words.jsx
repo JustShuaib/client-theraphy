@@ -23,7 +23,7 @@ const Words = ({ exerciseType }) => {
   // updates the current Exercise
   useEffect(() => {
     if (getResponseArray)
-      getResponseArray.map((item) => {
+      getResponseArray.forEach((item) => {
         if (currentExercise === item.id) {
           setExerciseName(item.name)
           // console.log(currentExercise)
@@ -97,35 +97,14 @@ const Words = ({ exerciseType }) => {
 
 
   // POST request to get diff
-  const sendPostRequest = async (adio) => {
-    console.log(adio)
-    // Create an audio context
-    // const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-    // // Create a FileReader to read the contents of the Blob
-    // const fileReader = new FileReader();
-
-    // fileReader.onload = async () => {
-    //   const arrayBuffer = fileReader.result;
-
-    // // Decode the arrayBuffer into an audio buffer
-    // const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    // const channel = audioBuffer.getChannelData(0)
-    // console.log("channel"); console.log(channel)
+  const sendPostRequest = async () => {
     try {
-
       const formData = new FormData();
       formData.append('name', exerciseName);
       formData.append('audio', recordedAudio, "generic.wav");
 
-      const boundary = '------WebKitFormBoundaryTuT1Rn4lqAJg8AyK'; // Use your actual boundary
-      const headers = {
-        'Content-Type': `multipart/form-data; boundary=${boundary}`,
-      };
-
       const response = await fetch('api/compare_sentences', {
         method: 'POST',
-        headers: headers,
         body: formData,
       });
 
@@ -133,23 +112,23 @@ const Words = ({ exerciseType }) => {
         throw new Error('Network response was not ok');
       }
 
-      // Handle the response as needed
       const responseData = await response.json();
-      setDiffInput(responseData)
-      console.log("this is the recorded audio on word:" + exerciseName + ": " + recordedAudio)
-      return responseData
+      setDiffInput(responseData);
+      console.log("this is the recorded audio on word:", exerciseName, ":", recordedAudio);
+      return responseData;
     } catch (error) {
       console.error('Error sending POST request:', error);
     }
-    // the bracket below should be commented out if not used.
-    // }
-    // // Read the contents of the Blob as an ArrayBuffer
-    // fileReader.readAsArrayBuffer(recordedAudio);
   };
 
-  const sendAudio = (adio) => {
-    const output = sendPostRequest(adio)
-    console.log("this is the output of the get diffInput function, this gets sent to backend: "); console.log(output)
+  const sendAudio = async () => {
+    try {
+      const output = await sendPostRequest()
+      setDiffInput(output)
+      console.log("this is the output of the get diffInput function, this gets sent to backend: "); console.log(output)
+    } catch (error) {
+      console.error('Error sending POST request:', error);
+    }
   }
 
   return (

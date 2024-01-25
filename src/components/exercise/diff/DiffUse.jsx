@@ -14,10 +14,7 @@ const DiffUse = ({ diffInput }) => {
     return <span key={index} style={{ color }}>{difference.value}</span>;
   });
 
-  const playAudio = (audioFile) => {
-    const audio = new Audio(audioFile);
-    audio.play();
-  };
+
 
   useEffect(() => {
     if (diffInput && diffInput !== undefined) {
@@ -25,20 +22,28 @@ const DiffUse = ({ diffInput }) => {
       setTranscribedText(diffInput.transcribed_sentence);
       setPhoneme(diffInput.missing_phonemes);
       console.log("missing phonemes : "); console.log(diffInput.missing_phonemes)
-
-      // Audio playing logic
-      const areTextsEqual = (correctText === transcribedText);
-      console.log("are texts equal: " + areTextsEqual)
-      if (correctText !== undefined) {
-        if (correctText === transcribedText) {
-          playAudio('goed-gedaan.mp3');
-        }
-        else {
-          playAudio('probeer-opnieuw.mp3');
-        }
-      }
     }
   }, [diffInput, correctText, transcribedText]);
+
+
+  useEffect(() => {
+    const playAudio = (audioFile) => {
+      const audio = new Audio(audioFile);
+      audio.play();
+    }
+    // Audio playing logic
+    const areTextsEqual = (correctText === transcribedText);
+    console.log("are texts equal: " + areTextsEqual)
+    if (correctText !== (undefined || null || "")) {
+      if (correctText === transcribedText) {
+        playAudio('goed-gedaan.mp3');
+      }
+      else {
+        playAudio('probeer-opnieuw.mp3');
+      }
+    }
+  }
+    , [correctText, transcribedText])
 
   return (
     <div className='pt-4 text-3xl'>
@@ -49,32 +54,31 @@ const DiffUse = ({ diffInput }) => {
           {correctText && correctText}
         </div>
       </div>
-      {
-        'wrong' && (
-          <div>
-            <div className="pl-6">
-              <h3 className="pb-4 text-3xl">Correcties:</h3>
-              <div className="px-4 text-lg bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
-                {/* {correct-sentences} */}
-                {highlightedText && highlightedText}
-              </div>
-              <div className="pt-4">
-                <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>
-                <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
-                  {/* missing phonemes*/}
-                  {phoneme &&
-                    phoneme.map((item) => {
-                      return (
-                        <div key={item.name + Math.random()}>
-                          {item}
-                        </div>
-                      )
-                    })}
-                </div>
-              </div>
+
+      <div>
+        <div className="pl-6">
+          <h3 className="pb-4 text-3xl">Correcties:</h3>
+          <div className="px-4 text-lg bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
+            {/* {correct-sentences} */}
+            {highlightedText && highlightedText}
+          </div>
+          <div className="pt-4">
+            <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>
+            <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
+              {/* missing phonemes*/}
+              {phoneme &&
+                phoneme.map((item) => {
+                  return (
+                    <div key={item.name + Math.random()}>
+                      {item}
+                    </div>
+                  )
+                })}
             </div>
           </div>
-        )}
+        </div>
+      </div>
+
     </div>
   );
 };

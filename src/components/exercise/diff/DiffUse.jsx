@@ -1,86 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
-import { diffWords } from 'diff';
-// import { diff } from 'semver';
+import SentenceComparison from './SentenceComarison';
 
-const DiffUse = ({ diffInput }) => {
-  const [correctText, setCorrectText] = useState('')
-  const [transcribedText, setTranscribedText] = useState('')
-  const [phoneme, setPhoneme] = useState('')
-  const differences = diffWords(correctText, transcribedText);
-
-  const highlightedText = differences.map((difference, index) => {
-    const color = difference.added ? 'red' : difference.removed ? '#00C55E' : '#00C55E';
-    return <span key={index} style={{ color }}>{difference.value}</span>;
-  });
-
-
-
-  useEffect(() => {
-    if (diffInput && diffInput !== undefined) {
-      setCorrectText(diffInput.correct_sentence);
-      setTranscribedText(diffInput.transcribed_sentence);
-      setPhoneme(diffInput.missing_phonemes);
-      console.log("missing phonemes : "); console.log(diffInput.missing_phonemes)
-    }
-  }, [diffInput, correctText, transcribedText]);
-
-
-  useEffect(() => {
-    const playAudio = (audioFile) => {
-      const audio = new Audio(audioFile);
-      audio.play();
-    }
-    // Audio playing logic
-    const areTextsEqual = (correctText === transcribedText);
-    console.log("are texts equal: " + areTextsEqual)
-    if (correctText !== (undefined || null || "")) {
-      if (correctText === transcribedText) {
-        playAudio('goed-gedaan.mp3');
-      }
-      else {
-        playAudio('probeer-opnieuw.mp3');
-      }
-    }
-  }
-    , [correctText, transcribedText])
+const DiffUse = ({diffInput}) => {
 
   return (
     <div className='pt-4 text-3xl'>
-      <div className="pt-4 pb-4 pl-6">
-        <h3 className="pb-4 text-3xl">Juiste woord/zin:</h3>
-        <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md min-h-6 min-w-64 w-fit">
-          {/* {correct-sentences} */}
-          {correctText && correctText}
-        </div>
-      </div>
-
-      <div>
-        <div className="pl-6">
-          <h3 className="pb-4 text-3xl">Correcties:</h3>
-          <div className="px-4 text-lg bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
-            {/* {correct-sentences} */}
-            {highlightedText && highlightedText}
-          </div>
-          <div className="pt-4">
-            <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>
-            <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
-              {/* missing phonemes*/}
-              {phoneme &&
-                phoneme.map((item) => {
-                  return (
-                    <div key={item.name + Math.random()}>
-                      {item}
-                    </div>
-                  )
-                })}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {diffInput=== undefined ?
+      " "
+      :
+      <SentenceComparison correctSentence={diffInput.correct_sentence} transcribedSentence={diffInput.transcribed_sentence} phoneme={diffInput.missing_phonemes} />
+    }
     </div>
   );
 };
+
+//to update all state from parent component in the child component, let's pass set state
 
 export default DiffUse;

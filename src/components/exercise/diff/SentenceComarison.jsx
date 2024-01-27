@@ -3,7 +3,7 @@
 
 import { useEffect } from "react";
 
-const SentenceComparison = ({ correctSentence, transcribedSentence, phoneme }) => {
+const SentenceComparison = ({ correctSentence, transcribedSentence }) => {
 
 
     useEffect(() => {
@@ -73,20 +73,20 @@ const SentenceComparison = ({ correctSentence, transcribedSentence, phoneme }) =
                             {/* {correct-sentences} */}
                             {comparedSentence && comparedSentence}
                         </div>
-                        <div className="pt-4">
+                        {/* <div className="pt-4">
                             <h3 className="pb-4 text-3xl">Ontbrekende fonemen:</h3>
-                            <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 ">
+                            <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md w-fit min-h-6 min-w-64 "> */}
                                 {/* missing phonemes*/}
-                                {phoneme &&
+                                {/* {phoneme &&
                                     phoneme.map((item) => {
                                         return (
                                             <div key={( Math.random())}>
                                                 {item}
                                             </div>
                                         )
-                                    })}
-                            </div>
-                        </div>
+                                    })} */}
+                            {/* </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* <div>{comparedSentence}</div> */}

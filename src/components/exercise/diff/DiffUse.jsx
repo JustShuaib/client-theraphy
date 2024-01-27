@@ -13,7 +13,7 @@ const DiffUse = ({diffInput}) => {
       {diffInput=== undefined ?
       " "
       :
-      <SentenceComparison correctSentence={diffInput.correct_sentence} transcribedSentence={diffInput.transcribed_sentence} phoneme={diffInput.missing_phonemes} />
+      <SentenceComparison correctSentence={diffInput.correct_sentence} transcribedSentence={diffInput.transcribed_sentence}/>
     }
     </div>
   );

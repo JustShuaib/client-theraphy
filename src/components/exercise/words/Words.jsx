@@ -97,11 +97,13 @@ const Words = ({ exerciseType }) => {
 
 
   // POST request to get diff
-  const sendPostRequest = async () => {
+  const sendPostRequest = async (audio) => {
+    // console.log("this log comes from the send post request fuction in words ")
+    // console.log(audio)
     try {
       const formData = new FormData();
       formData.append('name', exerciseName);
-      formData.append('audio', recordedAudio, "generic.wav");
+      formData.append('audio', audio, "generic.wav");
 
       const response = await fetch('api/compare_sentences', {
         method: 'POST',
@@ -121,11 +123,11 @@ const Words = ({ exerciseType }) => {
     }
   };
 
-  const sendAudio = async () => {
+  const sendAudio = async (audio) => {
     try {
-      const output = await sendPostRequest()
+      const output = await sendPostRequest(audio)
       setDiffInput(output)
-      console.log("this is the output of the get diffInput function, this gets sent to backend: "); console.log(output)
+      // console.log("this is the output of the get diffInput function, this gets sent to sentenceComparison: "); console.log(output)
     } catch (error) {
       console.error('Error sending POST request:', error);
     }
@@ -136,7 +138,7 @@ const Words = ({ exerciseType }) => {
       <Panel setExercise={setCurrentExercise} arrayResponse={getResponseArray} />
       <div className="w-5/6 px-12 py-4">
         <ExerciseAudio demoAudio={demoAudio} />
-        <Recorder setRecordedAudio={setRecordedAudio} sendAudio={sendAudio} />
+        <Recorder recordedAudio={recordedAudio} setRecordedAudio={setRecordedAudio} sendAudio={sendAudio} />
       </div>
       {/* test */}
       <div className="w-full h-full text-white bg-[#6366F1]">

@@ -12,11 +12,11 @@ const SentenceComparison = ({ correctSentence, transcribedSentence, phoneme }) =
             audio.play();
         }
         // Audio playing logic
-        const areTextsEqual = (correctSentence === transcribedSentence);
-        console.log("are texts equal: " + areTextsEqual)
+        // const areTextsEqual = (correctSentence === transcribedSentence);
+        // console.log("are texts equal: " + areTextsEqual)
         if (correctSentence !== (undefined || null || "")) {
-            console.log(correctSentence)
-           console.log(transcribedSentence)
+            // console.log(correctSentence)
+        //    console.log(transcribedSentence)
             if (correctSentence === transcribedSentence) {
                 playAudio('goed-gedaan.mp3');
             }
@@ -58,7 +58,7 @@ const SentenceComparison = ({ correctSentence, transcribedSentence, phoneme }) =
 
         return (
             <div>
-                {console.log(phoneme)}
+                {/* {console.log(phoneme)} */}
                 <div className="pt-4 pb-4 pl-6">
                     <h3 className="pb-4 text-3xl">Juiste woord/zin:</h3>
                     <div className="px-4 text-lg text-green-500 bg-gray-800 rounded-md min-h-6 min-w-64 w-fit">
@@ -80,7 +80,7 @@ const SentenceComparison = ({ correctSentence, transcribedSentence, phoneme }) =
                                 {phoneme &&
                                     phoneme.map((item) => {
                                         return (
-                                            <div key={item.name + Math.random()}>
+                                            <div key={( Math.random())}>
                                                 {item}
                                             </div>
                                         )

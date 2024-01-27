@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 import SentenceComparison from './SentenceComarison';
 
-const DiffUse = ({diffInput}) => {
+const DiffUse = () => {
+const diffInput = {
+  correct_sentence: "App is in the showboo",
+  transcribed_sentence: "App is in the boom",
+  missing_phonemes: ["oh", "yada", "yada"]
+}
 
   return (
     <div className='pt-4 text-3xl'>

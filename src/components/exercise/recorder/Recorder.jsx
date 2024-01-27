@@ -2,21 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-
-// logic
-// 3 step process
-// request for mic permission on page load and start stream - done
-// on button click, start listening to the audio stream and record to blob
-// on done, save blob
-
-// logic for with polyfill
-// 4 step process
-// check for mediarecorder support on page load.
-// request for mic permission and start stream
-// on button click, start listening to the audio stream and record to blob
-// on done, save blob
-
-const Recorder = ({ setRecordedAudio, sendAudio }) => {
+const Recorder = ({setRecordedAudio, sendAudio }) => {
   // Button State controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
@@ -24,6 +10,12 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
   const [recording, setRecording] = useState(null)
   const [recorderMedia, setRecorderMedia] = useState(null)
   const [audioBlob, setAudioBlob] = useState()
+
+  //  fix not sending audio on first try
+  // var using recorderMedia, Recording, and AudioBlob
+  // recording - is the stream of audio being listened to, it has no audio format
+  // RecorderMedia - is the stream of audio that is actually being recorded, it has no audio format, it is the same format as recording
+  // AudioBlob - is the blob version of recordermedia, it is in a .wav audio format
 
   const [stopped, setStopped] = useState()
   // recently added configuration for third-party polyfill library
@@ -79,15 +71,12 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
     });
   }
 
-  // logic to send recorded audio
-  // step 1: on click, stop audio recording
-  // step 2: once audio is stopped, trigger sendAudio function (send Audio)
-
   // stop recording when the check button is clicked
   const stopRecording = () => {
     if (recorderMedia !== null) {
       recorderMedia.stop();
       setStopped(true)
+      setRecordedAudio(audioBlob);
     }
     else {
       console.log('Recorder media is returning null')
@@ -96,17 +85,13 @@ const Recorder = ({ setRecordedAudio, sendAudio }) => {
 
   useEffect(() => {
     if (audioBlob && stopped) {
-      setRecordedAudio(audioBlob);
+      // sendAudio(audioBlob)
       sendAudio(audioBlob)
       setStopped(!stopped)
-      console.log("this is the recorded audio blob"); console.log(audioBlob)
-    } else console.log("media is not ready")
+      // console.log("this is the recorded audio blob"); console.log(audioBlob)
+    }
+    else console.log("media is not ready")
   }, [stopped, audioBlob, sendAudio, setRecordedAudio])
-
-  // useEffect(() => {
-  //   if (audioBlob)
-  //     console.log("audio blob:" + audioBlob)
-  // }, [audioBlob])
 
   // discard the recording when the discard button is clicked
   const discardRecording = () => {

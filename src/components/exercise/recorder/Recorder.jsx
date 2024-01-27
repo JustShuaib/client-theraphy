@@ -89,8 +89,7 @@ const Recorder = ({setRecordedAudio, sendAudio }) => {
       sendAudio(audioBlob)
       setStopped(!stopped)
       // console.log("this is the recorded audio blob"); console.log(audioBlob)
-    }
-    else console.log("media is not ready")
+    } else console.log("media is not ready")
   }, [stopped, audioBlob, sendAudio, setRecordedAudio])
 
   // discard the recording when the discard button is clicked

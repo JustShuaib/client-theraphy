@@ -52,36 +52,75 @@ const Recorder = ({setRecordedAudio, sendAudio }) => {
     grantMic()
   }, [])
 
+  // // start recording when the record button is clicked
+  // const startRecording = async () => {
+  //   return new Promise((resolve) => {
+  //     const mediaRecorder = new MediaRecorder(recording);
+  //     setRecorderMedia(mediaRecorder);
+
+  //     mediaRecorder.addEventListener('dataavailable', event => {
+  //       const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
+  //       setAudioBlob(blob);
+  //     });
+
+  //     mediaRecorder.addEventListener('start', () => {
+  //       resolve(); // Resolve the Promise once recording starts
+  //     });
+
+  //     mediaRecorder.start();
+  //   });
+  // }
+
+  // // stop recording when the check button is clicked
+  // const stopRecording = () => {
+  //   if (recorderMedia !== null) {
+  //     recorderMedia.stop();
+  //     setStopped(true)
+  //     setRecordedAudio(audioBlob);
+  //   }
+  //   else {
+  //     console.log('Recorder media is returning null')
+  //   }
+  // }
+
   // start recording when the record button is clicked
-  const startRecording = async () => {
-    return new Promise((resolve) => {
-      const mediaRecorder = new MediaRecorder(recording);
-      setRecorderMedia(mediaRecorder);
+const startRecording = async () => {
+  return new Promise((resolve) => {
+    const mediaRecorder = new MediaRecorder(recording);
+    setRecorderMedia(mediaRecorder);
 
-      mediaRecorder.addEventListener('dataavailable', event => {
-        const blob = new Blob([event.data], { type: 'audio/wav; codecs=opus' });
-        setAudioBlob(blob);
-      });
+    const chunks = [];
 
-      mediaRecorder.addEventListener('start', () => {
-        resolve(); // Resolve the Promise once recording starts
-      });
-
-      mediaRecorder.start();
+    mediaRecorder.addEventListener('dataavailable', event => {
+      if (event.data.size > 0) {
+        chunks.push(event.data);
+      }
     });
-  }
 
-  // stop recording when the check button is clicked
-  const stopRecording = () => {
-    if (recorderMedia !== null) {
-      recorderMedia.stop();
-      setStopped(true)
-      setRecordedAudio(audioBlob);
-    }
-    else {
-      console.log('Recorder media is returning null')
-    }
+    mediaRecorder.addEventListener('start', () => {
+      resolve(); // Resolve the Promise once recording starts
+    });
+
+    mediaRecorder.addEventListener('stop', () => {
+      const blob = new Blob(chunks, { type: 'audio/wav; codecs=opus' });
+      setAudioBlob(blob);
+    });
+
+    mediaRecorder.start();
+  });
+}
+
+// stop recording when the check button is clicked
+const stopRecording = async () => {
+  if (recorderMedia !== null) {
+    recorderMedia.stop();
+    await startRecording(); // Wait for startRecording to complete
+    setStopped(true);
+    setRecordedAudio(audioBlob);
+  } else {
+    console.log('Recorder media is returning null');
   }
+}
 
   useEffect(() => {
     if (audioBlob && stopped) {

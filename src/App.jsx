@@ -5,7 +5,7 @@ import { Landing } from './components/views/landing'
 
 function App() {
   return (
-    <div className='w-full max-w-[80rem] h-screen m-auto'>
+    <div className='w-full max-w-[80rem] h-screen m-auto bg-[#EBEDEF]'>
       <Landing />
       {/* <Onboarding /> */}
     </div>

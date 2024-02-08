@@ -4,9 +4,9 @@ import App from './App'
 import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Admin } from './components/views/Admin'
-import { Theme } from './components/views/admin/theme'
-import { EditTheme } from './components/views/admin/editTheme'
+import { Admin } from './views/admin'
+import { Theme } from './views/admin/theme'
+import { EditTheme } from './views/admin/editTheme'
 
 const router = createBrowserRouter([
   {

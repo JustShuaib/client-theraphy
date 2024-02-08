@@ -1,5 +1,5 @@
 import './App.css'
-import { Landing } from './components/views/landing'
+import { Landing } from './views/landing'
 // import Onboarding from './components/onboarding/Onboarding'
 // import { Admin } from './components/views/admin'
 

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+/* eslint-disable react/prop-types */
+// import { useState } from 'react';
 import { Steps } from 'antd';
 
-const TestSteps = () => {
-    const [current, setCurrent] = useState(0);
+const TestSteps = ({ current, setCurrent }) => {
+    // const [current, setCurrent] = useState(0);
 
     const onChange = (value) => {
         console.log('onChange:', value);

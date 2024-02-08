@@ -2,17 +2,20 @@ import { useRef, useState } from "react"
 import editImg from "./../../../assets/edit-3-svgrepo-com.svg"
 import TestSteps from "./testSteps";
 import { Divider } from 'antd';
+import FirstPane from "./FirstPane";
+import SecondPane from "./SecondPane";
+import ThirdPane from "./ThirdPane";
 
-import { Flex, Input } from 'antd';
-
-const { TextArea } = Input;
 
 const onChange = (e) => {
     console.log('Change:', e.target.value);
 };
 
+const views = [{ id: 1, element: <FirstPane onChange={onChange}/> }, { id: 2, element: <SecondPane /> }, { id: 3, element: <ThirdPane /> }]
+
 const EditTheme = () => {
     const [title, setTitle] = useState('')
+    const [current, setCurrent] = useState(0);
     const inputRef = useRef(null);
     const focusInput = () => {
         // Focus the input element when the button is clicked
@@ -36,24 +39,20 @@ const EditTheme = () => {
                 <Divider />
                 <div className="flex flex-row h-full ">
                     <div className="flex flex-col w-[70%] h-full ">
-                        <div className="flex flex-col h-[80%]">
-                            <h3>Template description</h3>
-                            <Flex vertical gap={32}>
-                                <TextArea
-                                    allowClear
-                                    showCount
-                                    maxLength={200}
-                                    onChange={onChange}
-                                    placeholder="This is a greeting exercise"
-                                    autoSize
-                                    style={{ height: 60, width: 280, resize: 'none' }} />
-                            </Flex>
+                        <div className="flex flex-col h-[70%]">
+                            {views.map((view) => {
+                                return (
+                                    (view.id) === current + 1 && (<div key={view.id} className="">{view.element}</div>)
+                                )
+                            })}
 
                         </div>
-                        <div className="flex uppercase place-self-end">next</div>
+                        <button
+                            onClick={() => setCurrent(current + 1)}
+                            className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit">next</button>
                     </div>
                     <div className="flex flex-col w-[30%]">
-                        <TestSteps />
+                        <TestSteps current={current} setCurrent={setCurrent} />
                     </div>
                 </div>
             </div>

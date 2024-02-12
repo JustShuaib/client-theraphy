@@ -1,6 +1,6 @@
-const SecondPane = () => {
+const SearchPane = () => {
     return (
-        <div className="grid w-full grid-cols-3 gap-5 overflow-y-scroll">
+        <div className="grid w-full grid-cols-3 gap-5 overflow-y-clipd">
             <div className="px-4 py-4 rounded-lg min-w-28 max-w-44 h-fit bg-gradient-to-br from-blue-300 to-blue-700">hhtht</div>
             <div className="px-4 py-4 rounded-lg min-w-28 max-w-44 h-fit bg-gradient-to-br from-blue-300 to-blue-700">hhtht</div>
             <div className="px-4 py-4 rounded-lg min-w-28 max-w-44 h-fit bg-gradient-to-br from-blue-300 to-blue-700">hhtht</div>
@@ -30,4 +30,4 @@ const SecondPane = () => {
     )
 }
 
-export default SecondPane
+export default SearchPane

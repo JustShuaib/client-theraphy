@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import userImg from "./../../assets/user-svgrepo-com.svg"
 import themeImg from "./../../assets/grid-plus-svgrepo-com.svg"
+import { motion } from "framer-motion"
+
 const Navbar = () => {
     return (
         <div className="flex flex-col h-screen px-4 pt-6 text-black bg-white min-w-60 max-w-60">
@@ -16,14 +18,18 @@ const Navbar = () => {
                 <Link
                     className="w-fit h-fit"
                     to='theme'>
-                    <button
+                    <motion.button
+                        initial={{ scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 1.05, x: 10 }}
+                        // onFocus={{ x: 10 }}
                         // onClick={setMode()}
                         className="flex flex-col justify-center w-full h-12 text-white bg-white rounded-md bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row justify-start pl-4 ">
+                        <button className="flex flex-row justify-start pl-4 ">
                             <img className="h-7 w-7" src={themeImg} alt="theme-icon" />
                             <p className="pl-2 text-lg font-semibold "> Theme  </p>
-                        </div>
-                    </button>
+                        </button>
+                    </motion.button>
                 </Link>
             </div>
         </div>

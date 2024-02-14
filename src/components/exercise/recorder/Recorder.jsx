@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 const Recorder = ({setRecordedAudio, sendAudio }) => {
+  const prevAudioBlobRef = useRef();
   // Button State controls what is displayed on the button
   const [buttonState, setButtonState] = useState('not speaking')
   const [hovered, setHovered] = useState(false)
@@ -123,12 +124,13 @@ const stopRecording = async () => {
 }
 
   useEffect(() => {
+    prevAudioBlobRef.current = audioBlob;
     if (audioBlob && stopped) {
       // sendAudio(audioBlob)
       sendAudio(audioBlob)
       setStopped(!stopped)
       // console.log("this is the recorded audio blob"); console.log(audioBlob)
-    } else console.log("media is not ready")
+    } else console.log("Previous audioBlob:", prevAudioBlobRef.current);
   }, [stopped, audioBlob, sendAudio, setRecordedAudio])
 
   // discard the recording when the discard button is clicked

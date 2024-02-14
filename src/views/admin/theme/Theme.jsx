@@ -24,13 +24,16 @@ const Theme = () => {
     console.log(error)
 
   return (
-    <div className="w-full h-screen pt-24 pl-8 mx-auto">
+    <div className="w-[80%] h-screen pt-24 pl-8 mx-auto">
+      <div>
+        {/* <h1>Themes</h1> */}
+      </div>
       <div className="grid grid-cols-3 gap-20">
         <button
           className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
           <Link to='/admin/theme/edit'>
             <div className="flex flex-row">
-              <div className="inline-block p-6 text-3xl font-semibold text-center">Create new theme <img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>
+              <div className="inline-block p-6 text-3xl font-semibold text-center">Nieuw thema maken <img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>
             </div>
           </Link>
         </button>
@@ -44,10 +47,12 @@ const Theme = () => {
           )
         })}
 
+        
+
         {/* <div className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
           <p className="p-6 text-3xl font-semibold text-center">Previous Theme 1</p>
-      </div> */}
-        {/* <div className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
+        </div>
+        <div className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
           <p className="p-6 text-3xl font-semibold text-center">Previous Theme 2</p>
         </div>
 

@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Admin />,
     children: [
       {
-        path: 'theme',
+        path: 'thema',
         element: <Theme />
       },
       {

@@ -14,12 +14,12 @@ body{
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #6366F1;
-
+  background-color: #EBEDEF;
+  
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: lightgrey;
+  background-color: #8D39D9;
   border-radius: 5px;
   padding-right: 2px;
 }

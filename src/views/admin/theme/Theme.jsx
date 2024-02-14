@@ -47,7 +47,7 @@ const Theme = () => {
           )
         })}
 
-        
+
 
         {/* <div className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
           <p className="p-6 text-3xl font-semibold text-center">Previous Theme 1</p>

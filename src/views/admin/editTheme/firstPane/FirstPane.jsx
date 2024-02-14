@@ -3,8 +3,7 @@ import { Divider } from 'antd';
 import { useRef } from 'react';
 import editImg from "./../../../../assets/edit-3-svgrepo-com.svg"
 import FirstPaneBody from './FirstPaneBody';
-
-
+import { useQuery } from '@tanstack/react-query';
 
 const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
     const inputRef = useRef(null);
@@ -12,6 +11,30 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
         // Focus the input element when the button is clicked
         inputRef.current.focus();
     }
+
+    const handleChange = async (e) => {
+        setTitle(e.target.value);
+        const boolean = await data;
+        !boolean ? alert('this name exists for antother template') : console.log('this name is available')
+    }
+
+    const { data, error } = useQuery({
+        queryKey: ['title'],
+        queryFn: async () => {
+            const response = await fetch('api/check_page_existence')
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
+            }
+            console.log(`response of check page existence`)
+            console.log(response)
+            const jsonResponse = await response.json();
+            console.log(`this is the used data, should be boolean(true or false): `)
+            console.log(jsonResponse)
+            return jsonResponse
+        }
+    })
+    if (error)
+        console.log(error)
 
     //this contains the title, divider and FirstPaneBody elements
     return (
@@ -23,9 +46,9 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
                         type="text"
                         placeholder="New Theme"
                         ref={inputRef}
-                        value={title} onChange={(e) => { setTitle(e.target.value) }} />
+                        value={title} onChange={(e) => { handleChange(e) }} />
                     <button
-                        onClick={setBlockCount(blockCount++)}>
+                        onClick={focusInput}>
                         <img draggable={false} className="inline-block w-5 h-5" src={editImg} alt="edit" />
                     </button>
                 </div>

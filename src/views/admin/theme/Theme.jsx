@@ -7,7 +7,7 @@ const Theme = () => {
   const { data, error } = useQuery({
     queryKey: ['templates'],
     queryFn: async () => {
-      const response = await fetch('api/fetch_all_pages')
+      const response = await fetch('/api/fetch_all_pages')
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }

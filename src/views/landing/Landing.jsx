@@ -1,25 +1,30 @@
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 
 export const Landing = () => {
   return (
-    <div className="w-full h-screen pt-12 pl-8 mx-auto bg-white">
+    <div className="w-full h-screen pt-12 pl-8 mx-auto bg-[#1F2937]">
       <div className="grid grid-cols-1 gap-20 mx-auto sm:grid-cols-3 ">
         <Link className="h-fit w-fit" to="/admin">
-          <button className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
+          <motion.button
+          whileHover={{scale: 1.05}}
+          whileTap={{scale: 0.9}}
+          
+          className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
             <p className="w-full p-6 text-3xl font-semibold text-end ">Client</p>
-          </button>
+          </motion.button>
         </Link>
 
         <Link className="h-fit w-fit" to="/admin">
-          <button className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-orange-300 to-orange-700">
+          <motion.button className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-orange-300 to-orange-700">
             <p className="w-full p-6 text-3xl font-semibold text-end">Therapist</p>
-          </button>
+          </motion.button>
         </Link>
 
         <Link className="h-fit w-fit" to="/admin">
-          <button className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
+          <motion.button className="flex flex-col w-[16rem] h-[4rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
             <p className="w-full p-6 text-3xl font-semibold text-end">Admin</p>
-          </button>
+          </motion.button>
         </Link>
 
       </div>

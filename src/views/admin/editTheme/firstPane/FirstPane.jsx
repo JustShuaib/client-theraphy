@@ -23,7 +23,7 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
     const { data, error } = useQuery({
         queryKey: ['title'],
         queryFn: async () => {
-            const response = await fetch('api/check_page_existence')
+            const response = await fetch('/api/check_page_existence')
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }

@@ -8,9 +8,10 @@ const FirstPaneBody = ({setCurrentBlock, blockCount, setBlockCount, current, set
 
     const generateBlocks = () => {
         
-        const handleClick = (i) => {
+        const handleClick = (i, current) => {
             setCurrent(current + 1)
             setCurrentBlock(i)
+            console.log(i)
         }
         
         const blocks = [];
@@ -18,7 +19,9 @@ const FirstPaneBody = ({setCurrentBlock, blockCount, setBlockCount, current, set
         for (let i = 1; i <= blockCount; i++) {
             blocks.push(
                 <button
-                    onClick={() => { handleClick(i) }}
+                    onClick={() => { 
+                        handleClick(i, current)
+                     }}
                     key={i} className="w-fit h-fit">
                     <BlockCard index={i} />
                 </button>
@@ -37,7 +40,7 @@ const FirstPaneBody = ({setCurrentBlock, blockCount, setBlockCount, current, set
         <div className='overflow-hidden'>
             <div className='relative flex flex-col'>
                 <div className='flex flex-col'>
-                    <h3 className="pb-2">Number of Exercise Blocks</h3>
+                    <h3 className="pb-2">Aantal Oefenblokken</h3>
                     <Flex vertical gap={32}>
                         <div className='flex flex-row'>
                             <TextArea

@@ -24,9 +24,9 @@ const Theme = () => {
     console.log(error)
 
   return (
-    <div className="w-[80%] h-screen pt-24 pl-8 mx-auto">
-      <div>
-        {/* <h1>Themes</h1> */}
+    <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
+      <div className="pb-12 ">
+        <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>Thema</h1>
       </div>
       <div className="grid grid-cols-3 gap-20">
         <button

@@ -54,7 +54,7 @@ const FirstPane = ({ title, setTitle, setCurrentBlock, current, setCurrent, bloc
                     <input
                         className={`text-4xl font-semibold text-${titleColor} w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
                         type="text"
-                        placeholder="New Theme"
+                        placeholder="Nieuw Thema"
                         ref={inputRef}
                         value={title} onChange={(e) => { handleChange(e) }} />
                     <button

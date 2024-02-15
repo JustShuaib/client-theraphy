@@ -28,7 +28,7 @@ const EditTheme = () => {
     //controls what view shows
     const views = [{
         id: 1,
-        element: <FirstPane title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />
+        element: <FirstPane title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} current={currentStep} setCurrent={setCurrentStep} setOnChange={onChange} />
     },
     {
         id: 2,
@@ -49,7 +49,7 @@ const EditTheme = () => {
                 })}
             </div>
             <div className="flex flex-col w-[30%] pl-4">
-                <TestSteps currentStep={currentStep} setCurrentStep={setCurrentStep} />
+                <TestSteps current={currentStep} setCurrent={setCurrentStep} />
                 <button
                     onClick={() => setCurrentStep(currentStep + 1)}
                     className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit">next</button>

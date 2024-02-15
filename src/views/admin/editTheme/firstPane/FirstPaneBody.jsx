@@ -3,15 +3,22 @@ import { Flex, Input } from 'antd';
 import BlockCard from '../BlockCard';
 
 const { TextArea } = Input;
-const FirstPaneBody = ({ blockCount, setBlockCount, current, setCurrent }) => {
+const FirstPaneBody = ({setCurrentBlock, blockCount, setBlockCount, current, setCurrent }) => {
+
 
     const generateBlocks = () => {
+        
+        const handleClick = (i) => {
+            setCurrent(current + 1)
+            setCurrentBlock(i)
+        }
+        
         const blocks = [];
 
         for (let i = 1; i <= blockCount; i++) {
             blocks.push(
                 <button
-                    onClick={() =>{ setCurrent(current+ 1)}}
+                    onClick={() => { handleClick(i) }}
                     key={i} className="w-fit h-fit">
                     <BlockCard index={i} />
                 </button>
@@ -37,7 +44,7 @@ const FirstPaneBody = ({ blockCount, setBlockCount, current, setCurrent }) => {
                                 allowClear
                                 maxLength={200}
                                 onChange={(e) => { setBlockCount(e.target.value) }}
-                                placeholder={5}
+                                placeholder='Enter a number'
                                 autoSize
                                 value={blockCount}
                                 style={{ height: 60, width: 200, resize: 'none' }} />
@@ -47,7 +54,7 @@ const FirstPaneBody = ({ blockCount, setBlockCount, current, setCurrent }) => {
                         </div>
                     </Flex>
                 </div>
-                <div>
+                <div className='w-full'>
                     {generateBlocks()}
                 </div>
             </div>

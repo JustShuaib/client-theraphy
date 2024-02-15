@@ -5,7 +5,7 @@ import editImg from "./../../../../assets/edit-3-svgrepo-com.svg"
 import FirstPaneBody from './FirstPaneBody';
 import { useQuery } from '@tanstack/react-query';
 
-const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
+const FirstPane = ({ title, setTitle, setCurrentBlock, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
     const inputRef = useRef(null);
     const [titleColor, setTitleColor] = useState()
 
@@ -47,8 +47,8 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
 
     //this contains the title, divider and FirstPaneBody elements
     return (
-        <div className="pt-12 h-full w-[70%]">
-            <div className="flex flex-col justify-start h-[20%]">
+        <div className="w-full h-full pt-12">
+            <div className="sticky top-0 flex flex-col justify-start h-[20%]">
                 <div className='flex flex-row'>
                     {/* thema title */}
                     <input
@@ -64,8 +64,8 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
                 </div>
                 <Divider />
             </div>
-            <div className='h-[80%]'>
-                <FirstPaneBody blockCount={blockCount} current={current} setCurrent={setCurrent} setBlockCount={setBlockCount} isOpen={isOpen} setIsOpen={setIsOpen} />
+            <div className='h-[80%] overflow-y-scroll'>
+                <FirstPaneBody setCurrentBlock={setCurrentBlock} blockCount={blockCount} current={current} setCurrent={setCurrent} setBlockCount={setBlockCount} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
         </div>
     )

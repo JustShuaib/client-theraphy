@@ -12,10 +12,15 @@ const onChange = (e) => {
 
 const EditTheme = () => {
     const [title, setTitle] = useState('')
-    // the current page showing
-    const [current, setCurrent] = useState(0);
+
+    // the current step showing
+    const [currentStep, setCurrentStep] = useState(0);
+
+    // the current block being handled
+    const [currentBlock, setCurrentBlock] = useState(0);
+
     // const [isOpen, setIsOpen] = useState(false)
-    const [blockCount, setBlockCount] = useState(0)
+    const [blockCount, setBlockCount] = useState('');
 
     // states that manage data
     // const [templateTitle, setTemplateTitle] = useState('')
@@ -23,11 +28,11 @@ const EditTheme = () => {
     //controls what view shows
     const views = [{
         id: 1,
-        element: <FirstPane title={title} setTitle={setTitle} blockCount={blockCount} setBlockCount={setBlockCount} current={current} setCurrent={setCurrent} setOnChange={onChange} />
+        element: <FirstPane title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />
     },
     {
         id: 2,
-        element: <SearchPane />
+        element: <SearchPane currentBlock={currentBlock} />
     },
     {
         id: 3,
@@ -39,14 +44,14 @@ const EditTheme = () => {
             <div className="flex flex-col w-[70%]">
                 {views.map((view) => {
                     return (
-                        (view.id) === current + 1 && (<div key={view.id} className="h-screen overflow-hidden overflow-y-scroll">{view.element}</div>)
+                        (view.id) === currentStep + 1 && (<div key={view.id} className="h-screen overflow-hidden ">{view.element}</div>)
                     )
                 })}
             </div>
             <div className="flex flex-col w-[30%] pl-4">
-                <TestSteps current={current} setCurrent={setCurrent} />
+                <TestSteps currentStep={currentStep} setCurrentStep={setCurrentStep} />
                 <button
-                    onClick={() => setCurrent(current + 1)}
+                    onClick={() => setCurrentStep(currentStep + 1)}
                     className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit">next</button>
             </ div>
         </div>

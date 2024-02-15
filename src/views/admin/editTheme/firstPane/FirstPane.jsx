@@ -14,8 +14,10 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
 
     const handleChange = async (e) => {
         setTitle(e.target.value);
-        const boolean = await data;
-        !boolean ? alert('this name exists for antother template') : console.log('this name is available')
+        setTimeout(async () => {
+            const boolean = await data;
+            boolean ? alert('this name already taken') : alert('this name is available')
+        }, 800)
     }
 
     const { data, error } = useQuery({

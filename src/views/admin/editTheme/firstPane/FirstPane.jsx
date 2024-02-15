@@ -1,23 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Divider } from 'antd';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import editImg from "./../../../../assets/edit-3-svgrepo-com.svg"
 import FirstPaneBody from './FirstPaneBody';
 import { useQuery } from '@tanstack/react-query';
 
 const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
     const inputRef = useRef(null);
+    const [titleColor, setTitleColor] = useState()
+
     const focusInput = () => {
         // Focus the input element when the button is clicked
         inputRef.current.focus();
-    }
-
-    const handleChange = async (e) => {
-        setTitle(e.target.value);
-        setTimeout(async () => {
-            const boolean = await data;
-            boolean ? alert('this name already taken') : alert('this name is available')
-        }, 800)
     }
 
     const { data, error } = useQuery({
@@ -30,21 +24,35 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
             console.log(`response of check page existence`)
             console.log(response)
             const jsonResponse = await response.json();
+            const match = jsonResponse.exists
             console.log(`this is the used data, should be boolean(true or false): `)
-            console.log(jsonResponse)
-            return jsonResponse
+            console.log(match)
+            return match
         }
     })
     if (error)
         console.log(error)
+
+    const handleChange = async (e) => {
+        setTitle(e.target.value);
+        setTimeout(async () => {
+            setTitleColor(await data ? 'red-500' : 'black')
+        }, 800)
+    }
+
+    useEffect(() => {
+        console.log('this is a check to see if titleColor is set ')
+        console.log(titleColor)
+    }, [titleColor])
 
     //this contains the title, divider and FirstPaneBody elements
     return (
         <div className="pt-12 h-full w-[70%]">
             <div className="flex flex-col justify-start h-[20%]">
                 <div className='flex flex-row'>
+                    {/* thema title */}
                     <input
-                        className="text-4xl font-semibold text-black w-[16rem] h-[3rem] bg-[#EBEDEF]  placeholder:text-black focus:outline-none"
+                        className={`text-4xl font-semibold text-${titleColor} w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
                         type="text"
                         placeholder="New Theme"
                         ref={inputRef}

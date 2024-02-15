@@ -19,7 +19,7 @@ const FirstPaneBody = ({ blockCount, setBlockCount, current, setCurrent }) => {
         }
 
         return (
-            <div className="relative grid w-full grid-cols-1 gap-5 pt-8 text-lg md:grid-cols-2 mx-auto overflow-y-scroll">
+            <div className="relative grid w-full grid-cols-1 gap-5 pt-8 mx-auto overflow-y-scroll text-lg md:grid-cols-2">
                 {blocks}
             </div>
         );

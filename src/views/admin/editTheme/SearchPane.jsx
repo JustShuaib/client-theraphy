@@ -30,12 +30,13 @@ const SearchPane = () => {
         // </div>
         <div>
             <BlockSlideShow />
+            <div className="overflow-x-scroll w-fit">
+            </div>
             <div className="h-[10%]">
-                <div className="overflow-x-scroll w-fit">
-                </div>
                 <SearchBar />
-                <div className="px-4 py-4 rounded-lg min-w-28 max-w-44 h-fit bg-gradient-to-br from-blue-300 to-blue-700">hhtht</div>
+                <div className="px-4 py-4 rounded-lg min-w-28 max-w-44 h-fit bg-gradient-to-br from-blue-300 to-blue-700">
 
+                </div>
             </div>
         </div>
     )

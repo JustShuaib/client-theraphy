@@ -36,7 +36,7 @@ const FirstPane = ({ title, setTitle, current, setCurrent, blockCount, setBlockC
     const handleChange = async (e) => {
         setTitle(e.target.value);
         setTimeout(async () => {
-            setTitleColor(await data ? 'red-500' : 'black')
+            setTitleColor(await data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
         }, 800)
     }
 

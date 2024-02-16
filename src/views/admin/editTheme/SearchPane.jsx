@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import BlockSlideShow from './BlockSlideShow';
 import SearchBar from './SearchBar';
-const SearchPane = () => {
+
+const SearchPane = ({ blockCount, currentBlock, setCurrentBlock }) => {
     return (
         <div>
-            <BlockSlideShow />
+            <BlockSlideShow blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} />
             <div className="overflow-x-scroll w-fit">
             </div>
             <div className="h-[10%]">

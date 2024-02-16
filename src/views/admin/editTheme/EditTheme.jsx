@@ -32,7 +32,7 @@ const EditTheme = () => {
     },
     {
         id: 2,
-        element: <SearchPane currentBlock={currentBlock} />
+        element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock}/>
     },
     {
         id: 3,

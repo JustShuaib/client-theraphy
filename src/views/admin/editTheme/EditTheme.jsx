@@ -48,7 +48,7 @@ const EditTheme = () => {
                     )
                 })}
             </div>
-            <div className="flex flex-col w-[30%] pl-4">
+            <div className="flex flex-col w-[30%] pl-4 my-auto">
                 <TestSteps current={currentStep} setCurrent={setCurrentStep} />
                 <button
                     onClick={() => setCurrentStep(currentStep + 1)}

@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Divider } from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import editImg from "./../../../../assets/edit-3-svgrepo-com.svg"
 import FirstPaneBody from './FirstPaneBody';
-import { useQuery } from '@tanstack/react-query';
 import SearchBar from '../SearchBar';
 import TitleInput from '../../../../components/titleInput/TitleInput';
 
@@ -15,7 +12,7 @@ const FirstPane = ({ title, setTitle, setCurrentBlock, current, setCurrent, bloc
     return (
         <div className="w-full h-full pt-12">
             <div className="sticky top-0 flex flex-col justify-start h-[20%]">
-                <TitleInput endpoint=''/>
+                <TitleInput title={title} setTitle={setTitle} endpoint=''/>
                 <Divider />
             </div>
             <div className='h-[80%]'>

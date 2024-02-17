@@ -1,41 +1,41 @@
 /* eslint-disable react/prop-types */
-import { Flex, Input } from 'antd';
-import BlockCard from '../BlockCard';
+// import { Flex, Input } from 'antd';
+// import BlockCard from '../BlockCard';
 import AudioPlayer from './AudioPlayer';
-import { useQuery } from '@tanstack/react-query';
 
-const { TextArea } = Input;
-const FirstPaneBody = ({ setCurrentBlock, blockCount, setBlockCount, current, setCurrent }) => {
+// const { TextArea } = Input;
 
+const FirstPaneBody = () => {
+    // setCurrentBlock, blockCount, setBlockCount, current, setCurrent
 
-    const generateBlocks = () => {
+    // const generateBlocks = () => {
 
-        const handleClick = (i, current) => {
-            setCurrent(current + 1)
-            setCurrentBlock(i)
-            console.log(i)
-        }
+    //     const handleClick = (i, current) => {
+    //         setCurrent(current + 1)
+    //         setCurrentBlock(i)
+    //         console.log(i)
+    //     }
 
-        const blocks = [];
+    //     const blocks = [];
 
-        for (let i = 1; i <= blockCount; i++) {
-            blocks.push(
-                <button
-                    onClick={() => {
-                        handleClick(i, current)
-                    }}
-                    key={i} className="w-fit h-fit">
-                    <BlockCard index={i} />
-                </button>
-            );
-        }
+    //     for (let i = 1; i <= blockCount; i++) {
+    //         blocks.push(
+    //             <button
+    //                 onClick={() => {
+    //                     handleClick(i, current)
+    //                 }}
+    //                 key={i} className="w-fit h-fit">
+    //                 <BlockCard index={i} />
+    //             </button>
+    //         );
+    //     }
 
-        return (
-            <div className="relative grid w-full grid-cols-1 gap-5 pt-8 mx-auto overflow-y-scroll text-lg md:grid-cols-2">
-                {blocks}
-            </div>
-        );
-    };
+    //     return (
+    //         <div className="relative grid w-full grid-cols-1 gap-5 pt-8 mx-auto overflow-y-scroll text-lg md:grid-cols-2">
+    //             {blocks}
+    //         </div>
+    //     );
+    // };
 
 
     return (

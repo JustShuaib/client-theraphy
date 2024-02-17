@@ -1,31 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react'
 import editImg from '../../assets/edit-3-svgrepo-com.svg'
+import axios from 'axios'
 
 const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
     const [titleColor, setTitleColor] = useState()
     const inputRef = useRef(null);
 
-
-    const { data, error } = useQuery({
-        queryKey: ['title'],
-        queryFn: async () => {
-            const response = await fetch(endpoint)
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-            console.log(`response of check page existence`)
-            console.log(response)
-            const jsonResponse = await response.json();
-            const match = jsonResponse.exists
-            console.log(`this is the used data, should be boolean(true or false): `)
-            console.log(match)
-            return match
-        }
+    const checkTitle = useMutation({
+        mutationFn: ((title) => {
+            return axios.post(endpoint, title)
+        })
     })
-    if (error)
-        console.log(error)
 
 
     const focusInput = () => {
@@ -33,18 +20,20 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
         inputRef.current.focus();
     }
 
-    const handleChange = async (e) => {
-        setTitle(e.target.value);
-        setTimeout(async () => {
-            setTitleColor(await data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
-        }, 800)
-    }
 
     useEffect(() => {
-        console.log('this is a check to see if titleColor is set ')
-        console.log(titleColor)
-    }, [titleColor])
-    
+        setTimeout(async () => {
+            checkTitle.mutate(title)
+            await checkTitle.isError && console.log(checkTitle.error.message)
+            setTitleColor(await checkTitle.data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
+        }, 800)
+    }, [title, checkTitle])
+
+    // useEffect(() => {
+    //     console.log('this is a check to see if titleColor is set ')
+    //     console.log(titleColor)
+    // }, [titleColor])
+
     return (
         <div className='flex flex-row'>
             {/* thema title */}
@@ -54,7 +43,7 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
                 type="text"
                 placeholder={placeholder}
                 ref={inputRef}
-                value={title} onChange={(e) => { handleChange(e) }} />
+                value={title} onChange={(e) => { setTitle(e.target.value) }} />
             <button
                 onClick={focusInput}>
                 <img draggable={false} className="inline-block w-5 h-5" src={editImg} alt="edit" />

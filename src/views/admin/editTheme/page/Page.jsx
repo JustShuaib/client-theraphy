@@ -3,6 +3,7 @@ import plusImg from "./../../../../assets/plus-square-svgrepo-com.svg"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react";
 import TitleInput from "../../../../components/titleInput/TitleInput";
+import { motion } from 'framer-motion'
 
 const Page = () => {
     const [themaName, setThemaName] = useState()
@@ -10,7 +11,7 @@ const Page = () => {
     const { data, error } = useQuery({
         queryKey: ['pages'],
         queryFn: async () => {
-            const response = await fetch('/api/fetch_theme_pages',{
+            const response = await fetch('/api/fetch_theme_pages', {
                 method: 'POST',
                 headers: ''
             })
@@ -40,7 +41,7 @@ const Page = () => {
                     className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
                     <Link to='/admin/thema/bladzijde/create'>
                         <div className="flex flex-row">
-                            <div className="inline-block p-6 text-2xl font-semibold text-center">Nieuwe pagina toevoegen<img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>
+                            <div className="inline-block p-6 text-2xl font-semibold text-center">Nieuwe pagina toevoegen <img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>
                         </div>
                     </Link>
                 </button>
@@ -53,6 +54,9 @@ const Page = () => {
                         </div>
                     )
                 })}
+                <motion.button className="absolute flex flex-col justify-center w-12 h-12 bg-purple-500 rounded-full right-12 bottom-12">
+                    <img className="mx-auto h-7 w-7" src="/save-svgrepo-com.svg" alt="" />
+                </motion.button>
             </div>
         </div>
     )

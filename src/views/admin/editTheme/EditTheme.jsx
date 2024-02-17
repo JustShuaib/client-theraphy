@@ -32,14 +32,14 @@ const EditTheme = () => {
     },
     {
         id: 2,
-        element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock}/>
+        element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} />
     },
     {
         id: 3,
         element: <ThirdPane />
     }
     ]
-    
+
     return (
         <div className="w-[80%] h-full pl-8 mx-auto flex flex-row">
             <div className="flex flex-col w-[70%]">

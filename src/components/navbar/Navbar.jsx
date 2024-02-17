@@ -5,9 +5,9 @@ import { motion } from "framer-motion"
 
 const Navbar = () => {
     return (
-        <div className="flex flex-col h-full px-4 pt-6 text-black bg-white w-[20%]">
+        <div className="flex flex-col h-full px-4 pt-6 text-white bg-[#1F2937] w-[20%] border-t">
             <div className="pb-6 text-xl font-semibold">logopediemateriaal</div>
-            <div className="flex flex-row justify-between gap-4 text-black bg-white content-baseline w-fit">
+            <div className="flex flex-row justify-between gap-4 text-white content-baseline w-fit">
                 <div className="w-12 h-12 rounded-full">
                     <img className="w-10 h-10 rounded-full" src={userImg} alt="user icon" />
                 </div>

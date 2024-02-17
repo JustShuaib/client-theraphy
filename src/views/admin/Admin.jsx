@@ -7,6 +7,7 @@ const Admin = () => {
 
     return (
         <div className="flex flex-row bg-[#EBEDEF] font-open-sans max-h-screen h-screen w-screen">
+            {/*  #CED4DA */}
             <Navbar />
             <Outlet />
         </div>

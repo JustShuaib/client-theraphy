@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom"
-import plusImg from "./../../../assets/plus-square-svgrepo-com.svg"
+import plusImg from "./../../../../assets/plus-square-svgrepo-com.svg"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react";
+import TitleInput from "../../../../components/titleInput/TitleInput";
 
 const Page = () => {
+    const [themaName, setThemaName] = useState()
 
     const { data, error } = useQuery({
         queryKey: ['pages'],
@@ -26,12 +29,12 @@ const Page = () => {
     return (
         <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
             <div className="pb-12 ">
-                <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>Thema</h1>
+                <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>bladzijde</h1>
             </div>
             <div className="grid grid-cols-3 gap-20">
                 <button
                     className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                    <Link to='/admin/theme/edit'>
+                    <Link to='/admin/thema/bladzijde/create'>
                         <div className="flex flex-row">
                             <div className="inline-block p-6 text-3xl font-semibold text-center">Nieuw thema maken <img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>
                         </div>

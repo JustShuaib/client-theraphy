@@ -39,6 +39,7 @@ const EditTheme = () => {
         element: <ThirdPane />
     }
     ]
+    
     return (
         <div className="w-[80%] h-full pl-8 mx-auto flex flex-row">
             <div className="flex flex-col w-[70%]">

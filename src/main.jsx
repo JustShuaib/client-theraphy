@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Admin } from './views/admin'
 import { Theme } from './views/admin/theme'
 import { EditTheme } from './views/admin/editTheme'
+import { Page } from './views/admin/editTheme/page'
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,12 @@ const router = createBrowserRouter([
       {
         path: 'thema',
         element: <Theme />
+      },{
+        path: 'thema/bladzijde',
+        element: <Page />
       },
       {
-        path: 'theme/edit',
+        path: 'thema/bladzijde/create',
         element: <EditTheme />
       }
     ]

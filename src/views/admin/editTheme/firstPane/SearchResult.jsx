@@ -7,6 +7,17 @@ const SearchResult = ({ audio, image, video }) => {
     const [selectAudio, setSelectAudio] = useState(true)
     const [selectVideo, setSelectVideo] = useState(true)
 
+    const options = {
+        1: Image_only,
+        2: audio only,
+        3: for video only,
+        4: for image and audio,
+        5: for image and video,
+        6: for audio and video,
+        7:  for image, audio and video.
+        
+    }
+
     return (
         <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
             <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
@@ -17,6 +28,7 @@ const SearchResult = ({ audio, image, video }) => {
                     </div>
                     <input
                         // onClick={}
+                        options={}
                         onChange={setSelectImage(!selectImage)}
                         checked={selectImage}
                         type="radio" name="" id="" />
@@ -24,6 +36,7 @@ const SearchResult = ({ audio, image, video }) => {
                 <div className='flex flex-col justify-center gap-4'>
                     <AudioPlayer audioSrc={audio} />
                     <input
+                        options={}
                         onChange={setSelectAudio(!selectAudio)}
                         checked={selectAudio}
                         type="radio" name="" id="" />
@@ -34,6 +47,7 @@ const SearchResult = ({ audio, image, video }) => {
                         <video className='absolute object-contain w-full h-full ' src={video}></video>
                     </div>
                     <input
+                    options={}
                         onChange={setSelectVideo(!selectVideo)}
                         checked={selectVideo}
                         type="radio" name="" id="" />

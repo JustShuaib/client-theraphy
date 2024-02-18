@@ -21,7 +21,7 @@ const FirstPane = ({ themeName, setCurrentBlock, current, setCurrent, blockCount
             </div>
             <div className='h-[80%]'>
                 <SearchBar searchResult={searchResult} setSearchResult={setSearchResult} />
-                <FirstPaneBody searchResult={searchResult} setSearchResult={setSearchResult} setCurrentBlock={setCurrentBlock} blockCount={blockCount} current={current} setCurrent={setCurrent} setBlockCount={setBlockCount} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <FirstPaneBody searchResult={searchResult} setCurrentBlock={setCurrentBlock} blockCount={blockCount} current={current} setCurrent={setCurrent} setBlockCount={setBlockCount} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
         </div>
     )

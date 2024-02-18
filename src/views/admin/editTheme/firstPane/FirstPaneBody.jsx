@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 // import { Flex, Input } from 'antd';
 // import BlockCard from '../BlockCard';
-import AudioPlayer from './AudioPlayer';
+// import AudioPlayer from './AudioPlayer';
+import SearchResult from './SearchResult';
 
 // const { TextArea } = Input;
 
@@ -62,87 +63,16 @@ const FirstPaneBody = () => {
                 {/* <div className='w-full'>
                     {generateBlocks()}
                 </div> */}
-                <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
-                    <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
-                    <div className='flex flex-row justify-between px-12'>
-                        <div className='w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='object-contain w-full h-full' src="" alt="" />
-                        </div>
-                        <AudioPlayer audioSrc={'s'} />
-                        <div className='flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='w-12' src="/play-svgrepo-com.svg" alt="audio svg" />
-
-                            <video className='absolute object-contain w-full h-full ' src="ee"></video>
-                        </div>
-                    </div>
-                </div>
-                <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
-                    <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
-                    <div className='flex flex-row justify-between px-12'>
-                        <div className='flex flex-col justify-center gap-4'>
-                            <div className='w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                                <img className='object-contain w-full h-full' src="" alt="" />
+                {
+                    SearchResult.map((search) => {
+                        return (
+                            <div key={search} className='w-fit h-fit'>
+                                <SearchResult sudio={search.audio} video={search.audio} image={search.image} />
                             </div>
-                            <input
-                                // onClick={}
-                                checked={true}
-                                type="radio" name="" id="" />
-                        </div>
-                        <div className='flex flex-col justify-center gap-4'>
-                            <AudioPlayer audioSrc={'s'} />
-                            <input type="radio" name="" id="" />
-                        </div>
-                        <div className='flex flex-col justify-center gap-4'>
-                            <div className='flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                                <img className='w-12' src="/play-svgrepo-com.svg" alt="audio svg" />
-
-                                <video className='absolute object-contain w-full h-full ' src="ee"></video>
-                            </div>
-                            <input type="radio" name="" id="" />
-                        </div>
-                    </div>
-                </div>
-                <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
-                    <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
-                    <div className='flex flex-row justify-between px-12'>
-                        <div className='w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='object-contain w-full h-full' src="" alt="" />
-                        </div>
-                        <AudioPlayer audioSrc={'s'} />
-                        <div className='flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='w-12' src="/play-svgrepo-com.svg" alt="audio svg" />
-
-                            <video className='absolute object-contain w-full h-full ' src="ee"></video>
-                        </div>
-                    </div>
-                </div>
-                <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
-                    <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
-                    <div className='flex flex-row justify-between px-12'>
-                        <div className='w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='object-contain w-full h-full' src="" alt="" />
-                        </div>
-                        <AudioPlayer audioSrc={'s'} />
-                        <div className='flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='w-12' src="/play-svgrepo-com.svg" alt="audio svg" />
-
-                            <video className='absolute object-contain w-full h-full ' src="ee"></video>
-                        </div>
-                    </div>
-                </div>
-                <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
-                    <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>
-                    <div className='flex flex-row justify-between px-12'>
-                        <div className='w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='object-contain w-full h-full' src="" alt="" />
-                        </div>
-                        <AudioPlayer audioSrc={'s'} />
-                        <div className='flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md'>
-                            <img className='w-12' src="/play-svgrepo-com.svg" alt="audio svg" />
-                            <video className='absolute object-contain w-full h-full ' src="ee"></video>
-                        </div>
-                    </div>
-                </div>
+                        )
+                    })
+                }
+                +
             </div>
         </div>
 

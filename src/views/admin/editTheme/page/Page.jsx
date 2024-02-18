@@ -4,11 +4,11 @@ import { useState } from "react";
 import TitleInput from "../../../../components/titleInput/TitleInput";
 import { motion } from 'framer-motion'
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Page = () => {
     const [themaName, setThemaName] = useState()
-
+    const navigate = useNavigate()
     const { data, error } = useQuery({
         queryKey: ['pages'],
         queryFn: async () => {
@@ -35,7 +35,8 @@ const Page = () => {
     const handleClick = async (themaName) => {
         const response = await savetheme.mutate({ 'theme_name': themaName })
         console.log(response)
-        response ? redirect('thema/bladzijde/create') : console.log('handleclick failed')
+        response===true ? navigate('/admin/thema/bladzijde/create', { state: themaName }) : console.log('handleclick failed')
+        
     }
 
     const savetheme = useMutation({

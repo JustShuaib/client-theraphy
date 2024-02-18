@@ -3,6 +3,7 @@ import TestSteps from "./testSteps";
 import FirstPane from "./firstPane/FirstPane";
 import SearchPane from "./SearchPane";
 import ThirdPane from "./ThirdPane";
+import { useLocation } from "react-router-dom";
 
 
 const onChange = (e) => {
@@ -11,6 +12,9 @@ const onChange = (e) => {
 
 
 const EditTheme = () => {
+    const {state} = useLocation()
+    const themeName = state;
+    
     const [title, setTitle] = useState('')
 
     // the current step showing
@@ -28,7 +32,7 @@ const EditTheme = () => {
     //controls what view shows
     const views = [{
         id: 1,
-        element: <FirstPane title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} current={currentStep} setCurrent={setCurrentStep} setOnChange={onChange} />
+        element: <FirstPane themeName={themeName} title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} current={currentStep} setCurrent={setCurrentStep} setOnChange={onChange} />
     },
     {
         id: 2,

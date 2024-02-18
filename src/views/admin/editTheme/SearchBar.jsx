@@ -31,7 +31,6 @@ const SearchBar = ({ searchResult, setSearchResult }) => {
         }
     })
 
-
     useEffect(() => {
         setSearchResult(data)
     }, [data, setSearchResult])
@@ -51,8 +50,8 @@ const SearchBar = ({ searchResult, setSearchResult }) => {
                     onSearch={onSearch}
                     style={{ width: '100%' }} />
             </div>
-            <div className='relative z-10 w-full overflow-y-scroll bg-white rounded-lg shadow-md h-36'>
-                {searchResult.map((searchResult) => {
+            <div className='relative z-10 w-full overflow-y-scroll bg-white rounded-lg shadow-md h-fit'>
+                {searchResult && searchResult.map((searchResult) => {
                     return (
                         <div key={searchResult} className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
                             <p className='text-lg font-semibold capitalize'>{searchResult}</p>

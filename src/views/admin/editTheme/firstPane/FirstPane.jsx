@@ -2,20 +2,21 @@
 import { Divider } from 'antd';
 import FirstPaneBody from './FirstPaneBody';
 import SearchBar from '../SearchBar';
-import TitleInput from '../../../../components/titleInput/TitleInput';
 import { useState } from 'react';
 
 
-const FirstPane = ({ title, setTitle, setCurrentBlock, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
+const FirstPane = ({ themeName, setCurrentBlock, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
 
-    const [searchResult, setSearchResult] = useState('')
+    const [searchResult, setSearchResult] = useState()
     // const [pickedSearchItems, setPickedSearchItems]
 
     //this contains the title, divider and FirstPaneBody elements
     return (
         <div className="w-full h-full pt-12">
             <div className="sticky top-0 flex flex-col justify-start h-[20%]">
-                <TitleInput title={title} setTitle={setTitle} endpoint='' />
+                <h3 className='text-4xl font-semibold text-${titleColor} w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none'>
+                    {themeName}
+                </h3>
                 <Divider />
             </div>
             <div className='h-[80%]'>
@@ -24,7 +25,6 @@ const FirstPane = ({ title, setTitle, setCurrentBlock, current, setCurrent, bloc
             </div>
         </div>
     )
-
 }
 
 export default FirstPane

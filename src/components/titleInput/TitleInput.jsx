@@ -6,6 +6,8 @@ import axios from 'axios'
 
 const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
     const [titleColor, setTitleColor] = useState()
+    const [prevText, setPrevText] = useState("");
+
     const inputRef = useRef(null);
 
     const checkTitle = useMutation({
@@ -14,25 +16,18 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
         })
     })
 
-
     const focusInput = () => {
-        // Focus the input element when the button is clicked
+        // Focus input element
         inputRef.current.focus();
     }
 
-
     useEffect(() => {
-        setTimeout(async () => {
-            checkTitle.mutate(title)
-            await checkTitle.isError && console.log(checkTitle.error.message)
-            setTitleColor(await checkTitle.data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
-        }, 800)
-    }, [title, checkTitle])
-
-    // useEffect(() => {
-    //     console.log('this is a check to see if titleColor is set ')
-    //     console.log(titleColor)
-    // }, [titleColor])
+        title !== prevText && (checkTitle.mutate({ theme_name: title }),
+            checkTitle.isError && console.log(checkTitle.error.message),
+            setTitleColor(checkTitle.data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
+        )
+        setPrevText(title)
+    }, [title, prevText, checkTitle,])
 
     return (
         <div className='flex flex-row'>

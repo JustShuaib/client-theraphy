@@ -70,11 +70,11 @@ const Page = () => {
                         </div>
                     )
                 })}
-                <motion.button
+                {/* <motion.button
                     whileTap={{ scale: 0.9 }}
                     className="absolute flex flex-col justify-center w-12 h-12 bg-purple-500 rounded-full right-12 bottom-12">
                     <img className="mx-auto h-7 w-7" src="/save-svgrepo-com.svg" alt="" />
-                </motion.button>
+                </motion.button> */}
             </div>
         </div>
     )

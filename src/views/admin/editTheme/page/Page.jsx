@@ -41,7 +41,7 @@ const Page = () => {
 
     const savetheme = useMutation({
         mutationFn: async (themaName) => {
-            const response = axios.post('/api/save_page', themaName)
+            const response = axios.post('/api/save_theme', themaName)
             return response.success
         }
     })

@@ -2,12 +2,11 @@
 import { useState } from "react";
 import AudioPlayer from "./AudioPlayer";
 
-const SearchResult = ({ audio, image, video, options }) => {
+const SearchResult = ({ audio, image, video }) => {
     const [selectImage, setSelectImage] = useState(true);
     const [selectAudio, setSelectAudio] = useState(true);
     const [selectVideo, setSelectVideo] = useState(true);
 
-    const [chosenOption, setChosenOption] = useState('')
 
     // Function to handle options based on selected media types
     const handleOptions = () => {
@@ -30,7 +29,12 @@ const SearchResult = ({ audio, image, video, options }) => {
                 return 'No media selected';
         }
     };
-
+    
+    // const handleInputChange = () => {
+    //     // Update the search item with the new options
+    //     updateSearchResult({ ...search, options: handleOptions() });
+    // };
+    
     return (
         <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
             <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>

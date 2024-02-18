@@ -67,7 +67,7 @@ const FirstPaneBody = ({ pickedSearch }) => {
                     pickedSearch && pickedSearch.map((search) => {
                         return (
                             <div key={search} className='w-fit h-fit'>
-                                <SearchResult sudio={search.audio} video={search.audio} image={search.image} />
+                                <SearchResult audio={search.audio} video={search.video} image={search.image} options={search.options} />
                             </div>
                         )
                     })

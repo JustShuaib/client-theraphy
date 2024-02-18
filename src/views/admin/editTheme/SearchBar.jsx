@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const { Search } = Input;
 
 
-const SearchBar = ({ searchResult, setSearchResult }) => {
+const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearch }) => {
     const [searchValue, setSearchValue] = useState('')
     const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -39,6 +39,10 @@ const SearchBar = ({ searchResult, setSearchResult }) => {
         console.log(error)
     }, [error])
 
+    const handleClick = (search) => {
+        //add to selected array
+        setPickedSearch(...pickedSearch, { name: search.name, table_name: search.table_name, options: '', audio: search.audio, image: search.image, video: search.video })
+    }
     return (
         <div className="relative w-full h-fit">
             <div className='z-40 w-full'>
@@ -51,14 +55,16 @@ const SearchBar = ({ searchResult, setSearchResult }) => {
                     style={{ width: '100%' }} />
             </div>
             <div className='relative z-10 w-full overflow-y-scroll bg-white rounded-lg shadow-md h-fit'>
-                {searchResult && searchResult.map((searchResult) => {
+                {searchResult && searchResult.map((search) => {
                     return (
-                        <div key={searchResult} className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
-                            <p className='text-lg font-semibold capitalize'>{searchResult}</p>
-                            {/* <div className='flex flex-col justify-end h-full'>
-                        <p className='text-sm opacity-55'> from family</p>
-                    </div> */}
-                        </div>
+                        <button
+                            onClick={() => handleClick(search)}
+                            key={search.name} className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
+                            <p className='text-lg font-semibold capitalize'>{search.name}</p>
+                            <div className='flex flex-col justify-end h-full'>
+                                <p className='text-sm opacity-55'> from {search.table_name}</p>
+                            </div>
+                        </button>
                     )
                 })}
 

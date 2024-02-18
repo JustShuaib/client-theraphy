@@ -6,7 +6,7 @@ import SearchResult from './SearchResult';
 
 // const { TextArea } = Input;
 
-const FirstPaneBody = ({ searchResult }) => {
+const FirstPaneBody = ({ pickedSearch }) => {
     // setCurrentBlock, blockCount, setBlockCount, current, setCurrent
 
     // const generateBlocks = () => {
@@ -64,7 +64,7 @@ const FirstPaneBody = ({ searchResult }) => {
                     {generateBlocks()}
                 </div> */}
                 {
-                    searchResult && searchResult.map((search) => {
+                    pickedSearch && pickedSearch.map((search) => {
                         return (
                             <div key={search} className='w-fit h-fit'>
                                 <SearchResult sudio={search.audio} video={search.audio} image={search.image} />

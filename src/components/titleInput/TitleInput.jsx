@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react'
-import editImg from '../../assets/edit-3-svgrepo-com.svg'
+// import editImg from '../../assets/edit-3-svgrepo-com.svg'
+import saveImg from '../../assets/save-svgrepo-com.svg'
 import axios from 'axios'
+import { motion } from 'framer-motion';
 
-const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
+const TitleInput = ({ title, setTitle, endpoint, placeholder, nameTaken, setNameTaken }) => {
     const [titleColor, setTitleColor] = useState()
     const [prevText, setPrevText] = useState("");
 
@@ -12,22 +14,33 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
 
     const checkTitle = useMutation({
         mutationFn: ((title) => {
-            return axios.post(endpoint, title)
+            const response = axios.post(endpoint, title)
+            const result = response.json()
+            return result.exists
         })
     })
 
-    const focusInput = () => {
-        // Focus input element
-        inputRef.current.focus();
-    }
+    // const focusInput = () => {
+    //     // Focus input element
+    //     inputRef.current.focus();
+    // }
+
+    const saveTheme = useMutation({
+        mutationFn: async (themaName) => {
+            const response = axios.post('/api/save_theme', themaName)
+            return response.success
+        }
+    })
 
     useEffect(() => {
-        title !== prevText && (checkTitle.mutate({ theme_name: title }),
+        title !== prevText && (
+            checkTitle.mutate({ theme_name: title }),
             checkTitle.isError && console.log(checkTitle.error.message),
+            checkTitle.data && setNameTaken(!nameTaken),
             setTitleColor(checkTitle.data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
         )
         setPrevText(title)
-    }, [title, prevText, checkTitle])
+    }, [title, prevText, checkTitle, setNameTaken, nameTaken])
 
     return (
         <div className='flex flex-row'>
@@ -39,10 +52,14 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
                 placeholder={placeholder}
                 ref={inputRef}
                 value={title} onChange={(e) => { setTitle(e.target.value) }} />
-            <button
-                onClick={focusInput}>
-                <img draggable={false} className="inline-block w-5 h-5" src={editImg} alt="edit" />
-            </button>
+            <motion.button
+                whileTap={{ scale: 0.95 }}
+                disabled={nameTaken}
+                onClick={() => saveTheme.mutate(title)}
+                className={`w-10 h-10 p-1 ${nameTaken ? 'bg-gray-500' : 'bg-purple-500'} rounded-lg`}
+            >
+                <img draggable={false} className="inline-block w-5 h-5" src={saveImg} alt="edit" />
+            </motion.button>
         </div>
     )
 }

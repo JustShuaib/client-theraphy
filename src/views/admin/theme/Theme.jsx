@@ -15,7 +15,7 @@ const Theme = () => {
       console.log(`this is the fetch template response`)
       console.log(response)
       const jsonResponse = await response.json();
-      const templates = jsonResponse.pages;
+      const templates = jsonResponse.themes;
       console.log(`this is the returned templates data: should be a list of strings`)
       console.log(templates)
       return templates

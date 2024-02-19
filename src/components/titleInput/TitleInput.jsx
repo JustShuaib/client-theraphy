@@ -27,7 +27,7 @@ const TitleInput = ({ title, setTitle, endpoint, placeholder }) => {
             setTitleColor(checkTitle.data ? ('red-500', console.log('name is unavailable')) : ('black', console.log('name is available ')))
         )
         setPrevText(title)
-    }, [title, prevText, checkTitle,])
+    }, [title, prevText, checkTitle])
 
     return (
         <div className='flex flex-row'>

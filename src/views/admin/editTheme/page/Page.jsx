@@ -11,39 +11,6 @@ const Page = () => {
     const [themaName, setThemaName] = useState("");
     const [nameTaken, setNameTaken] = useState(true);
 
-    // const { data, error } = useQuery({
-    //   queryKey: ["pages"],
-    //   queryFn: async () => {
-    //     const response = await fetch("/api/fetch_theme_pages", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ theme_name: themaName }),
-    //     });
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     console.log(`this is the fetch template response`);
-    //     console.log(response);
-    //     const jsonResponse = await response.json();
-    //     const templates = jsonResponse.pages;
-    //     console.log(
-    //       `this is the returned templates data: should be a list of strings`
-    //     );
-    //     console.log(templates);
-    //     return templates;
-    //   },
-    // });
-    // if (error) console.log(error);
-
-    // const handleClick = async (themaName) => {
-    //     const response = await savetheme.mutate({ 'theme_name': themaName })
-    //     console.log('this is the response from save theme')
-    //     console.log(response)
-    //     response === true ? navigate('/admin/thema/bladzijde/create', { state: themaName }) : console.log('handleclick failed')
-    // }
-
     const tapCheck = () => {
         return !nameTaken && { scale: 0.95 };
     };

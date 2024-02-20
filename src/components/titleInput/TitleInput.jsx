@@ -42,7 +42,7 @@ const TitleInput = ({
     title !== prevText &&
       (checkTitle.mutate({ theme_name: title }),
         checkTitle.isError && console.log(checkTitle.error.message),
-        checkTitle.data && setNameTaken(!nameTaken),
+        checkTitle.data && setNameTaken(checkTitle.data),
         setTitleColor(
           checkTitle.data
             ? (console.log("name is unavailable"))

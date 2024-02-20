@@ -24,6 +24,8 @@ const TitleInput = ({
     mutationFn: async (title) => {
       const response = await axios.post(endpoint, title);
       const result = await response.json();
+      console.log('this is check title exists response')
+      console.log(result.exists)
       return result.exists;
     },
   });
@@ -54,13 +56,13 @@ const TitleInput = ({
   useEffect(() => {
     title !== prevText &&
       (checkTitle.mutate({ theme_name: title }),
-      checkTitle.isError && console.log(checkTitle.error.message),
-      checkTitle.data && setNameTaken(!nameTaken),
-      setTitleColor(
-        checkTitle.data
-          ? ("red-500", console.log("name is unavailable"))
-          : ("black", console.log("name is available "))
-      ));
+        checkTitle.isError && console.log(checkTitle.error.message),
+        checkTitle.data && setNameTaken(checkTitle.data),
+        setTitleColor(
+          checkTitle.data
+            ? (console.log("name is unavailable"))
+            : (console.log("name is available "))
+        ));
     setPrevText(title);
   }, [title, prevText, checkTitle, setNameTaken, nameTaken]);
 

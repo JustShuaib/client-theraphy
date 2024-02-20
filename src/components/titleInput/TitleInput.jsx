@@ -13,7 +13,7 @@ const TitleInput = ({
   placeholder,
   nameTaken,
   setNameTaken,
-  setSavedTheme
+  setHasSavedTheme,
 }) => {
   const [titleColor, setTitleColor] = useState();
   const [prevText, setPrevText] = useState("");
@@ -32,17 +32,14 @@ const TitleInput = ({
 
   const saveTheme = useMutation({
     mutationFn: async (themaName) => {
-      const response = axios.post("/api/save_theme", themaName);
-      console.log('this is save theme success response')
-      console.log(response.success)
+      const response = await axios.post("/api/save_theme", themaName);
       return response.success;
     },
   });
 
-  const handleSave = async () => {
-    const saveState = await saveTheme.mutate(title)
-    setSavedTheme(saveState)
-  }
+  // ***** THIS WILL BE PROPERLY IMPLEMENTED WHEN CHECK WORKS FINE
+  // const hasSavedTheme = saveTheme.data;
+  // if (hasSavedTheme) setHasSavedTheme(true);
 
   useEffect(() => {
     title !== prevText &&
@@ -73,9 +70,13 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => { handleSave() }}
-        className={`w-10 h-10 p-1 ${nameTaken ? "bg-gray-500" : "bg-purple-500"
-          } rounded-lg`}
+        onClick={() => {
+          setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
+          saveTheme.mutate(title);
+        }}
+        className={`w-10 h-10 p-1 ${
+          nameTaken ? "bg-gray-500" : "bg-purple-500"
+        } rounded-lg`}
       >
         <img
           draggable={false}

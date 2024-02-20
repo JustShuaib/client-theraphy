@@ -22,7 +22,7 @@ const TitleInput = ({
 
   const checkTitle = useMutation({
     mutationFn: async (title) => {
-      const response = await axios.post(endpoint, title);
+      const response = await axios.post(endpoint, { theme_name: title });
       const result = await response.json();
       console.log('this is check title exists response')
       console.log(result.exists)
@@ -74,9 +74,8 @@ const TitleInput = ({
           setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
           saveTheme.mutate(title);
         }}
-        className={`w-10 h-10 p-1 ${
-          nameTaken ? "bg-gray-500" : "bg-purple-500"
-        } rounded-lg`}
+        className={`w-10 h-10 p-1 ${nameTaken ? "bg-gray-500" : "bg-purple-500"
+          } rounded-lg`}
       >
         <img
           draggable={false}

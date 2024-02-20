@@ -29,12 +29,12 @@ const SearchResult = ({ audio, image, video }) => {
                 return 'No media selected';
         }
     };
-    
+
     // const handleInputChange = () => {
     //     // Update the search item with the new options
     //     updateSearchResult({ ...search, options: handleOptions() });
     // };
-    
+
     return (
         <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
             <h3 className='w-full text-2xl font-semibold text-center'>Brother</h3>

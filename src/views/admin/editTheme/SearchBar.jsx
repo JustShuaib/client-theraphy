@@ -17,7 +17,7 @@ const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearc
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(searchValue),
+                body: JSON.stringify({ query: searchValue }),
             })
             if (!response.ok) {
                 throw new Error('Network response was not ok')

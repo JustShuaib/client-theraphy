@@ -29,15 +29,27 @@ const TitleInput = ({
   });
 
   const saveTheme = useMutation({
-    mutationFn: async (themaName) => {
-      const response = await axios.post("/api/save_theme", themaName);
-      return response.success;
+    mutationFn: async (themeName) => {
+      try {
+        const response = await axios.post(
+          "/api/save_theme",
+          { theme_name: themeName },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error saving theme:", error.message);
+        throw error; // Rethrow the error to mark the mutation as failed
+      }
     },
   });
 
-  // ***** THIS WILL BE PROPERLY IMPLEMENTED WHEN CHECK WORKS FINE
-  // const hasSavedTheme = saveTheme.data;
-  // if (hasSavedTheme) setHasSavedTheme(true);
+  const hasSavedTheme = saveTheme.data;
+  if (hasSavedTheme) setHasSavedTheme(true);
 
   useEffect(() => {
     title !== prevText &&
@@ -68,10 +80,7 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => {
-          setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
-          saveTheme.mutate(title);
-        }}
+        onClick={() => saveTheme.mutate(title)}
         className={`w-10 h-10 p-1 ${
           nameTaken ? "bg-gray-500" : "bg-purple-500"
         } rounded-lg`}

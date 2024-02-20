@@ -13,6 +13,7 @@ const TitleInput = ({
   placeholder,
   nameTaken,
   setNameTaken,
+  setSavedTheme
 }) => {
   const [titleColor, setTitleColor] = useState();
   const [prevText, setPrevText] = useState("");
@@ -37,6 +38,11 @@ const TitleInput = ({
       return response.success;
     },
   });
+
+  const handleSave = async () => {
+    const saveState = await saveTheme.mutate(title)
+    setSavedTheme(saveState)
+  }
 
   useEffect(() => {
     title !== prevText &&
@@ -67,7 +73,7 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => saveTheme.mutate(title)}
+        onClick={() => { handleSave() }}
         className={`w-10 h-10 p-1 ${nameTaken ? "bg-gray-500" : "bg-purple-500"
           } rounded-lg`}
       >

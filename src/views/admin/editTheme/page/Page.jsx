@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Page = () => {
   const navigate = useNavigate();
   const [themaName, setThemaName] = useState("");
+  const [hasSavedTheme, setHasSavedTheme] = useState(false);
   /* 🔥🔥 THIS WAS JUST ADDED TEMPORARILY TO PASS THE CHECK, LOOK INTO IT LATER🔥🔥 */
   const [nameTaken, setNameTaken] = useState(false);
 
@@ -45,14 +46,16 @@ const Page = () => {
   //     console.log(response)
   //     response === true ? navigate('/admin/thema/bladzijde/create', { state: themaName }) : console.log('handleclick failed')
   // }
+  // ***************************************
+  // const tapCheck = () => {
+  //   return !nameTaken && { scale: 0.95 };
+  // };
+  // const hoverCheck = () => {
+  //   return !nameTaken && { scale: 1.05 };
+  // };
+  // ******************************
 
-  const tapCheck = () => {
-    return !nameTaken && { scale: 0.95 };
-  };
-  const hoverCheck = () => {
-    return !nameTaken && { scale: 1.05 };
-  };
-  console.log({ nameTaken });
+  console.log({ hasSavedTheme });
   return (
     <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
       <div className="pb-12 ">
@@ -61,6 +64,7 @@ const Page = () => {
           setNameTaken={setNameTaken}
           title={themaName}
           setTitle={setThemaName}
+          setHasSavedTheme={setHasSavedTheme}
           endpoint="/api/check_theme_existence"
           placeholder="Nieuwe Thema"
         />
@@ -68,21 +72,22 @@ const Page = () => {
       </div>
       <div className="grid grid-cols-3 gap-20">
         <motion.button
-          whileTap={tapCheck}
-          whileHover={hoverCheck}
+          // whileTap={tapCheck}
+          // whileHover={hoverCheck}
+          disabled={hasSavedTheme ? false : true}
+          onClick={() => navigate("/admin/thema/bladzijde/create")}
           className={`flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br ${
-            !nameTaken
+            hasSavedTheme
               ? "from-purple-400 to-purple-700"
               : "from-gray-400 to-gray-700"
           } `}
         >
-          <motion.button
-            disabled={nameTaken}
-            onClick={() => navigate("/admin/thema/bladzijde/create")}
-            // onClick={() => { console.log('theme') }}
-            // to="/admin/thema/bladzijde/create"
+          <motion.span
+
+          // onClick={() => { console.log('theme') }}
+          // to="/admin/thema/bladzijde/create"
           >
-            <span aria-disabled={nameTaken} className="flex flex-row">
+            <span className="flex flex-row">
               <span className="inline-block p-6 text-2xl font-semibold text-center">
                 Nieuwe pagina toevoegen{" "}
                 <img
@@ -92,7 +97,7 @@ const Page = () => {
                 />
               </span>
             </span>
-          </motion.button>
+          </motion.span>
         </motion.button>
       </div>
     </div>

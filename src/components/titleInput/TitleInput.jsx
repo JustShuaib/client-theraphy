@@ -13,6 +13,7 @@ const TitleInput = ({
   placeholder,
   nameTaken,
   setNameTaken,
+  setHasSavedTheme,
 }) => {
   const [titleColor, setTitleColor] = useState();
   const [prevText, setPrevText] = useState("");
@@ -29,10 +30,14 @@ const TitleInput = ({
 
   const saveTheme = useMutation({
     mutationFn: async (themaName) => {
-      const response = axios.post("/api/save_theme", themaName);
+      const response = await axios.post("/api/save_theme", themaName);
       return response.success;
     },
   });
+
+  // ***** THIS WILL BE PROPERLY IMPLEMENTED WHEN CHECK WORKS FINE
+  // const hasSavedTheme = saveTheme.data;
+  // if (hasSavedTheme) setHasSavedTheme(true);
 
   useEffect(() => {
     title !== prevText &&
@@ -63,7 +68,10 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => saveTheme.mutate(title)}
+        onClick={() => {
+          setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
+          saveTheme.mutate(title);
+        }}
         className={`w-10 h-10 p-1 ${
           nameTaken ? "bg-gray-500" : "bg-purple-500"
         } rounded-lg`}

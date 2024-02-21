@@ -12,13 +12,15 @@ const ViewTheme = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const handleDelete = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: async () => {
-      const response = axios.post("/api/delete_theme", { id });
-      const status = response.json();
+      const response = await axios.post("/api/delete_theme", { id });
+      const status = await response.json();
+      console.log({ status });
       return status.success;
     },
     onSuccess: () => {
+      console.log("on success works");
       navigate("/admin/thema");
     },
   });
@@ -57,9 +59,9 @@ const ViewTheme = () => {
         </h1>
 
         <Button
-          loading={handleDelete.isPending}
+          loading={deleteMutation.isPending}
           icon={<MdDelete />}
-          onClick={() => handleDelete.mutate()}
+          onClick={() => deleteMutation.mutate()}
           type="primary"
           danger
         >

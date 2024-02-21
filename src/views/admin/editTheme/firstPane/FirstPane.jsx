@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import BlocksPage from '../blocks/BlocksPage';
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
 
@@ -15,6 +16,8 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
 
     const [cols, setCols] = useState()
     const [rows, setRows] = useState()
+
+    const navigation = useNavigate()
 
     const savePage = useMutation({
         mutationFn: async (pageData) => {
@@ -26,9 +29,10 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
 
     const handleSave = async () => {
         const response = await savePage()
-        const status = response.json()
-        return status.success
+        const status = await response.json()
+        status.success ? navigation(`/admin/theme/${themeName}`) : alert('save failed, try again.')
     }
+
     //controls what view shows
     const views = [{
         id: 1,

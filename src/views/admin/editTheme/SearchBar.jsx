@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Input } from 'antd';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 const { Search } = Input;
 
@@ -9,16 +10,9 @@ const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearc
     const [searchValue, setSearchValue] = useState('')
     const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-    const { data, error } = useQuery({
-        queryKey: ['search'],
-        queryFn: async () => {
-            const response = await fetch('api/dynamic_search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ query: searchValue }),
-            })
+    const searchMutate = useMutation({
+        mutationFn: async (searchValue) => {
+            const response = axios.post('/api/dynamic_search', searchValue)
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
@@ -32,12 +26,17 @@ const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearc
     })
 
     useEffect(() => {
-        setSearchResult(data)
-    }, [data, setSearchResult])
+        setSearchResult(searchMutate.data)
+    }, [searchMutate.data, setSearchResult])
 
     useEffect(() => {
-        console.log(error)
-    }, [error])
+        console.log(searchMutate.error)
+    }, [searchMutate.error])
+
+    const handleSearch = (search) => {
+        setSearchValue(search)
+        searchMutate.mutate({ query: searchValue })
+    }
 
     const handleClick = (search) => {
         //add to selected array
@@ -47,7 +46,7 @@ const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearc
         <div className="relative w-full h-fit">
             <div className='z-40 w-full'>
                 <Search
-                    onChange={(e) => { setSearchValue(e.target.value) }}
+                    onChange={(e) => { handleSearch(e.target.value) }}
                     value={searchValue}
                     placeholder="input search text"
                     allowClear

@@ -3,7 +3,7 @@ import { Input } from "antd";
 import { useEffect, useState } from "react";
 // import { motion } from "framer-motion";
 
-const BlocksPage = ({ setCols, setRows }) => {
+const BlocksPage = ({ pickedSearch, setCols, setRows }) => {
     const [rowNumber, setRowNumber] = useState('')
     const [colNumber, setColNumber] = useState('')
 
@@ -13,10 +13,7 @@ const BlocksPage = ({ setCols, setRows }) => {
     }, [rowNumber, colNumber, setCols, setRows])
 
     return (
-        <div className="flex flex-col w-full h-full px-8 pt-12">
-            <h3>
-                BlocksPage
-            </h3>
+        <div className="flex flex-col w-full h-full px-8 pt-4">
             <div className="flex flex-row gap-4">
                 <div className="flex flex-col gap-2">
                     <h3>Number of columns:</h3>
@@ -29,60 +26,19 @@ const BlocksPage = ({ setCols, setRows }) => {
             </div>
             <div className="flex flex-col overflow-scroll ">
                 <div className={`pt-8 grid grid-cols-[repeat(${colNumber},minmax(0,1fr))] grid-rows-[repeat(${rowNumber},minmax(0,1fr))]`}>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
-                    <div
-                        className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
-                        <div className="flex flex-row px-6 pb-2 overflow-hidden">
-                            Block Name
-                        </div>
-                    </div>
+                    {
+                        pickedSearch.map((search) => {
+                            return (
+                                <div
+                                    key={search.name}
+                                    className="mb-4 flex flex-col justify-end max-w-[6rem] w-fit h-[4rem]  rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700">
+                                    <div className="flex flex-row px-6 pb-2 overflow-hidden">
+                                        {search.name}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>

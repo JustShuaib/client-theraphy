@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import plusImg from "./../../../assets/plus-square-svgrepo-com.svg"
 import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 
 const Theme = () => {
+
+  const navigation = useNavigate()
 
   const { data, error } = useQuery({
     queryKey: ['thema'],
@@ -23,6 +25,10 @@ const Theme = () => {
   })
   if (error)
     console.log(error)
+
+  const handleClick = (template) => {
+    navigation(`/admin/thema/${template}`, { state: template })
+  }
 
   return (
     <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
@@ -44,9 +50,13 @@ const Theme = () => {
         {data !== (undefined) && data.map((template) => {
           const index = Math.random() * 1000
           return (
-            <div key={index} className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => { handleClick(template) }}
+              key={index} className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700">
               <p className="p-6 text-2xl font-semibold text-center">{template}</p>
-            </div>
+            </motion.button>
           )
         })}
       </div>

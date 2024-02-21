@@ -1,11 +1,8 @@
 import plusImg from "./../../../../assets/plus-square-svgrepo-com.svg";
-// import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import TitleInput from "../../../../components/titleInput/TitleInput";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
-// import { useNavigate } from "react-router-dom";
 
 const Page = () => {
     const [themaName, setThemaName] = useState("");
@@ -42,7 +39,7 @@ const Page = () => {
                         whileTap={tapCheck}
                         whileHover={hoverCheck}
                         disabled={savedTheme}
-                        onClick={() => { navigate("/admin/thema/bladzijde/create"); }}
+                        onClick={() => { navigate("/admin/thema/bladzijde/create", { state: themaName }); }}
                         className={`flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br ${!nameTaken ? 'from-purple-400 to-purple-700' : 'from-gray-400 to-gray-700'} `}>
                         <div className="flex flex-row">
                             <div className="inline-block p-6 text-2xl font-semibold text-center">Nieuwe pagina toevoegen <img className="inline-block w-10 h-10" src={plusImg} alt="plus icon" /></div>

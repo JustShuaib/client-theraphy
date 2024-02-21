@@ -44,7 +44,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
     },
     {
         id: 2,
-        element: <BlocksPage setCols={setCols} setRows={setRows} />
+        element: <BlocksPage pickedSearch={pickedSearch} setCols={setCols} setRows={setRows} />
         // element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} />
     }
     ]

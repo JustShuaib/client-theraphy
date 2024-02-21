@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 // import editImg from '../../assets/edit-3-svgrepo-com.svg'
 import saveImg from "../../assets/save-svgrepo-com.svg";
 import axios from "axios";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
+import { Button } from "antd";
 
 const TitleInput = ({
   title,
@@ -19,6 +20,7 @@ const TitleInput = ({
   const [prevText, setPrevText] = useState("");
 
   const inputRef = useRef(null);
+  const saveBtnRef = useRef(null);
 
   const checkTitle = useMutation({
     mutationFn: async (title) => {
@@ -46,10 +48,6 @@ const TitleInput = ({
             },
           }
         );
-        console.log({
-          "save theme func fired complete": true,
-          res: response.data,
-        });
         return response.data;
       } catch (error) {
         console.error("Error saving theme:", error.message);
@@ -59,12 +57,14 @@ const TitleInput = ({
   });
 
   const hasSavedTheme = saveTheme.data;
-  console.log({ "it ran": "has saved theme ran", hasSavedTheme });
-  if (hasSavedTheme) setHasSavedTheme(true);
+  if (hasSavedTheme) {
+    setHasSavedTheme(true);
+    if (saveBtnRef.current) {
+      saveBtnRef.current.disabled = true;
+    }
+  }
 
   const handleSave = (title) => {
-    console.log("clicked title is: ", title);
-    console.log("handle save clicked");
     setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
     saveTheme.mutate(title);
   };
@@ -136,9 +136,30 @@ const TitleInput = ({
         autoFocus
         onChange={(e) => setTitle(e.target.value)}
       />
-      <motion.button
+      <Button
+        loading={saveTheme.isPending}
+        icon={
+          <img
+            draggable={false}
+            className="inline-block w-5 h-5"
+            src={saveImg}
+            alt="edit"
+          />
+        }
+        disabled={nameTaken}
+        ref={saveBtnRef}
+        onClick={() => handleSave(title)}
+        style={{
+          width: "2.5rem",
+        }}
+        className={`custom-save-btn w-10 h-10 p-1 ${
+          nameTaken ? "bg-gray-500" : "bg-purple-500 hover:bg-red-300"
+        } rounded-lg`}
+      />
+      {/* <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
+        ref={saveBtnRef}
         onClick={() => handleSave(title)}
         className={`w-10 h-10 p-1 ${
           nameTaken ? "bg-gray-500" : "bg-purple-500"
@@ -150,7 +171,7 @@ const TitleInput = ({
           src={saveImg}
           alt="edit"
         />
-      </motion.button>
+      </motion.button> */}
     </div>
   );
 };

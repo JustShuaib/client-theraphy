@@ -13,8 +13,11 @@ const TitleInput = ({
   placeholder,
   nameTaken,
   setNameTaken,
+  savedTheme,
+  setSavedTheme,
   setHasSavedTheme,
 }) => {
+
   const [titleColor, setTitleColor] = useState();
   const [prevText, setPrevText] = useState("");
 
@@ -40,10 +43,18 @@ const TitleInput = ({
     },
   });
 
+
+  useEffect(() => {
+    saveTheme.data === 'success' && 
+  }, [saveTheme.data])
   // ***** THIS WILL BE PROPERLY IMPLEMENTED WHEN CHECK WORKS FINE
   // const hasSavedTheme = saveTheme.data;
   // if (hasSavedTheme) setHasSavedTheme(true);
 
+  const handleSave = (title) => {
+    setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
+    saveTheme.mutate(title);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -88,10 +99,7 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => {
-          setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
-          saveTheme.mutate(title);
-        }}
+        onClick={() => { handleSave(title) }}
         className={`w-10 h-10 p-1 ${nameTaken ? "bg-gray-500" : "bg-purple-500"
           } rounded-lg`}
       >

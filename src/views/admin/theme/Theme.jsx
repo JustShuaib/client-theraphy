@@ -54,10 +54,7 @@ const Theme = () => {
               key={template.id}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                // handleClick(template.theme_name);
-                navigate(template.id);
-              }}
+              onClick={() => navigate(String(template.id))}
               className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700"
             >
               <p className="p-6 text-2xl font-semibold text-center">

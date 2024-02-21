@@ -26,20 +26,20 @@ const router = createBrowserRouter([
         element: <Theme />,
       },
       {
-        path: "thema/bladzijde",
-        element: <Page />,
-      },
-      {
-        path: "thema/bladzijde/create",
-        element: <EditTheme />,
-      },
-      {
         path: "thema/:id",
         element: <ViewTheme />,
       },
       {
         path: "thema/:id/:slug",
         element: <ViewPage />,
+      },
+      {
+        path: "thema/bladzijde",
+        element: <Page />,
+      },
+      {
+        path: "thema/bladzijde/create",
+        element: <EditTheme />,
       },
     ],
   },

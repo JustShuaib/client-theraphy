@@ -105,7 +105,7 @@ const ViewTheme = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                navigate(`/admin/thema/${page.id}`);
+                navigate("/admin/thema/bladzijde/create");
               }}
               className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700"
             >

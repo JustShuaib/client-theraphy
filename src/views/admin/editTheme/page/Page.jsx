@@ -18,6 +18,7 @@ const Page = () => {
         return !nameTaken && { scale: 1.05 };
     };
     console.log({ nameTaken });
+
     return (
         <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
             <div className="pb-12 ">

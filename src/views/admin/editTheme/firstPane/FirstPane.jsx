@@ -5,10 +5,11 @@ import SearchBar from '../SearchBar';
 import { useState } from 'react';
 
 
-const FirstPane = ({ themeName, setCurrentBlock, current, setCurrent, blockCount, setBlockCount, isOpen, setIsOpen }) => {
+const FirstPane = ({ themeName }) => {
 
     const [searchResult, setSearchResult] = useState([])
     const [pickedSearch, setPickedSearch] = useState([])
+
 
     //this contains the title, divider and FirstPaneBody elements
     return (
@@ -21,11 +22,11 @@ const FirstPane = ({ themeName, setCurrentBlock, current, setCurrent, blockCount
                 <Divider />
             </div>
             <div className='h-[80%]'>
-                <FirstPaneBody pickedSearch={pickedSearch} setCurrentBlock={setCurrentBlock} blockCount={blockCount} current={current} setCurrent={setCurrent} setBlockCount={setBlockCount} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <FirstPaneBody pickedSearch={pickedSearch} setPickedSearch={setPickedSearch} />
             </div>
         </div>
     )
 }
-// this component embodies the searh bar and search results
+// this component embodies the search bar and search results
 
 export default FirstPane

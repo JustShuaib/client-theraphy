@@ -67,32 +67,6 @@ const SearchBar = ({ searchResult, setSearchResult, pickedSearch, setPickedSearc
                         </button>
                     )
                 })}
-
-                {/* <div className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
-                    <p className='text-lg font-semibold capitalize'>brother</p>
-                    <div className='flex flex-col justify-end h-full'>
-                        <p className='text-sm opacity-55'> from family</p>
-                    </div>
-                </div>
-                <div className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
-                    <p className='text-lg font-semibold capitalize'>brother</p>
-                    <div className='flex flex-col justify-end h-full'>
-                        <p className='text-sm opacity-55'> from family</p>
-                    </div>
-                </div>
-                <div className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
-                    <p className='text-lg font-semibold capitalize'>brother</p>
-                    <div className='flex flex-col justify-end h-full'>
-                        <p className='text-sm opacity-55'> from family</p>
-                    </div>
-                </div>
-                <div className='flex flex-row items-center justify-between w-full h-10 px-2 border-b-2'>
-                    <p className='text-lg font-semibold capitalize'>brother</p>
-                    <div className='flex flex-col justify-end h-full'>
-                        <p className='text-sm opacity-55'> from family</p>
-                    </div>
-                </div> */}
-
             </div>
             {/* <div className='flex flex-row w-full h-8 pl-4 bg-white rounded-lg'>
                 <input className='w-[95%] focus:outline-none rounded-lg' type="text" name="" id="" />

@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AudioPlayer from "./AudioPlayer";
 
-const SearchResult = ({ audio, image, video }) => {
+const SearchResult = ({ name, audio, image, video, handleOption }) => {
     const [selectImage, setSelectImage] = useState(true);
     const [selectAudio, setSelectAudio] = useState(true);
     const [selectVideo, setSelectVideo] = useState(true);
 
-
+    const [optionSum, setOptionSum] = useState(0)
     // Function to handle options based on selected media types
     const handleOptions = () => {
         // Determine the combination of selected media types
@@ -30,10 +30,35 @@ const SearchResult = ({ audio, image, video }) => {
         }
     };
 
-    // const handleInputChange = () => {
-    //     // Update the search item with the new options
-    //     updateSearchResult({ ...search, options: handleOptions() });
-    // };
+    useEffect(() => {
+        if (optionSum === 2) {
+            handleOption(1, name)
+        } else if (optionSum === 6) {
+            handleOption(2, name)
+        } else if (optionSum === 9) {
+            handleOption(3, name)
+        } else if (optionSum === 8) {
+            handleOption(4, name)
+        } else if (optionSum === 11) {
+            handleOption(5, name)
+        } else if (optionSum === 15) {
+            handleOption(6, name)
+        } else if (optionSum === 17) {
+            handleOption(7, name)
+        }
+    }, [optionSum])
+
+    useEffect(() => [
+        selectAudio ? setOptionSum((prevValue) => { prevValue + 2 }) : setOptionSum((prevValue) => { prevValue - 2 })
+    ], [selectAudio])
+
+    useEffect(() => [
+        selectImage ? setOptionSum((prevValue) => { prevValue + 2 }) : setOptionSum((prevValue) => { prevValue - 2 })
+    ], [selectImage])
+
+    useEffect(() => [
+        selectVideo ? setOptionSum((prevValue) => { prevValue + 2 }) : setOptionSum((prevValue) => { prevValue - 2 })
+    ], [selectVideo])
 
     return (
         <div className='w-full py-8 bg-purple-500 rounded-lg h-fit'>
@@ -44,6 +69,7 @@ const SearchResult = ({ audio, image, video }) => {
                         <img className='object-contain w-full h-full' src={image} alt="" />
                     </div>
                     <input
+                        value={2}
                         onChange={() => setSelectImage(!selectImage)}
                         checked={selectImage}
                         type="checkbox" />
@@ -51,6 +77,7 @@ const SearchResult = ({ audio, image, video }) => {
                 <div className='flex flex-col justify-center gap-4'>
                     <AudioPlayer audioSrc={audio} />
                     <input
+                        value={6}
                         onChange={() => setSelectAudio(!selectAudio)}
                         checked={selectAudio}
                         type="checkbox" />
@@ -61,12 +88,13 @@ const SearchResult = ({ audio, image, video }) => {
                         <video className='absolute object-contain w-full h-full ' src={video}></video>
                     </div>
                     <input
+                        value={9}
                         onChange={() => setSelectVideo(!selectVideo)}
                         checked={selectVideo}
                         type="checkbox" />
                 </div>
             </div>
-            <div>{handleOptions()}</div>
+            <div className="flex flex-row justify-center w-full">{handleOptions()}</div>
         </div>
     )
 };

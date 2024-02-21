@@ -8,6 +8,8 @@ import { Admin } from './views/admin'
 import { Theme } from './views/admin/theme'
 import { EditTheme } from './views/admin/editTheme'
 import { Page } from './views/admin/editTheme/page'
+import ViewTheme from './views/admin/viewTheme/ViewTheme'
+// import BlocksPage from './views/admin/editTheme/blocks/BlocksPage'
 
 const router = createBrowserRouter([
   {
@@ -21,14 +23,18 @@ const router = createBrowserRouter([
       {
         path: 'thema',
         element: <Theme />
-      },{
+      }, {
         path: 'thema/bladzijde',
         element: <Page />
       },
       {
         path: 'thema/bladzijde/create',
         element: <EditTheme />
-      }
+      },
+      {
+        path: 'thema/:id',
+        element: <ViewTheme />
+      },
     ]
   },
 ])

@@ -1,22 +1,18 @@
 import { useState } from "react"
-import TestSteps from "./testSteps";
 import FirstPane from "./firstPane/FirstPane";
-import SearchPane from "./SearchPane";
-import ThirdPane from "./ThirdPane";
+// import SearchPane from "./SearchPane";
+// import ThirdPane from "./ThirdPane";
 import { useLocation } from "react-router-dom";
-
 
 const onChange = (e) => {
     console.log('Change:', e.target.value);
 };
 
-
 const EditTheme = () => {
-    const {state} = useLocation()
+    const { state } = useLocation()
     const themeName = state;
-    
-    const [title, setTitle] = useState('')
 
+    const [pageTitle, setPageTitle] = useState('')
     // the current step showing
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -26,39 +22,22 @@ const EditTheme = () => {
     // const [isOpen, setIsOpen] = useState(false)
     const [blockCount, setBlockCount] = useState('');
 
-    // states that manage data
-    // const [templateTitle, setTemplateTitle] = useState('')
-
-    //controls what view shows
-    const views = [{
-        id: 1,
-        element: <FirstPane themeName={themeName} title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} current={currentStep} setCurrent={setCurrentStep} setOnChange={onChange} />
-    },
-    {
-        id: 2,
-        element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} />
-    },
-    {
-        id: 3,
-        element: <ThirdPane />
-    }
-    ]
-
     return (
-        <div className="w-[80%] h-full pl-8 mx-auto flex flex-row">
-            <div className="flex flex-col w-[70%]">
-                {views.map((view) => {
-                    return (
-                        (view.id) === currentStep + 1 && (<div key={view.id} className="h-screen overflow-hidden ">{view.element}</div>)
-                    )
-                })}
+        <div className="flex flex-col w-screen h-full mx-auto overflow-hidden">
+            <div className='flex flex-row px-12 pt-20'>
+                <h3 className='text-4xl pt-4 font-semibold text-${titleColor} w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none'>
+                        {themeName}
+                    </h3>
+                <input
+                    className={`text-4xl font-semibold text-black w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
+                    type="text"
+                    placeholder={'New Page'}
+                    value={pageTitle}
+                    autoFocus
+                    onChange={(e) => setPageTitle(e.target.value)}
+                />
             </div>
-            <div className="flex flex-col w-[30%] pl-4 my-auto">
-                <TestSteps current={currentStep} setCurrent={setCurrentStep} />
-                <button
-                    onClick={() => setCurrentStep(currentStep + 1)}
-                    className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit">next</button>
-            </ div>
+            <FirstPane themeName={themeName} pageTitle={pageTitle} setPageTitle={setPageTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />
         </div>
     )
 }

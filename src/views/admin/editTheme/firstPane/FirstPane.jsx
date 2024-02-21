@@ -30,7 +30,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
     const handleSave = async () => {
         const response = await savePage()
         const status = await response.json()
-        status.success ? navigation(`/admin/theme/${themeName}`) : alert('save failed, try again.')
+        status.success ? navigation(`/admin/thema/${themeName}`) : alert('save failed, try again.')
     }
 
     //controls what view shows

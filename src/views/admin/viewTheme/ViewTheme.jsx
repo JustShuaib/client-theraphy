@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import plusImg from "./../../../assets/plus-square-svgrepo-com.svg";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -7,11 +6,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import ErrorMessage from "../../../components/ErrorMessage";
 
-const Theme = () => {
-  const { state } = useLocation();
+const ViewTheme = () => {
   const navigation = useNavigate();
   const { id } = useParams();
+  console.log({ id });
 
+  const handleDelete = useMutation({
+    mutationFn: async () => {
+      const response = axios.post("/api/delete_theme", id);
+      const status = response.json();
+      return status.success;
+    },
+  });
   const { data, isLoading, error } = useQuery({
     queryKey: ["thema"],
     queryFn: async () => {
@@ -32,15 +38,8 @@ const Theme = () => {
       };
     },
   });
-  if (error) console.log(error);
+  console.log({ data });
 
-  const handleDelete = useMutation({
-    mutationFn: async () => {
-      const response = axios.post("/api/delete_theme", id);
-      const status = response.json();
-      return status.success;
-    },
-  });
   if (isLoading) return <Loader />;
   if (error) return <ErrorMessage />;
   return (
@@ -83,13 +82,13 @@ const Theme = () => {
             {data.themeName} currently does not have a page.
           </p>
         ) : (
-          data.pages.map((page) => (
+          data.pages?.map((page) => (
             <motion.button
               key={page.id}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                navigation(`/admin/thema/${state}`);
+                navigation(`/admin/thema/${page.id}`);
               }}
               className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700"
             >
@@ -104,4 +103,4 @@ const Theme = () => {
   );
 };
 
-export default Theme;
+export default ViewTheme;

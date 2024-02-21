@@ -2,11 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import plusImg from "./../../../assets/plus-square-svgrepo-com.svg";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import Loader from "../../../components/Loader";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 const Theme = () => {
   const navigate = useNavigate();
 
-  const { data, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["thema"],
     queryFn: async () => {
       const response = await fetch("/api/fetch_all_themes");
@@ -17,14 +19,13 @@ const Theme = () => {
       return jsonResponse.themes;
     },
   });
-  if (error) console.log(error);
 
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorMessage />;
   return (
     <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
       <div className="pb-12 ">
-        <h1
-          className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
-        >
+        <h1 className="text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none">
           Thema
         </h1>
       </div>
@@ -47,7 +48,6 @@ const Theme = () => {
             </div>
           </Link>
         </motion.button>
-
         {data?.length > 0 &&
           data.map((template) => (
             <motion.button

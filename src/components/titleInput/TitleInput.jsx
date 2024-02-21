@@ -13,8 +13,6 @@ const TitleInput = ({
   placeholder,
   nameTaken,
   setNameTaken,
-  savedTheme,
-  setSavedTheme,
   setHasSavedTheme,
 }) => {
 
@@ -44,9 +42,6 @@ const TitleInput = ({
   });
 
 
-  useEffect(() => {
-    saveTheme.data === 'success' && 
-  }, [saveTheme.data])
   // ***** THIS WILL BE PROPERLY IMPLEMENTED WHEN CHECK WORKS FINE
   // const hasSavedTheme = saveTheme.data;
   // if (hasSavedTheme) setHasSavedTheme(true);

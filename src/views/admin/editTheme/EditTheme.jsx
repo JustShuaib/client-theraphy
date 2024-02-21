@@ -1,5 +1,4 @@
 import { useState } from "react"
-// import TestSteps from "./testSteps";
 import FirstPane from "./firstPane/FirstPane";
 // import SearchPane from "./SearchPane";
 // import ThirdPane from "./ThirdPane";
@@ -13,8 +12,7 @@ const EditTheme = () => {
     const { state } = useLocation()
     const themeName = state;
 
-    const [title, setTitle] = useState('')
-
+    const [pageTitle, setPageTitle] = useState('')
     // the current step showing
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -25,8 +23,18 @@ const EditTheme = () => {
     const [blockCount, setBlockCount] = useState('');
 
     return (
-        <div className="flex flex-row w-screen h-full mx-auto overflow-hidden">
-            <FirstPane themeName={themeName} title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />
+        <div className="flex flex-col w-screen h-full mx-auto overflow-hidden">
+            <div className='flex flex-row px-12 pt-20'>
+                <input
+                    className={`text-4xl font-semibold text-black w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
+                    type="text"
+                    placeholder={'New Page'}
+                    value={pageTitle}
+                    autoFocus
+                    onChange={(e) => setPageTitle(e.target.value)}
+                />
+            </div>
+            <FirstPane themeName={themeName} pageTitle={pageTitle} setPageTitle={setPageTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />
         </div>
     )
 }

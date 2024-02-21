@@ -8,10 +8,13 @@ import BlocksPage from '../blocks/BlocksPage';
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-const FirstPane = ({ themeName, currentStep, setCurrentStep }) => {
+const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
 
     const [searchResult, setSearchResult] = useState([])
     const [pickedSearch, setPickedSearch] = useState([])
+
+    const [cols, setCols] = useState()
+    const [rows, setRows] = useState()
 
     const savePage = useMutation({
         mutationFn: async (pageData) => {
@@ -41,7 +44,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep }) => {
     },
     {
         id: 2,
-        element: <BlocksPage />
+        element: <BlocksPage setCols={setCols} setRows={setRows} />
         // element: <SearchPane blockCount={blockCount} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} />
     }
     ]
@@ -58,14 +61,14 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep }) => {
             element: (
                 <motion.button
                     // onClick={() => setCurrentStep(currentStep + 1)}
-                    onClick={() => { savePage() }}
+                    onClick={() => { savePage({ theme_name: themeName, page_name: pageTitle, rows: rows, column: cols, blocks: pickedSearch }) }}
                     className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit"> Complete </motion.button>)
         }
     ]
 
     //this contains the title, divider and FirstPaneBody elements
     return (
-        <div className="flex flex-row w-full h-full px-12 pt-12">
+        <div className="flex flex-row w-full h-full px-12">
             <div className='flex flex-row w-[80%] h-full '>
                 {views.map((view) => {
                     return (

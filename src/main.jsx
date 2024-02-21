@@ -28,7 +28,6 @@ const router = createBrowserRouter([
       },
       {
         path: 'thema/bladzijde/create',
-        // element: <BlocksPage />
         element: <EditTheme />
       }
     ]

@@ -1,11 +1,16 @@
+/* eslint-disable react/prop-types */
 import { Input } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { motion } from "framer-motion";
 
-const BlocksPage = () => {
+const BlocksPage = ({ setCols, setRows }) => {
     const [rowNumber, setRowNumber] = useState('')
     const [colNumber, setColNumber] = useState('')
 
+    useEffect(() => {
+        setCols(colNumber)
+        setRows(rowNumber)
+    }, [rowNumber, colNumber, setCols, setRows])
 
     return (
         <div className="flex flex-col w-full h-full px-8 pt-12">

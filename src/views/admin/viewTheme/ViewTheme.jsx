@@ -32,6 +32,7 @@ const ViewTheme = () => {
         throw new Error("Network response was not ok");
       }
       const jsonResponse = await response.json();
+      console.log({ jsonResponse });
       return {
         themeName: jsonResponse.theme_name,
         pages: jsonResponse.pages,

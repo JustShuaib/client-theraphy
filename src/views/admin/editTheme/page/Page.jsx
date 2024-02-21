@@ -25,7 +25,7 @@ const Page = () => {
           nameTaken={nameTaken}
           setNameTaken={setNameTaken}
           title={themaName}
-          setSavedTheme={setSavedTheme}
+          setHasSavedTheme={setSavedTheme}
           setTitle={setThemaName}
           endpoint="/api/check_theme_existence"
           placeholder="Nieuwe Thema"

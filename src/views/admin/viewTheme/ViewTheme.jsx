@@ -53,14 +53,12 @@ const ViewTheme = () => {
         >
           {data?.themeName}
         </h1>
-        {data.pages?.length > 0 && (
-          <motion.button
-            onClick={() => handleDelete.mutate()}
-            className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit"
-          >
-            DELETE THEME
-          </motion.button>
-        )}
+        <motion.button
+          onClick={() => handleDelete.mutate()}
+          className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit"
+        >
+          DELETE THEME
+        </motion.button>
       </div>
       <div className="grid grid-cols-3 gap-20">
         <motion.button

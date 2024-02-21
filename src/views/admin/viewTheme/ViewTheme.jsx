@@ -7,9 +7,8 @@ import Loader from "../../../components/Loader";
 import ErrorMessage from "../../../components/ErrorMessage";
 
 const ViewTheme = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
-  console.log({ id });
 
   const handleDelete = useMutation({
     mutationFn: async () => {
@@ -17,7 +16,11 @@ const ViewTheme = () => {
       const status = response.json();
       return status.success;
     },
+    onSuccess: () => {
+      navigate("/admin/thema");
+    },
   });
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["thema"],
     queryFn: async () => {
@@ -32,7 +35,6 @@ const ViewTheme = () => {
         throw new Error("Network response was not ok");
       }
       const jsonResponse = await response.json();
-      console.log({ jsonResponse });
       return {
         themeName: jsonResponse.theme_name,
         pages: jsonResponse.pages,
@@ -51,12 +53,14 @@ const ViewTheme = () => {
         >
           {data?.themeName}
         </h1>
-        <motion.button
-          onClick={handleDelete}
-          className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit"
-        >
-          DELETE THEME
-        </motion.button>
+        {data.pages?.length > 0 && (
+          <motion.button
+            onClick={() => handleDelete.mutate()}
+            className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit"
+          >
+            DELETE THEME
+          </motion.button>
+        )}
       </div>
       <div className="grid grid-cols-3 gap-20">
         <motion.button
@@ -64,7 +68,6 @@ const ViewTheme = () => {
           whileTap={{ scale: 0.95 }}
           className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700"
         >
-          {/* <Link to='/admin/thema/bladzijde'> */}
           <div className="flex flex-row">
             <div className="inline-block p-6 text-2xl font-semibold text-center">
               Nieuwe pagina toevoegen{" "}
@@ -75,21 +78,24 @@ const ViewTheme = () => {
               />
             </div>
           </div>
-          {/* </Link> */}
         </motion.button>
 
-        {data.pages?.length === 0 ? (
-          <p className="text-lg text-center">
-            {data.themeName} currently does not have a page.
-          </p>
-        ) : (
+        {data.pages?.length > 0 &&
+          // ? (
+          //   <div className="flex flex-col gap-y-2">
+          //     <TiInfoOutline />
+          //     <p className="text-lg text-center">
+          //       {data.themeName} currently does not have a page.
+          //     </p>
+          //   </div>
+          // ) :
           data.pages?.map((page) => (
             <motion.button
               key={page.id}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                navigation(`/admin/thema/${page.id}`);
+                navigate(`/admin/thema/${page.id}`);
               }}
               className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700"
             >
@@ -97,8 +103,7 @@ const ViewTheme = () => {
                 {page.page_name}
               </p>
             </motion.button>
-          ))
-        )}
+          ))}
       </div>
     </div>
   );

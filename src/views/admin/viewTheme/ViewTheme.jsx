@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 
 const Theme = () => {
+    
     const { state } = useLocation()
 
     const { data, error } = useQuery({
@@ -30,7 +31,7 @@ const Theme = () => {
     return (
         <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
             <div className="pb-12 ">
-                <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>Thema</h1>
+                <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>{state}</h1>
             </div>
             <div className="grid grid-cols-3 gap-20">
                 <motion.button

@@ -24,6 +24,11 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
         }
     })
 
+    const handleSave = async () => {
+        const response = await savePage()
+        const status = response.json()
+        return status.success
+    }
     //controls what view shows
     const views = [{
         id: 1,
@@ -61,7 +66,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
             element: (
                 <motion.button
                     // onClick={() => setCurrentStep(currentStep + 1)}
-                    onClick={() => { savePage({ theme_name: themeName, page_name: pageTitle, rows: rows, column: cols, blocks: pickedSearch }) }}
+                    onClick={() => { handleSave({ theme_name: themeName, page_name: pageTitle, rows: rows, columns: cols, blocks: pickedSearch }) }}
                     className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit"> Complete </motion.button>)
         }
     ]

@@ -9,6 +9,7 @@ import { Theme } from "./views/admin/theme";
 import { EditTheme } from "./views/admin/editTheme";
 import { Page } from "./views/admin/editTheme/page";
 import ViewTheme from "./views/admin/viewTheme/ViewTheme";
+import ViewPage from "./views/admin/editTheme/viewPage/ViewPage";
 // import BlocksPage from './views/admin/editTheme/blocks/BlocksPage'
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "thema/:id",
         element: <ViewTheme />,
+      },
+      {
+        path: "thema/:id/:slug",
+        element: <ViewPage />,
       },
     ],
   },

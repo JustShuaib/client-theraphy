@@ -5,12 +5,21 @@ import SearchBar from '../SearchBar';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import BlocksPage from '../blocks/BlocksPage';
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const FirstPane = ({ themeName, currentStep, setCurrentStep }) => {
 
     const [searchResult, setSearchResult] = useState([])
     const [pickedSearch, setPickedSearch] = useState([])
 
+    const savePage = useMutation({
+        mutationFn: async (pageData) => {
+            const response = axios.post('/api/save_page', pageData)
+            const successRes = response.json()
+            return successRes.success
+        }
+    })
 
     //controls what view shows
     const views = [{
@@ -49,7 +58,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep }) => {
             element: (
                 <motion.button
                     // onClick={() => setCurrentStep(currentStep + 1)}
-                    // onClick={() => { savePage() }}
+                    onClick={() => { savePage() }}
                     className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit"> Complete </motion.button>)
         }
     ]

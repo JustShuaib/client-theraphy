@@ -24,15 +24,6 @@ const EditTheme = () => {
     // const [isOpen, setIsOpen] = useState(false)
     const [blockCount, setBlockCount] = useState('');
 
-    // states that manage data
-    // const [templateTitle, setTemplateTitle] = useState('')
-
-
-    // const handleRoute = () => {
-    //     //increase page count by 1
-    //     setPageCount(pageCount + 1)
-    // }
-
     return (
         <div className="flex flex-row w-screen h-full mx-auto overflow-hidden">
             <FirstPane themeName={themeName} title={title} setTitle={setTitle} currentBlock={currentBlock} setCurrentBlock={setCurrentBlock} blockCount={blockCount} setBlockCount={setBlockCount} currentStep={currentStep} setCurrentStep={setCurrentStep} setOnChange={onChange} />

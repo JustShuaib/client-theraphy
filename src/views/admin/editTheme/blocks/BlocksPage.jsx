@@ -1,20 +1,11 @@
 import { Input } from "antd";
 import { useState } from "react";
 // import { motion } from "framer-motion";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 
 const BlocksPage = () => {
     const [rowNumber, setRowNumber] = useState('')
     const [colNumber, setColNumber] = useState('')
 
-    const savePage = useMutation({
-        mutationFn: async (pageData) => {
-            const response = axios.post('/api/save_page', pageData)
-            const successRes = response.json()
-            return successRes.success
-        }
-    })
 
     return (
         <div className="flex flex-col w-full h-full px-8 pt-12">

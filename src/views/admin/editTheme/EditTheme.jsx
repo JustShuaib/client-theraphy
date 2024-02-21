@@ -25,6 +25,9 @@ const EditTheme = () => {
     return (
         <div className="flex flex-col w-screen h-full mx-auto overflow-hidden">
             <div className='flex flex-row px-12 pt-20'>
+                <h3 className='text-4xl pt-4 font-semibold text-${titleColor} w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none'>
+                        {themeName}
+                    </h3>
                 <input
                     className={`text-4xl font-semibold text-black w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
                     type="text"

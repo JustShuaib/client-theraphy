@@ -39,9 +39,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
         element: (
             <div className='flex flex-row w-full h-full '>
                 <div className="sticky top-0 flex w-full flex-col justify-start h-[20%]">
-                    <h3 className='text-4xl font-semibold text-${titleColor} w-[16.5rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none'>
-                        {themeName}
-                    </h3>
+
                     <SearchBar pickedSearch={pickedSearch} setPickedSearch={setPickedSearch} searchResult={searchResult} setSearchResult={setSearchResult} />
                     <Divider />
                 </div>

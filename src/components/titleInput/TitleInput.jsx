@@ -23,7 +23,7 @@ const TitleInput = ({
   const checkTitle = useMutation({
     mutationFn: async (title) => {
       try {
-        const response = await axios.post(endpoint, { theme_name: title });
+        const response = await axios.post(endpoint, title);
         const result = response.data; // Assuming the result is directly in the response data
         return result.exists;
       } catch (error) {
@@ -35,7 +35,7 @@ const TitleInput = ({
 
   const saveTheme = useMutation({
     mutationFn: async (themaName) => {
-      const response = await axios.post("/api/save_theme", { theme_name: themaName });
+      const response = await axios.post("/api/save_theme", themaName);
       return response.success;
     },
   });

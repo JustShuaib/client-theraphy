@@ -24,7 +24,7 @@ const TitleInput = ({
     mutationFn: async (title) => {
       try {
         const response = await axios.post(endpoint, title);
-        const result = response.data; // Assuming the result is directly in the response data
+        const result = response.data;
         return result.exists;
       } catch (error) {
         console.error("Error checking title:", error.message);
@@ -60,6 +60,7 @@ const TitleInput = ({
     setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
     saveTheme.mutate(title);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,12 +70,11 @@ const TitleInput = ({
           if (checkTitle.isError) {
             console.log("Error checking title:", checkTitle.error.message);
           } else {
-            setNameTaken(checkTitle.data.exists);
-            setTitleColor(checkTitle.data.exists ? "red-500" : "black");
+            const isNameTaken = checkTitle.data && checkTitle.data.exists;
+            setNameTaken(isNameTaken);
+            setTitleColor(isNameTaken ? "red-500" : "black");
             console.log(
-              checkTitle.data.exists
-                ? "name is unavailable"
-                : "name is available"
+              isNameTaken ? "name is unavailable" : "name is available"
             );
           }
         }
@@ -87,6 +87,34 @@ const TitleInput = ({
 
     fetchData();
   }, [title, prevText, checkTitle, setNameTaken]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (title !== prevText) {
+  //         await checkTitle.mutate({ theme_name: title });
+
+  //         if (checkTitle.isError) {
+  //           console.log("Error checking title:", checkTitle.error.message);
+  //         } else {
+  //           setNameTaken(checkTitle.data.exists);
+  //           setTitleColor(checkTitle.data.exists ? "red-500" : "black");
+  //           console.log(
+  //             checkTitle.data.exists
+  //               ? "name is unavailable"
+  //               : "name is available"
+  //           );
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error in useEffect:", error.message);
+  //     } finally {
+  //       setPrevText(title);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [title, prevText, checkTitle, setNameTaken]);
 
   return (
     <div className="flex flex-row">

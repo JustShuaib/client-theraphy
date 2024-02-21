@@ -9,7 +9,9 @@ const Theme = () => {
   const { data, error } = useQuery({
     queryKey: ["thema"],
     queryFn: async () => {
-      const response = await fetch("/api/fetch_all_themes");
+      const response = await fetch(
+        "http://[2001:1c00:1511:4800:ae16:2dff:fea4:a238]:8000/api/fetch_all_themes"
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

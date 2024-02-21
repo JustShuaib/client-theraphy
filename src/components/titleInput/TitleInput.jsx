@@ -35,6 +35,7 @@ const TitleInput = ({
 
   const saveTheme = useMutation({
     mutationFn: async (themeName) => {
+      console.log("save theme func firing");
       try {
         const response = await axios.post(
           "/api/save_theme",
@@ -45,6 +46,10 @@ const TitleInput = ({
             },
           }
         );
+        console.log({
+          "save theme func fired complete": true,
+          res: response.data,
+        });
         return response.data;
       } catch (error) {
         console.error("Error saving theme:", error.message);
@@ -54,9 +59,12 @@ const TitleInput = ({
   });
 
   const hasSavedTheme = saveTheme.data;
+  console.log({ "it ran": "has saved theme ran", hasSavedTheme });
   if (hasSavedTheme) setHasSavedTheme(true);
 
   const handleSave = (title) => {
+    console.log("clicked title is: ", title);
+    console.log("handle save clicked");
     setHasSavedTheme(true); //THIS WILL BE REMOVED & REPLACED WITH THE ONE AT THE TOP LATER
     saveTheme.mutate(title);
   };
@@ -65,8 +73,7 @@ const TitleInput = ({
     const fetchData = async () => {
       try {
         if (title !== prevText) {
-          await checkTitle.mutate({ theme_name: title });
-
+          checkTitle.mutate({ theme_name: title });
           if (checkTitle.isError) {
             console.log("Error checking title:", checkTitle.error.message);
           } else {
@@ -132,9 +139,7 @@ const TitleInput = ({
       <motion.button
         whileTap={{ scale: 0.95 }}
         disabled={nameTaken}
-        onClick={() => {
-          handleSave(title);
-        }}
+        onClick={() => handleSave(title)}
         className={`w-10 h-10 p-1 ${
           nameTaken ? "bg-gray-500" : "bg-purple-500"
         } rounded-lg`}

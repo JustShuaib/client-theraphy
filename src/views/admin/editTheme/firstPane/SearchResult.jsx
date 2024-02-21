@@ -46,7 +46,7 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
         } else if (optionSum === 17) {
             handleOption(7, name)
         }
-    }, [optionSum])
+    }, [optionSum, handleOption, name])
 
     useEffect(() => [
         selectAudio ? setOptionSum((prevValue) => { prevValue + 2 }) : setOptionSum((prevValue) => { prevValue - 2 })

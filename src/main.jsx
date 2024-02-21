@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Admin } from './views/admin'
 import { Theme } from './views/admin/theme'
-// import { EditTheme } from './views/admin/editTheme'
+import { EditTheme } from './views/admin/editTheme'
 import { Page } from './views/admin/editTheme/page'
-import BlocksPage from './views/admin/editTheme/blocks/BlocksPage'
+// import BlocksPage from './views/admin/editTheme/blocks/BlocksPage'
 
 const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'thema/bladzijde/create',
-        element: <BlocksPage />
-        // element: <EditTheme />
+        // element: <BlocksPage />
+        element: <EditTheme />
       }
     ]
   },

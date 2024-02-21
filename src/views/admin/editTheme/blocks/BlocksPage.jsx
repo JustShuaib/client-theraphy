@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import { useState } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -17,7 +17,7 @@ const BlocksPage = () => {
     })
 
     return (
-        <div className="flex flex-col w-[70%] h-full px-8 pt-12">
+        <div className="flex flex-col w-full h-full px-8 pt-12">
             <h3>
                 BlocksPage
             </h3>
@@ -28,7 +28,7 @@ const BlocksPage = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                     <h3>Number of rows:</h3>
-                    <Input placeholder="enter a number" onChange={(e) => { console.log((e.target.value).toString()), setRowNumber(e.target.value) }} value={rowNumber} type="number" maxLength={2} />
+                    <Input placeholder="enter a number" onChange={(e) => { setRowNumber(e.target.value) }} value={rowNumber} type="number" maxLength={2} />
                 </div>
             </div>
             <div className="flex flex-col overflow-scroll ">
@@ -88,14 +88,6 @@ const BlocksPage = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="self-end">
-                    <motion.button
-                        // onClick={() => setCurrentStep(currentStep + 1)}
-                        onClick={() => { savePage() }}
-                        className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit"> Complete </motion.button>
-                </div>
-
             </div>
         </div>
     )

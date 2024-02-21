@@ -5,6 +5,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import ErrorMessage from "../../../components/ErrorMessage";
+import { Button } from "antd";
+import { MdDelete } from "react-icons/md";
 
 const ViewTheme = () => {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ const ViewTheme = () => {
 
   const handleDelete = useMutation({
     mutationFn: async () => {
-      const response = axios.post("/api/delete_theme", id);
+      const response = axios.post("/api/delete_theme", { id });
       const status = response.json();
       return status.success;
     },
@@ -53,12 +55,20 @@ const ViewTheme = () => {
         >
           {data?.themeName}
         </h1>
-        <motion.button
+
+        <Button
+          loading={handleDelete.isPending}
+          icon={<MdDelete />}
           onClick={() => handleDelete.mutate()}
-          className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit"
+          type="primary"
+          danger
         >
+          Delete theme
+        </Button>
+
+        {/* <motion.button className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-red-500 border rounded-lg place-self-end w-fit">
           DELETE THEME
-        </motion.button>
+        </motion.button> */}
       </div>
       <div className="grid grid-cols-3 gap-20">
         <motion.button

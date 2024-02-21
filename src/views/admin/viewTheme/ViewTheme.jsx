@@ -16,7 +16,11 @@ const Theme = () => {
     queryKey: ["thema"],
     queryFn: async () => {
       const response = await fetch("/api/fetch_theme_pages", {
-        body: { id },
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -74,7 +78,7 @@ const Theme = () => {
           {/* </Link> */}
         </motion.button>
 
-        {data.pages.length === 0 ? (
+        {data.pages?.length === 0 ? (
           <p className="text-lg text-center">
             {data.themeName} currently does not have a page.
           </p>

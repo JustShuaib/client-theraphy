@@ -49,7 +49,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
             />
             <Divider />
           </div>
-          <div className="h-[80%] bg-green-200 w-full">
+          <div className="h-[80%] w-full">
             <FirstPaneBody
               pickedSearch={pickedSearch}
               setPickedSearch={setPickedSearch}

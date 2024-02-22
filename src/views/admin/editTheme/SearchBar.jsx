@@ -18,11 +18,9 @@ const SearchBar = ({
     mutationFn: async (searchValue) => {
       try {
         const response = await axios.post("/api/dynamic_search", searchValue);
-        console.log({ response });
         if (response.status >= 200 && response.status < 300) {
           const jsonResponse = await response.data;
           const searchResponse = jsonResponse.results;
-          console.log({ searchResponse });
           return searchResponse;
         } else {
           throw new Error("Network response was not ok");
@@ -34,50 +32,18 @@ const SearchBar = ({
     },
   });
 
-  // const searchMutate = useMutation({
-  //   mutationFn: async (searchValue) => {
-  //     const response = await axios.post("/api/dynamic_search", searchValue);
-  //     console.log({response})
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const jsonResponse = await response.json();
-  //     const searchResponse = jsonResponse.results;
-  //     console.log("the response of the search query is this:");
-  //     console.log(searchResponse);
-  //     // search response in itself is expected to be a list of key-value pairs.
-  //     return searchResponse;
-  //   },
-  // });
-
   useEffect(() => {
     if (searchMutate.status === "success") {
       setSearchResult(searchMutate.data);
-      console.log("search result is: ", searchMutate.data);
     } else if (searchMutate.status === "error") {
       console.log("The search could not be updated");
     }
   }, [searchMutate.data, searchMutate.status, pickedSearch, setSearchResult]);
-  console.log({ searchMutate });
-  //   useEffect(() => {
-  //     console.log(searchMutate.error);
-  //   }, [searchMutate.error]);
 
   const handleSearch = (search) => {
     setSearchValue(search);
     searchMutate.mutate({ query: searchValue });
   };
-
-  // const handleSearch = (search) => {
-  //   if (search.length > 1) {
-  //     setSearchValue((prevSearchValue) => {
-  //       if (search !== prevSearchValue) {
-  //         searchMutate.mutate({ query: search });
-  //       }
-  //       return search;
-  //     });
-  //   }
-  // };
 
   const handleClick = (search) => {
     //add to selected array

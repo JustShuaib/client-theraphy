@@ -19,11 +19,10 @@ const FirstPaneBody = ({ pickedSearch, setPickedSearch }) => {
   };
 
   return (
-    <div className="overflow-hidden bg-red-500">
+    <div className="overflow-hidden">
       <div className="relative flex flex-col w-full gap-4 pt-8 overflow-scroll overflow-x-hidden">
-        {pickedSearch &&
-          pickedSearch.map((search) => {
-            return (
+        {pickedSearch && Array.isArray(pickedSearch)
+          ? pickedSearch.map((search) => (
               <div key={search.name} className="w-fit h-fit">
                 <SearchResult
                   name={search.name}
@@ -34,8 +33,19 @@ const FirstPaneBody = ({ pickedSearch, setPickedSearch }) => {
                   options={search.options}
                 />
               </div>
-            );
-          })}
+            ))
+          : Object.values(pickedSearch).map((value, i) => (
+              <div key={i} className="w-fit h-fit">
+                <SearchResult
+                  name={value.name}
+                  handleOption={updateOption}
+                  audio={value.audio}
+                  video={value.video}
+                  image={value.image}
+                  options={value.options}
+                />
+              </div>
+            ))}
       </div>
     </div>
   );

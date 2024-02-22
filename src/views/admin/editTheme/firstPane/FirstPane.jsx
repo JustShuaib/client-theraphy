@@ -20,19 +20,41 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
 
   const savePage = useMutation({
     mutationFn: async (pageData) => {
-      const response = axios.post("/api/save_page", pageData);
-      const successRes = response.json();
+      const response = await axios.post("/api/save_page", pageData);
+      const successRes = await response.data;
       return successRes.success;
     },
   });
-
   const handleSave = async () => {
-    const response = await savePage();
-    const status = await response.json();
-    status.success
-      ? navigation(`/admin/thema/${themeName}`)
-      : alert("save failed, try again.");
+    try {
+      savePage.mutate({
+        theme_name: themeName,
+        page_name: pageTitle,
+        rows: rows,
+        columns: cols,
+        blocks: pickedSearch,
+      });
+
+      const status = savePage.data; // `savePage.data` contains the result of the mutation
+
+      if (status.success) {
+        navigation(`/admin/thema/${themeName}`);
+      } else {
+        alert("Save failed, try again.");
+      }
+    } catch (error) {
+      console.error("Error handling save:", error);
+      // Handle the error as needed (e.g., show an error message to the user)
+    }
   };
+
+  // const handleSave = async () => {
+  //   const response = await savePage();
+  //   const status = await response.json();
+  //   status.success
+  //     ? navigation(`/admin/thema/${themeName}`)
+  //     : alert("save failed, try again.");
+  // };
 
   //controls what view shows
   const views = [
@@ -88,15 +110,16 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
       element: (
         <motion.button
           // onClick={() => setCurrentStep(currentStep + 1)}
-          onClick={() => {
-            handleSave({
-              theme_name: themeName,
-              page_name: pageTitle,
-              rows: rows,
-              columns: cols,
-              blocks: pickedSearch,
-            });
-          }}
+          // onClick={() => {
+          //   handleSave({
+          //     theme_name: themeName,
+          //     page_name: pageTitle,
+          //     rows: rows,
+          //     columns: cols,
+          //     blocks: pickedSearch,
+          //   });
+          // }}
+          onClick={handleSave}
           className="flex px-4 py-2 text-lg font-semibold text-white uppercase bg-blue-500 border rounded-lg place-self-end w-fit"
         >
           {" "}

@@ -40,7 +40,7 @@ const BlocksPage = ({ pickedSearch, setCols, setRows }) => {
           />
         </div>
       </div>
-      <div className="flex flex-col overflow-scroll ">
+      <div className="flex flex-col overflow-scroll">
         <div
           className={`pt-8 grid grid-cols-[repeat(${colNumber},minmax(0,1fr))] grid-rows-[repeat(${rowNumber},minmax(0,1fr))]`}
         >

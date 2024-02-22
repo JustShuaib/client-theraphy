@@ -13,12 +13,8 @@ const EditTheme = () => {
   const themeName = state;
 
   const [pageTitle, setPageTitle] = useState("");
-  // the current step showing
   const [currentStep, setCurrentStep] = useState(0);
-
-  // the current block being handled
   const [currentBlock, setCurrentBlock] = useState(0);
-
   // const [isOpen, setIsOpen] = useState(false)
   const [blockCount, setBlockCount] = useState("");
 

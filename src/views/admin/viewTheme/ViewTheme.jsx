@@ -76,6 +76,9 @@ const ViewTheme = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            navigate("/admin/thema/bladzijde/create");
+          }}
           className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700"
         >
           <div className="flex flex-row">

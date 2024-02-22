@@ -16,18 +16,39 @@ const SearchBar = ({
 
   const searchMutate = useMutation({
     mutationFn: async (searchValue) => {
-      const response = await axios.post("/api/dynamic_search", searchValue);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      try {
+        const response = await axios.post("/api/dynamic_search", searchValue);
+        console.log({ response });
+        if (response.status >= 200 && response.status < 300) {
+          const jsonResponse = await response.json();
+          const searchResponse = jsonResponse.results;
+          console.log({ searchResponse });
+          return searchResponse;
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      } catch (error) {
+        console.error("Error in search mutation:", error.message);
+        throw error;
       }
-      const jsonResponse = await response.json();
-      const searchResponse = jsonResponse.results;
-      console.log("the response of the search query is this:");
-      console.log(searchResponse);
-      // search response in itself is expected to be a list of key-value pairs.
-      return searchResponse;
     },
   });
+
+  // const searchMutate = useMutation({
+  //   mutationFn: async (searchValue) => {
+  //     const response = await axios.post("/api/dynamic_search", searchValue);
+  //     console.log({response})
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     const jsonResponse = await response.json();
+  //     const searchResponse = jsonResponse.results;
+  //     console.log("the response of the search query is this:");
+  //     console.log(searchResponse);
+  //     // search response in itself is expected to be a list of key-value pairs.
+  //     return searchResponse;
+  //   },
+  // });
 
   useEffect(() => {
     if (searchMutate.status === "success") {
@@ -43,7 +64,7 @@ const SearchBar = ({
   //   }, [searchMutate.error]);
 
   const handleSearch = (search) => {
-    if (search.length > 0) {
+    if (search.length > 1) {
       setSearchValue(search);
       searchMutate.mutate({ query: searchValue });
     }

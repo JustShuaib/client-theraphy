@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import AudioPlayer from "./AudioPlayer";
 
 const SearchResult = ({ name, audio, image, video, handleOption }) => {
-  const [selectImage, setSelectImage] = useState(true);
-  const [selectAudio, setSelectAudio] = useState(true);
-  const [selectVideo, setSelectVideo] = useState(true);
+  const [selectAudio, setSelectAudio] = useState(false);
+  const [selectVideo, setSelectVideo] = useState(false);
+  const [selectImage, setSelectImage] = useState(false);
 
   const [optionSum, setOptionSum] = useState(0);
   // Function to handle options based on selected media types
@@ -47,49 +47,60 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
       handleOption(7, name);
     }
   }, [optionSum, handleOption, name]);
+  useEffect(() => {
+    setOptionSum((prevValue) => (selectAudio ? prevValue + 2 : prevValue - 2));
+  }, [selectAudio]);
 
-  useEffect(
-    () => [
-      selectAudio
-        ? setOptionSum((prevValue) => {
-            prevValue + 2;
-          })
-        : setOptionSum((prevValue) => {
-            prevValue - 2;
-          }),
-    ],
-    [selectAudio]
-  );
+  useEffect(() => {
+    setOptionSum((prevValue) => (selectImage ? prevValue + 2 : prevValue - 2));
+  }, [selectImage]);
 
-  useEffect(
-    () => [
-      selectImage
-        ? setOptionSum((prevValue) => {
-            prevValue + 2;
-          })
-        : setOptionSum((prevValue) => {
-            prevValue - 2;
-          }),
-    ],
-    [selectImage]
-  );
+  useEffect(() => {
+    setOptionSum((prevValue) => (selectVideo ? prevValue + 2 : prevValue - 2));
+  }, [selectVideo]);
 
-  useEffect(
-    () => [
-      selectVideo
-        ? setOptionSum((prevValue) => {
-            prevValue + 2;
-          })
-        : setOptionSum((prevValue) => {
-            prevValue - 2;
-          }),
-    ],
-    [selectVideo]
-  );
+  // useEffect(
+  //   () => [
+  //     selectAudio
+  //       ? setOptionSum((prevValue) => {
+  //           prevValue + 2;
+  //         })
+  //       : setOptionSum((prevValue) => {
+  //           prevValue - 2;
+  //         }),
+  //   ],
+  //   [selectAudio]
+  // );
+
+  // useEffect(
+  //   () => [
+  //     selectImage
+  //       ? setOptionSum((prevValue) => {
+  //           prevValue + 2;
+  //         })
+  //       : setOptionSum((prevValue) => {
+  //           prevValue - 2;
+  //         }),
+  //   ],
+  //   [selectImage]
+  // );
+
+  // useEffect(
+  //   () => [
+  //     selectVideo
+  //       ? setOptionSum((prevValue) => {
+  //           prevValue + 2;
+  //         })
+  //       : setOptionSum((prevValue) => {
+  //           prevValue - 2;
+  //         }),
+  //   ],
+  //   [selectVideo]
+  // );
 
   return (
     <div className="w-full py-8 bg-purple-500 rounded-lg h-fit">
-      <h3 className="w-full text-2xl font-semibold text-center">Brother</h3>
+      <h3 className="w-full text-2xl font-semibold text-center">{name}</h3>
       <div className="flex flex-row justify-between px-12">
         <div className="flex flex-col justify-center gap-4">
           <div className="w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md">
@@ -115,7 +126,7 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
           <div className="flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md">
             <img className="w-12" src="/play-svgrepo-com.svg" alt="audio svg" />
             <video
-              className="absolute object-contain w-full h-full "
+              className="absolute object-contain w-full h-full"
               src={video}
             ></video>
           </div>

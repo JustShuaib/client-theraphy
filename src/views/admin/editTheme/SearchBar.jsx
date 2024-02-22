@@ -16,7 +16,7 @@ const SearchBar = ({
 
   const searchMutate = useMutation({
     mutationFn: async (searchValue) => {
-      const response = axios.post("/api/dynamic_search", searchValue);
+      const response = await axios.post("/api/dynamic_search", searchValue);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

@@ -37,7 +37,7 @@ const SearchBar = ({
       console.log("The search could not be updated");
     }
   }, [searchMutate.data, searchMutate.status, pickedSearch, setSearchResult]);
-
+  console.log({ searchMutate });
   //   useEffect(() => {
   //     console.log(searchMutate.error);
   //   }, [searchMutate.error]);

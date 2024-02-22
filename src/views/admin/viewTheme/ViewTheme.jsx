@@ -15,7 +15,7 @@ const ViewTheme = () => {
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/delete_theme", { id });
-      const status = await response.json();
+      const status = await response.data;
       console.log({ status });
       return status.success;
     },

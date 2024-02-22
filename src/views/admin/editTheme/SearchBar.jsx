@@ -64,11 +64,20 @@ const SearchBar = ({
   //   }, [searchMutate.error]);
 
   const handleSearch = (search) => {
-    if (search.length > 1) {
-      setSearchValue(search);
-      searchMutate.mutate({ query: searchValue });
-    }
+    setSearchValue(search);
+    searchMutate.mutate({ query: searchValue });
   };
+
+  // const handleSearch = (search) => {
+  //   if (search.length > 1) {
+  //     setSearchValue((prevSearchValue) => {
+  //       if (search !== prevSearchValue) {
+  //         searchMutate.mutate({ query: search });
+  //       }
+  //       return search;
+  //     });
+  //   }
+  // };
 
   const handleClick = (search) => {
     //add to selected array

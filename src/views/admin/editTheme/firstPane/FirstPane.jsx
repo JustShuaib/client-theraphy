@@ -39,7 +39,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
     {
       id: 1,
       element: (
-        <div className="flex flex-row w-full h-full ">
+        <div className="flex flex-row w-full h-full">
           <div className="sticky top-0 flex w-full flex-col justify-start h-[20%]">
             <SearchBar
               pickedSearch={pickedSearch}
@@ -49,7 +49,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
             />
             <Divider />
           </div>
-          <div className="h-[80%]">
+          <div className="h-[80%] bg-green-200 w-full">
             <FirstPaneBody
               pickedSearch={pickedSearch}
               setPickedSearch={setPickedSearch}

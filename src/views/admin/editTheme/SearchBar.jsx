@@ -32,10 +32,11 @@ const SearchBar = ({
   useEffect(() => {
     if (searchMutate.status === "success") {
       setSearchResult(searchMutate.data);
+      console.log("search result is: ", searchMutate.data);
     } else if (searchMutate.status === "error") {
       console.log("The search could not be updated");
     }
-  }, [searchMutate.data, searchMutate.status, setSearchResult]);
+  }, [searchMutate.data, searchMutate.status, pickedSearch, setSearchResult]);
 
   //   useEffect(() => {
   //     console.log(searchMutate.error);
@@ -71,7 +72,7 @@ const SearchBar = ({
           style={{ width: "100%" }}
         />
       </div>
-      <div className="relative z-10 w-full overflow-y-scroll bg-white rounded-lg shadow-md h-fit">
+      <div className="relative z-10 w-full overflow-y-scroll rounded-lg shadow-md h-fit">
         {searchResult &&
           searchResult.map((search) => {
             return (

@@ -20,7 +20,7 @@ const SearchBar = ({
         const response = await axios.post("/api/dynamic_search", searchValue);
         console.log({ response });
         if (response.status >= 200 && response.status < 300) {
-          const jsonResponse = await response.json();
+          const jsonResponse = await response.data;
           const searchResponse = jsonResponse.results;
           console.log({ searchResponse });
           return searchResponse;

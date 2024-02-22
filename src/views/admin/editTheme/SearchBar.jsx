@@ -43,8 +43,10 @@ const SearchBar = ({
   //   }, [searchMutate.error]);
 
   const handleSearch = (search) => {
-    setSearchValue(search);
-    searchMutate.mutate({ query: searchValue });
+    if (search.length > 0) {
+      setSearchValue(search);
+      searchMutate.mutate({ query: searchValue });
+    }
   };
 
   const handleClick = (search) => {

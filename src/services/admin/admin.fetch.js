@@ -1,6 +1,8 @@
 import { handleError } from "../../utils/functions";
 
-const API_URL = "http://83.85.157.106:8000/api/";
+const API_URL = import.meta.env.DEV
+  ? "http://83.85.157.106:8000/api/"
+  : "/api/";
 
 export const fetchAllThemes = async () => {
   try {
@@ -83,6 +85,22 @@ export const fetchThemePages = async (id) => {
       themeName: data.theme_name,
       pages: data.pages,
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const savePage = async (pageData) => {
+  try {
+    const response = await fetch("save_page", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pageData),
+    });
+
+    const successRes = await response.json();
+    return successRes.success;
   } catch (error) {
     handleError(error);
   }

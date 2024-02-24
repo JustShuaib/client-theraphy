@@ -4,28 +4,17 @@ import {
   deleteTheme,
   fetchAllThemes,
   fetchThemePages,
+  savePage,
   saveTheme,
 } from "./admin.fetch";
 import { useNavigate } from "react-router-dom";
+
 export const useFetchAllThemes = () =>
   useQuery({
     queryKey: ["themes"],
     queryFn: fetchAllThemes,
   });
-export const useFetchThemePages = (id) =>
-  useQuery({
-    queryKey: ["themes"],
-    queryFn: () => fetchThemePages(id),
-  });
 
-export const useDeleteTheme = (id) => {
-  const navigate = useNavigate();
-  return useMutation({
-    mutationKey: ["themes"],
-    mutationFn: () => deleteTheme(id),
-    onSuccess: () => navigate("/admin/thema"),
-  });
-};
 export const useCheckThemeExistence = (theme) => {
   return useMutation({
     mutationKey: ["themes"],
@@ -37,5 +26,25 @@ export const useSaveTheme = (theme, hasSavedTheme) => {
     mutationKey: ["themes"],
     mutationFn: () => saveTheme(theme),
     onSuccess: hasSavedTheme,
+  });
+};
+export const useDeleteTheme = (id) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationKey: ["themes"],
+    mutationFn: () => deleteTheme(id),
+    onSuccess: () => navigate("/admin/thema"),
+  });
+};
+export const useFetchThemePages = (id) =>
+  useQuery({
+    queryKey: ["pages"],
+    queryFn: () => fetchThemePages(id),
+  });
+
+export const useSavePage = (pageData) => {
+  return useMutation({
+    mutationKey: ["pages"],
+    mutationFn: () => savePage(pageData),
   });
 };

@@ -56,14 +56,6 @@ const ViewTheme = () => {
         </motion.button>
 
         {data.pages?.length > 0 &&
-          // ? (
-          //   <div className="flex flex-col gap-y-2">
-          //     <TiInfoOutline />
-          //     <p className="text-lg text-center">
-          //       {data.themeName} currently does not have a page.
-          //     </p>
-          //   </div>
-          // ) :
           data.pages?.map((page) => (
             <motion.button
               key={page.id}

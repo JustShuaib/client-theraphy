@@ -1,63 +1,33 @@
-import plusImg from "./../../../../assets/plus-square-svgrepo-com.svg";
 import { useState } from "react";
+import { LuPlusSquare } from "react-icons/lu";
 import TitleInput from "../../../../components/titleInput/TitleInput";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const Page = () => {
-  const [themaName, setThemaName] = useState("");
-  const [nameTaken, setNameTaken] = useState(true);
-  const [savedTheme, setSavedTheme] = useState(false);
-
+  const [themeSaved, setThemeSaved] = useState(false);
   const navigate = useNavigate();
-
-  const tapCheck = () => {
-    return !nameTaken && { scale: 0.95 };
-  };
-  const hoverCheck = () => {
-    return !nameTaken && { scale: 1.05 };
-  };
 
   return (
     <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
-      <div className="pb-12 ">
-        <TitleInput
-          nameTaken={nameTaken}
-          setNameTaken={setNameTaken}
-          title={themaName}
-          setHasSavedTheme={setSavedTheme}
-          setTitle={setThemaName}
-          endpoint="/api/check_theme_existence"
-          placeholder="Nieuwe Thema"
-        />
-        {/* <h1 className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}>bladzijde</h1> */}
+      <div className="pb-12">
+        <TitleInput setThemeSaved={setThemeSaved} />
       </div>
       <div className="grid grid-cols-3 gap-20">
         <div className="grid grid-cols-3 gap-20">
-          <motion.button
-            whileTap={tapCheck}
-            whileHover={hoverCheck}
-            disabled={savedTheme}
+          <button
+            disabled={themeSaved === false}
             onClick={() => {
-              navigate("/admin/thema/bladzijde/create", { state: themaName });
+              navigate("/admin/thema/bladzijde/create");
             }}
-            className={`flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br ${
-              !nameTaken
-                ? "from-purple-400 to-purple-700"
-                : "from-gray-400 to-gray-700"
-            } `}
+            className={`flex disabled:from-gray-400 disabled:to-gray-500 disabled:opacity-80 enabled:from-purple-400 enabled:to-purple-600 disabled:text-gray-200 hover:enabled:scale-105 duration-200 flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br`}
           >
             <div className="flex flex-row">
               <div className="inline-block p-6 text-2xl font-semibold text-center">
                 Nieuwe pagina toevoegen{" "}
-                <img
-                  className="inline-block w-10 h-10"
-                  src={plusImg}
-                  alt="plus icon"
-                />
+                <LuPlusSquare className="inline-block w-9 h-9" />
               </div>
             </div>
-          </motion.button>
+          </button>
         </div>
       </div>
     </div>

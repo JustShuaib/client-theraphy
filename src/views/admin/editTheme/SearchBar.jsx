@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
-import { useMutation } from "@tanstack/react-query";
-import { Input } from "antd";
-import axios from "axios";
+import { Divider, Input, Skeleton } from "antd";
 import { useEffect, useState } from "react";
+import { useSearchText } from "../../../services/admin/admin.api";
 const { Search } = Input;
+import { IoCloseCircle } from "react-icons/io5";
 
 const SearchBar = ({
   searchResult,
@@ -12,39 +11,44 @@ const SearchBar = ({
   setPickedSearch,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-  const searchMutate = useMutation({
-    mutationFn: async (searchValue) => {
-      try {
-        const response = await axios.post("/api/dynamic_search", searchValue);
-        if (response.status >= 200 && response.status < 300) {
-          const jsonResponse = await response.data;
-          const searchResponse = jsonResponse.results;
-          return searchResponse;
-        } else {
-          throw new Error("Network response was not ok");
-        }
-      } catch (error) {
-        console.error("Error in search mutation:", error.message);
-        throw error;
-      }
-    },
-  });
+  const {
+    mutate: search,
+    data,
+    isPending,
+    isSuccess,
+    isError,
+  } = useSearchText({ query: searchValue });
+  // const searchMutate = useMutation({
+  //   mutationFn: async (searchValue) => {
+  //     try {
+  //       const response = await axios.post("/api/dynamic_search", searchValue);
+  //       if (response.status >= 200 && response.status < 300) {
+  //         const jsonResponse = await response.data;
+  //         const searchResponse = jsonResponse.results;
+  //         return searchResponse;
+  //       } else {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error in search mutation:", error.message);
+  //       throw error;
+  //     }
+  //   },
+  // });
 
   useEffect(() => {
-    if (searchMutate.status === "success") {
-      setSearchResult(searchMutate.data);
-    } else if (searchMutate.status === "error") {
-      console.log("The search could not be updated");
-    }
-  }, [searchMutate.data, searchMutate.status, pickedSearch, setSearchResult]);
-
-  const handleSearch = (search) => {
-    setSearchValue(search);
-    searchMutate.mutate({ query: searchValue });
+    if (isSuccess) setSearchResult(data);
+  }, [data, isSuccess, setSearchResult]);
+  const handleSearch = () => {
+    if (searchValue.trim() === "") setSearchResult([]);
+    else search();
   };
-
+  const handleClear = () => {
+    console.log("is clearing");
+    setSearchValue("");
+    setSearchResult([]);
+  };
   const handleClick = (search) => {
     //add to selected array
     setPickedSearch(...pickedSearch, {
@@ -58,26 +62,44 @@ const SearchBar = ({
   };
   return (
     <div className="relative w-full h-fit">
-      <div className="z-40 w-full">
+      <span className="w-full">
         <Search
-          onChange={(e) => {
-            handleSearch(e.target.value);
-          }}
+          onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
-          placeholder="input search text"
+          placeholder="Input search text"
           allowClear
-          onSearch={onSearch}
-          style={{ width: "100%" }}
+          // allowClear={{
+          //   clearIcon: (
+          //     <button onClick={handleClear}>
+          //       <IoCloseCircle size={18} />
+          //     </button>
+          //   ),
+          // }}
+          onSearch={handleSearch}
+          size="large"
+          loading={isPending}
+          status={isError ? "error" : ""}
         />
-      </div>
-      <div className="relative z-10 w-full overflow-y-scroll rounded-lg shadow-md h-fit">
-        {searchResult &&
+        {isError && (
+          <span className="text-sm text-red-500">
+            Error updating search query
+          </span>
+        )}
+      </span>
+      <Divider />
+      <div className="overflow-y-scroll h-[25rem]">
+        {isPending ? (
+          <div className="mt-6">
+            <Skeleton active />
+          </div>
+        ) : (
+          searchResult &&
           searchResult.map((search) => {
             return (
               <button
                 onClick={() => handleClick(search)}
                 key={search.name}
-                className="flex flex-row items-center justify-between w-full h-10 px-2 border-b-2"
+                className="flex flex-row items-center justify-between w-full h-12 shadow px-2 border-b-2"
               >
                 <p className="text-lg font-semibold capitalize">
                   {search.name}
@@ -90,7 +112,8 @@ const SearchBar = ({
                 </div>
               </button>
             );
-          })}
+          })
+        )}
       </div>
       {/* <div className='flex flex-row w-full h-8 pl-4 bg-white rounded-lg'>
                 <input className='w-[95%] focus:outline-none rounded-lg' type="text" name="" id="" />

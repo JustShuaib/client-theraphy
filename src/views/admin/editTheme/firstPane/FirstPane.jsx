@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Divider } from "antd";
 import FirstPaneBody from "./FirstPaneBody";
 import SearchBar from "../SearchBar";
@@ -8,6 +7,7 @@ import BlocksPage from "../blocks/BlocksPage";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSavePage } from "../../../../services/admin/admin.api";
 
 const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
   const [searchResult, setSearchResult] = useState([]);
@@ -17,7 +17,14 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
   const [rows, setRows] = useState();
 
   const navigation = useNavigate();
-
+  const pageData = {
+    theme_name: themeName,
+    page_name: pageTitle,
+    rows: rows,
+    columns: cols,
+    blocks: pickedSearch,
+  };
+  const { mutate, data } = useSavePage(pageData);
   const savePage = useMutation({
     mutationFn: async (pageData) => {
       const response = await axios.post("/api/save_page", pageData);
@@ -69,7 +76,7 @@ const FirstPane = ({ themeName, currentStep, setCurrentStep, pageTitle }) => {
               searchResult={searchResult}
               setSearchResult={setSearchResult}
             />
-            <Divider />
+            {/* <Divider /> */}
           </div>
           <div className="h-[80%] w-full">
             <FirstPaneBody

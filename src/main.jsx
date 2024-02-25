@@ -10,6 +10,7 @@ import { EditTheme } from "./views/admin/editTheme";
 import { Page } from "./views/admin/editTheme/page";
 import ViewTheme from "./views/admin/viewTheme/ViewTheme";
 import ViewPage from "./views/admin/editTheme/viewPage/ViewPage";
+import CreatePage from "./views/admin/createPage";
 // import BlocksPage from './views/admin/editTheme/blocks/BlocksPage'
 
 const router = createBrowserRouter([
@@ -39,8 +40,12 @@ const router = createBrowserRouter([
       },
       {
         path: "thema/bladzijde/create",
-        element: <EditTheme />,
+        element: <CreatePage />,
       },
+      // {
+      //   path: "thema/bladzijde/create",
+      //   element: <EditTheme />,
+      // },
     ],
   },
 ]);

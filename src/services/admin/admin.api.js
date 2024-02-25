@@ -6,6 +6,7 @@ import {
   fetchThemePages,
   savePage,
   saveTheme,
+  searchText,
 } from "./admin.fetch";
 import { useNavigate } from "react-router-dom";
 
@@ -46,5 +47,10 @@ export const useSavePage = (pageData) => {
   return useMutation({
     mutationKey: ["pages"],
     mutationFn: () => savePage(pageData),
+  });
+};
+export const useSearchText = (text) => {
+  return useMutation({
+    mutationFn: () => searchText(text),
   });
 };

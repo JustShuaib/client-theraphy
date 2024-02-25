@@ -105,3 +105,24 @@ export const savePage = async (pageData) => {
     handleError(error);
   }
 };
+export const searchText = async (text) => {
+  try {
+    const response = await fetch(API_URL + "dynamic_search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(text),
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      const searchResponse = jsonResponse.results;
+      return searchResponse;
+    } else {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    handleError(error);
+  }
+};

@@ -14,7 +14,7 @@ const FirstPaneBody = ({ pickedSearch, setPickedSearch }) => {
   };
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-red-500 h-[25rem] mt-14">
       <div className="relative flex flex-col w-full gap-4 pt-8 overflow-scroll overflow-x-hidden">
         {Array.isArray(pickedSearch) && pickedSearch.length > 0
           ? pickedSearch.map((search) => (

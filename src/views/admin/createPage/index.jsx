@@ -1,40 +1,25 @@
 import { useState } from "react";
 import { TreeSelect, Form, Input, Button } from "antd";
-import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
+import {
+  IoMdArrowForward,
+  IoIosArrowDown,
+  IoIosCloseCircle,
+} from "react-icons/io";
+import { TbBookOff } from "react-icons/tb";
 
 const CreatePage = () => {
-  const [activeView, setActiveView] = useState(0);
-
-  const views = {
-    0: <SelectPageName />,
-    1: <SelectPageWord onBack={() => setActiveView(0)} />,
-  };
-
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full">
       <Form.Provider
-        onFormFinish={(name) => {
-          name === "page_name" && setActiveView(1);
+        onFormFinish={(name, { values, forms }) => {
+          if (name === "page_name") {
+            const { page_name } = forms;
+            const pageName = page_name.getFieldValue("page_name") || "";
+            console.log({ pageName, values });
+            page_name.setFieldsValue({ page_name: values?.page_name });
+          }
         }}
-        className="h-full"
       >
-        <p className="mt-14 text-4xl font-semibold text-center">
-          {activeView === 0 ? "Enter Page Name" : "Select Words"}
-        </p>
-        {views[activeView]}
-      </Form.Provider>
-    </div>
-  );
-};
-
-export default CreatePage;
-
-const SelectPageName = () => {
-  const [form] = Form.useForm();
-
-  return (
-    <div className="-mt-32 flex flex-col h-full overflow-x-hidden justify-center items-center w-full">
-      <Form form={form} name="page_name" layout="inline">
         <Form.Item
           name="page_name"
           rules={[
@@ -43,23 +28,58 @@ const SelectPageName = () => {
               message: "Please input a page name",
             },
           ]}
+          className="mx-auto mt-6 w-fit"
         >
           <Input
             placeholder="Enter page name"
-            className="min-w-[29rem] border text-lg text-[#1f2937] h-14 rounded-2xl placeholder:text-lg"
+            className="h-14 text-4xl font-semibold text-[#151b24] placeholder:text-4xl placeholder:text-[#686e79]"
+            variant="borderless"
+            autoFocus
           />
         </Form.Item>
-        <button
-          type="submit"
-          className="h-14 text-white rounded-2xl shadow  hover:scale-105 duration-200 text-xl font-open-sans min-w-36 from-purple-500 to-purple-700 bg-gradient-to-br hover:!bg-purple-800"
-        >
-          Submit
-        </button>
-      </Form>
+        <div>
+          <SelectPageWord />
+        </div>
+        {/* <p className="mt-14 text-center text-4xl font-semibold">Select Words</p> */}
+        {/* {views[activeView]} */}
+      </Form.Provider>
     </div>
   );
 };
-const SelectPageWord = ({ onBack }) => {
+
+export default CreatePage;
+
+// const SelectPageName = () => {
+//   const [form] = Form.useForm();
+
+//   return (
+//     <div className="-mt-32 flex h-full w-full flex-col items-center justify-center overflow-x-hidden">
+//       <Form form={form} name="page_name" layout="inline">
+//         <Form.Item
+//           name="page_name"
+//           rules={[
+//             {
+//               required: true,
+//               message: "Please input a page name",
+//             },
+//           ]}
+//         >
+//           <Input
+//             placeholder="Enter page name"
+//             className="h-14 min-w-[29rem] rounded-2xl border text-lg text-[#1f2937] placeholder:text-lg"
+//           />
+//         </Form.Item>
+//         <button
+//           type="submit"
+//           className="h-14 min-w-36 rounded-2xl bg-gradient-to-br  from-purple-500 to-purple-700 font-open-sans text-xl text-white shadow duration-200 hover:scale-105 hover:!bg-purple-800"
+//         >
+//           Submit
+//         </button>
+//       </Form>
+//     </div>
+//   );
+// };
+const SelectPageWord = () => {
   const [value, setValue] = useState("");
   const onChange = (value) => {
     setValue(value);
@@ -106,29 +126,39 @@ const SelectPageWord = ({ onBack }) => {
     },
   ];
   return (
-    <div className="min-w-80">
+    <div className="pl-12">
+      <p className="mb-1 text-sm font-medium text-gray-800">Select word</p>
       <TreeSelect
         showSearch
-        style={{
-          width: "100%",
-        }}
+        className="!h-11 w-full max-w-[43%]"
         value={value}
         dropdownStyle={{
           maxHeight: 400,
           overflow: "auto",
         }}
-        placeholder="Please select"
-        allowClear
-        //   treeDefaultExpandAll
+        placeholder={"Select"}
+        suffixIcon={<IoIosArrowDown size={22} />}
+        allowClear={{
+          clearIcon: <IoIosCloseCircle size={17} />,
+        }}
+        notFoundContent={
+          <div className="flex flex-col items-center justify-center gap-y-2 text-lg">
+            <TbBookOff size={26} />
+            <span>Word not available</span>
+          </div>
+        }
         onChange={onChange}
         treeData={treeData}
         size="large"
+        // loading={true}
       />
-      <div className="flex items-center gap-x-28 mx-auto">
-        <Button onClick={onBack} icon={<IoMdArrowBack />}>
-          Back
+      <div className="mt-52 flex items-center justify-around">
+        <Button
+          icon={<IoMdArrowForward className="-mb-0.5" />}
+          className="h-12 min-w-32 rounded-xl border border-[black] text-xl"
+        >
+          Next
         </Button>
-        <Button icon={<IoMdArrowForward />}>Next</Button>
       </div>
     </div>
   );

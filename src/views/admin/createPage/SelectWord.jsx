@@ -1,9 +1,7 @@
-import { Form, Select, Spin } from "antd";
-import { useFetchSubCategoryOrWord } from "../../../services/admin/admin.api";
+import { Form, Select } from "antd";
 import { IoIosArrowDown } from "react-icons/io";
 
 const SelectWord = ({ data, setWords }) => {
-  const { isPending } = useFetchSubCategoryOrWord();
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const handleChange = (value) => {
@@ -26,14 +24,13 @@ const SelectWord = ({ data, setWords }) => {
           mode="multiple"
           placeholder="Select Word"
           optionFilterProp="children"
-          suffixIcon={isPending ? <Spin /> : <IoIosArrowDown size={22} />}
+          suffixIcon={<IoIosArrowDown size={22} />}
           filterOption={filterOption}
-          options={data.map((category) => ({
+          options={data?.map((category) => ({
             label: category.name,
             value: category.id,
           }))}
           size="large"
-          loading={isPending}
           onChange={handleChange}
         />
       </Form.Item>

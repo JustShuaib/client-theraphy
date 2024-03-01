@@ -14,13 +14,14 @@ const CategoryAndSubSelection = ({ words, setWords }) => {
     if (Object.prototype.hasOwnProperty.call(data || {}, "words_data"))
       setCategoryLevel("word");
     else if (Object.prototype.hasOwnProperty.call(data || {}, "categories"))
-      setCategoryLevel("sub-category");
+      setCategoryLevel("categories");
     else if (Object.prototype.hasOwnProperty.call(data || {}, "message"))
       setCategoryLevel("not-found");
   }, [data]);
 
   return (
     <div className="basis-2/3">
+      <p className="-mb-4 font-open-sans text-[13px]">Search category</p>
       <Space.Compact className="mt-5 w-[68%]" size="large">
         <div className="w-full">
           <Form.Item
@@ -40,13 +41,21 @@ const CategoryAndSubSelection = ({ words, setWords }) => {
             type="primary"
             className="!w-[4rem] bg-gray-500 text-[1.3rem] duration-300 hover:scale-105"
             icon={<BiSearch className="text-[22px]" />}
-            onClick={() => mutate(searchTerm)}
+            onClick={() => {
+              setWords([]);
+              setCategoryLevel("categories");
+              mutate(searchTerm);
+            }}
             loading={isPending}
           />
         </Form.Item>
       </Space.Compact>
       {categoryLevel === "categories" ? (
-        <SelectSubCategory data={data?.categories} />
+        <SelectSubCategory
+          level={data?.category_level}
+          data={data?.categories}
+          setWords={setWords}
+        />
       ) : categoryLevel === "word" ? (
         <SelectWord data={data?.words_data} setWords={setWords} />
       ) : categoryLevel === "not-found" ? (

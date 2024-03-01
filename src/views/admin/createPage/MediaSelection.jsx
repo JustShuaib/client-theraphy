@@ -10,10 +10,11 @@ const MediaSelection = ({ words, blockStates, setBlockStates }) => {
     }));
     setBlockStates(initialBlockStates);
   }, [setBlockStates, words]);
-  console.log({ blockStates });
-
+  /**
+   * The function `handleCheckboxChange` takes in a block index and type as parameters, and returns a
+   * function that updates the state of block states based on checkbox changes.
+   */
   const handleCheckboxChange = (blockIndex, type) => (e) => {
-    console.log({ blockIndex, type, e });
     setBlockStates((prevBlockStates) => {
       const newState = [...prevBlockStates];
       newState[blockIndex] = {
@@ -31,6 +32,7 @@ const MediaSelection = ({ words, blockStates, setBlockStates }) => {
           handleChange={handleCheckboxChange}
           key={word.id}
           index={index}
+          blockStates={blockStates}
           {...word}
         />
       ))}

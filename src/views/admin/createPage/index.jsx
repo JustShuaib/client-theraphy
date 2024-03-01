@@ -3,10 +3,11 @@ import { Button, Form, Input } from "antd";
 import MediaSelection from "./MediaSelection";
 import CategoryAndSubSelection from "./CategoryAndSubSelection";
 import { useSavePage } from "../../../services/admin/admin.api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreatePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const theme = searchParams.get("theme");
   const [words, setWords] = useState([]);
@@ -28,7 +29,9 @@ const CreatePage = () => {
       })),
     };
     console.log({ pageData });
-    // mutate(pageData);
+    mutate(pageData, {
+      onSuccess: () => navigate(-1),
+    });
   };
   return (
     <div className="mb-12 w-full">

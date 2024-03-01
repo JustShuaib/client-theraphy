@@ -91,7 +91,7 @@ export const fetchThemePages = async (id) => {
 };
 export const savePage = async (pageData) => {
   try {
-    const response = await fetch("save_page", {
+    const response = await fetch(API_URL + "save_page", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,6 @@ export const savePage = async (pageData) => {
       body: JSON.stringify(pageData),
     });
     const successRes = await response.json();
-    console.log({ successRes });
     return successRes.success;
   } catch (error) {
     handleError(error);

@@ -1,247 +1,102 @@
+import { useState } from "react";
 import { useFetchSubCategoryOrWord } from "../../../services/admin/admin.api";
-import { Select, Spin, Form } from "antd";
+import { Form, Select, Spin } from "antd";
 import { IoIosArrowDown } from "react-icons/io";
 import SelectWord from "./SelectWord";
 
-const SelectSubCategory = ({ data }) => {
-  const { isPending, mutate } = useFetchSubCategoryOrWord();
-
+const SelectSubCategory = ({ data, setWords, level }) => {
+  const { isPending, mutate, data: fetchedData } = useFetchSubCategoryOrWord();
+  const [currentCount, setCurrentCount] = useState(0);
+  const [currentList, setCurrentList] = useState(fetchedData);
   const filterOption = (input, option) => {
-    console.log({ input, option });
     return (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   };
-  const SearchItem = ({ add, field }) => {
+  const SearchItem = () => {
     return (
-      <Form.Item {...field} key={field.key}>
-        <Select
-          showSearch
-          placeholder="Select a Sub Category"
-          optionFilterProp="children"
-          onChange={(value) => {
-            console.log(`selected ${value}`);
-            mutate(
-              {
-                id: value,
-                category_level: data?.category_level,
-              },
-              {
-                onSuccess: add,
-              },
-            );
-          }}
-          suffixIcon={isPending ? <Spin /> : <IoIosArrowDown size={22} />}
-          filterOption={filterOption}
-          options={data?.map((category) => ({
-            label: category.name,
-            value: category.id,
-          }))}
-          size="large"
-          loading={isPending}
-        />
-      </Form.Item>
+      <div className="">
+        <p className="mb-0.5 font-open-sans text-[13px]">
+          Select a Sub Category
+        </p>
+        <Form.Item
+          name="sub-category"
+          rules={[{ required: true, message: "Field is required" }]}
+        >
+          <Select
+            showSearch
+            placeholder="Select a Sub Category"
+            optionFilterProp="children"
+            onChange={(value) => {
+              mutate(
+                {
+                  id: value,
+                  category_level: level,
+                },
+                {
+                  onSuccess: (data) => {
+                    setCurrentList(data);
+                    setCurrentCount((count) => count + 1);
+                  },
+                },
+              );
+            }}
+            suffixIcon={isPending ? <Spin /> : <IoIosArrowDown size={22} />}
+            filterOption={filterOption}
+            options={data?.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+            size="large"
+            loading={isPending}
+            className="w-11/12"
+          />
+        </Form.Item>
+      </div>
     );
   };
+
   return (
     <div className="mt-6 w-2/3">
-      <Form.List name="sub-category">
-        {(fields, { add }) => {
-          return (
-            <>
-              {fields.map((field) => (
-                <>
-                  <p className="mb-0.5 font-open-sans text-[13px]">
-                    Select a Sub Category
-                  </p>
-                  <SearchItem add={add} field={field} />
-
-                  {/* **************** */}
-                  {/* Conditionally render WordData or another Select based on data structure */}
-                  {data && data.word_data ? (
-                    <SelectWord data={data.word_data} />
-                  ) : (
-                    <>
-                      <p className="mb-0.5 font-open-sans text-[13px]">
-                        Select another Sub Category
-                      </p>
-
-                      <SearchItem add={add} field={field} />
-                    </>
-                  )}
-                </>
-              ))}
-            </>
-          );
-        }}
-      </Form.List>
-      {/* <p className="mb-0.5 font-open-sans text-[13px]">Select a Sub Category</p>
-      <Select
-        showSearch
-        placeholder="Select a Sub Category"
-        optionFilterProp="children"
-        onChange={onChange}
-        suffixIcon={isPending ? <Spin /> : <IoIosArrowDown size={22} />}
-        filterOption={filterOption}
-        options={selectOptions.map((category) => ({
-          label: category.name,
-          value: category.id,
-        }))}
-        size="large"
-        className="min-w-[22rem]"
-        loading={isPending}
-      /> */}
-
-      {/* ************************************* */}
-      {/* <Form
-        name="dynamic_form_item"
-        {...formItemLayoutWithOutLabel}
-        onFinish={onFinish}
-        style={{
-          maxWidth: 600,
-        }}
-      >
-        <Form.List
-          name="names"
-          rules={[
-            {
-              validator: async (_, names) => {
-                if (!names || names.length < 2) {
-                  return Promise.reject(new Error("At least 2 passengers"));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => {
-            console.log({ fields });
-            return (
-              <>
-                {fields.map((field, index) => (
-                  <Form.Item
-                    {...(index === 0
-                      ? formItemLayout
-                      : formItemLayoutWithOutLabel)}
-                    label={index === 0 ? "Passengers" : ""}
-                    required={false}
-                    key={field.key}
-                  >
-                    <Form.Item
-                      {...field}
-                      validateTrigger={["onChange", "onBlur"]}
-                      rules={[
-                        {
-                          required: true,
-                          whitespace: true,
-                          message:
-                            "Please input passenger's name or delete this field.",
-                        },
-                      ]}
-                      noStyle
-                    >
-                      <Input
-                        placeholder="passenger name"
-                        style={{
-                          width: "60%",
-                        }}
-                      />
-                    </Form.Item>
-                    {fields.length > 1 ? (
-                      <BiCircle
-                        className="dynamic-delete-button"
-                        onClick={() => remove(field.name)}
-                      />
-                    ) : null}
-                  </Form.Item>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    style={{
-                      width: "60%",
-                    }}
-                    icon={<BiPlus />}
-                  >
-                    Add field
-                  </Button>
-                  <Form.ErrorList errors={errors} />
-                </Form.Item>
-              </>
-            );
-          }}
-        </Form.List>
-      </Form> */}
+      {data && <SearchItem />}
+      {
+        currentCount === 1 &&
+        Object.prototype.hasOwnProperty.call(
+          currentList || {},
+          "words_data",
+        ) ? (
+          <div className="w-[110%]">
+            <SelectWord data={currentList?.words_data} setWords={setWords} />
+          </div>
+        ) : Object.prototype.hasOwnProperty.call(
+            currentList || {},
+            "categories",
+          ) ? (
+          <SearchItem />
+        ) : null
+        // <p className="font-open-sans text-lg">
+        //   Category not found. Try another query
+        // </p>
+      }
+      {
+        currentCount === 2 &&
+        Object.prototype.hasOwnProperty.call(
+          currentList || {},
+          "words_data",
+        ) ? (
+          <div className="w-[110%]">
+            <SelectWord data={currentList?.words_data} setWords={setWords} />
+          </div>
+        ) : Object.prototype.hasOwnProperty.call(
+            currentList || {},
+            "categories",
+          ) ? (
+          <SearchItem />
+        ) : null
+        // <p className="font-open-sans text-lg">
+        //   Category not found. Try another query
+        // </p>
+      }
     </div>
   );
 };
 
 export default SelectSubCategory;
-
-// Former fields
-//  {
-//   return (
-//     <>
-//       <p className="mb-0.5 font-open-sans text-[13px]">
-//         Select a Sub Category
-//       </p>
-//       <Form.Item {...fields}>
-//         <Select
-//           showSearch
-//           placeholder="Select a Sub Category"
-//           optionFilterProp="children"
-//           onChange={async (val) => {
-//             console.log(`selected ${val}`);
-//             try {
-//               const res = await simulateServerRequest();
-//               console.log({ res });
-//               if (res) add();
-//             } catch (err) {
-//               console.log(err);
-//             }
-//           }}
-//           // onChange={(value) => {
-//           //   console.log(`selected ${value}`);
-//           //   mutate(
-//           //     {
-//           //       id: value,
-//           //       category_level: data?.category_level,
-//           //     },
-//           //     {
-//           //       onSuccess: () => add(),
-//           //     },
-//           //   );
-//           // }}
-//           suffixIcon={
-//             isPending ? <Spin /> : <IoIosArrowDown size={22} />
-//           }
-//           filterOption={filterOption}
-//           options={data?.map((category) => ({
-//             label: category.name,
-//             value: category.id,
-//           }))}
-//           size="large"
-//           loading={isPending}
-//         />
-//       </Form.Item>
-//       {/* <p className="mb-0.5 font-open-sans text-[13px]">
-//         Select a Sub Category
-//       </p>
-//       <Select
-//         showSearch
-//         placeholder="Select a Sub Category"
-//         optionFilterProp="children"
-//         onChange={onChange}
-//         suffixIcon={
-//           isPending ? <Spin /> : <IoIosArrowDown size={22} />
-//         }
-//         filterOption={filterOption}
-//         options={selectOptions.map((category) => ({
-//           label: category.name,
-//           value: category.id,
-//         }))}
-//         size="large"
-//         className="min-w-[22rem]"
-//         loading={isPending}
-//       /> */}
-//     </>
-//   );
-// }}

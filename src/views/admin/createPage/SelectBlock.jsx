@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Form, Input } from "antd";
 
 const SelectBlock = ({ words }) => {
-  const [cols, setCols] = useState(0);
-  const [rows, setRows] = useState(0);
+  const [cols, setCols] = useState(1);
+  const [rows, setRows] = useState(1);
   return (
     <div className="w-10/12">
       <div className="flex gap-4">

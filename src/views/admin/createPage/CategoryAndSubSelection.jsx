@@ -50,65 +50,10 @@ const CategoryAndSubSelection = ({ words, setWords }) => {
       ) : categoryLevel === "word" ? (
         <SelectWord data={data?.words_data} setWords={setWords} />
       ) : categoryLevel === "not-found" ? (
-        <p>Not found</p>
+        <p className="font-open-sans text-lg">
+          Category not found. Try another query
+        </p>
       ) : null}
-      {/* <SelectSubCategory
-        data={[
-          {
-            id: 1,
-            name: "Breakfast",
-          },
-          {
-            id: 2,
-            name: "Brunch",
-          },
-          {
-            id: 3,
-            name: "Lunch",
-          },
-          {
-            id: 4,
-            name: "Dinner",
-          },
-        ]}
-      /> */}
-      {/* <SelectWord
-        setWords={setWords}
-        data={[
-          {
-            name: "Tofu",
-            id: 1,
-            table_name: "Munch",
-            image: "https://www.example.com/",
-            audio: "https://www.test.com/audio.mp3",
-            video: "https://video.com/",
-          },
-          {
-            name: "Pizza",
-            id: 2,
-            table_name: "Lunch",
-            image: "https://www.example.com/",
-            audio: "https://www.test.com/audio.mp3",
-            video: "https://video.com/",
-          },
-          {
-            name: "Lasagne",
-            id: 3,
-            table_name: "Dessert",
-            image: "https://www.example.com/",
-            audio: "https://www.test.com/audio.mp3",
-            video: "https://video.com/",
-          },
-          {
-            name: "Dodo",
-            id: 4,
-            table_name: "Toppings",
-            image: "https://www.example.com/",
-            audio: "https://www.test.com/audio.mp3",
-            video: "https://video.com/",
-          },
-        ]}
-      /> */}
       {words.length > 0 && <SelectBlock words={words} />}
     </div>
   );

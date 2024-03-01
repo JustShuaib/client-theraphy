@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchResult from "../editTheme/firstPane/SearchResult";
-const MediaSelection = ({ words }) => {
-  const [blockStates, setBlockStates] = useState([]);
-
+const MediaSelection = ({ words, blockStates, setBlockStates }) => {
   useEffect(() => {
     // Dynamically initialize the state for each block based on selectedWords
     const initialBlockStates = words.map(() => ({
@@ -11,11 +9,11 @@ const MediaSelection = ({ words }) => {
       video: false,
     }));
     setBlockStates(initialBlockStates);
-  }, [words]);
+  }, [setBlockStates, words]);
   console.log({ blockStates });
+
   const handleCheckboxChange = (blockIndex, type) => (e) => {
     console.log({ blockIndex, type, e });
-    // Update the state for the corresponding checkbox
     setBlockStates((prevBlockStates) => {
       const newState = [...prevBlockStates];
       newState[blockIndex] = {

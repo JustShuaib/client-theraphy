@@ -10,6 +10,7 @@ const CreatePage = () => {
   const searchParams = new URLSearchParams(location.search);
   const theme = searchParams.get("theme");
   const [words, setWords] = useState([]);
+  const [blockStates, setBlockStates] = useState([]);
   const { mutate, isPending } = useSavePage();
 
   const handleSavePage = (values) => {
@@ -52,19 +53,27 @@ const CreatePage = () => {
 
         <div className="flex px-12">
           <CategoryAndSubSelection words={words} setWords={setWords} />
-          {words.length > 0 && <MediaSelection words={words} />}
+          {words.length > 0 && (
+            <MediaSelection
+              words={words}
+              blockStates={blockStates}
+              setBlockStates={setBlockStates}
+            />
+          )}
         </div>
 
-        <Form.Item className="mt-20 flex items-center justify-center">
-          <Button
-            loading={isPending}
-            size="large"
-            htmlType="submit"
-            className="h-[3.5rem] min-w-[15rem] border-gray-700 text-lg tracking-wide text-gray-600"
-          >
-            Create Page
-          </Button>
-        </Form.Item>
+        {words.length > 0 && (
+          <Form.Item className="mt-20 flex items-center justify-center">
+            <Button
+              loading={isPending}
+              size="large"
+              htmlType="submit"
+              className="h-[3.5rem] min-w-[15rem] border-gray-700 text-lg tracking-wide text-gray-600"
+            >
+              Create Page
+            </Button>
+          </Form.Item>
+        )}
       </Form>
     </div>
   );

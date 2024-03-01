@@ -41,9 +41,7 @@ const ViewTheme = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            navigate("/admin/thema/bladzijde/create", {
-              state: data?.themeName,
-            });
+            navigate(`/admin/thema/bladzijde/create?theme=${data.themeName}`);
           }}
           className="flex h-[8rem] w-[16rem] flex-col rounded-md bg-black bg-gradient-to-br from-purple-400 to-purple-700 text-white"
         >

@@ -7,8 +7,8 @@ const SelectWord = ({ data, setWords }) => {
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const handleChange = (value) => {
-    const selectedWords = data?.filter((word) =>
-      value.find((val) => val === word.id),
+    const selectedWords = value.map((val) =>
+      data.find((word) => val === word.id),
     );
     setWords(selectedWords);
   };

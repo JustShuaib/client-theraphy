@@ -8,6 +8,7 @@ import SelectBlock from "./SelectBlock";
 
 const CategoryAndSubSelection = ({ words, setWords }) => {
   const [categoryLevel, setCategoryLevel] = useState("categories");
+  const [searchTerm, setSearchTerm] = useState("");
   const { mutate, isPending, data } = usePerformCategorySearch();
   useEffect(() => {
     if (Object.prototype.hasOwnProperty.call(data || {}, "words_data"))
@@ -22,13 +23,13 @@ const CategoryAndSubSelection = ({ words, setWords }) => {
     <div className="basis-2/3">
       <Space.Compact className="mt-5 w-[68%]" size="large">
         <div className="w-full">
-          {/* <Form form={form} onFinish={(value) => mutate(value.category)}> */}
           <Form.Item
             name="category"
             className="w-full"
             rules={[{ required: true, message: "Field is required" }]}
           >
             <Input
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search Categories"
               className="w-full bg-[#fbfbfc] placeholder:text-gray-400"
             />
@@ -39,7 +40,7 @@ const CategoryAndSubSelection = ({ words, setWords }) => {
             type="primary"
             className="!w-[4rem] bg-gray-500 text-[1.3rem] duration-300 hover:scale-105"
             icon={<BiSearch className="text-[22px]" />}
-            onClick={(value) => mutate(value.category)}
+            onClick={() => mutate(searchTerm)}
             loading={isPending}
           />
         </Form.Item>

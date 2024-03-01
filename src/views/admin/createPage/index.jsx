@@ -7,18 +7,27 @@ import { useLocation } from "react-router-dom";
 
 const CreatePage = () => {
   const location = useLocation();
-  const themeName = location.state ? location.state.themeName : null;
+  const searchParams = new URLSearchParams(location.search);
+  const theme = searchParams.get("theme");
   const [words, setWords] = useState([]);
-  const { mutate } = useSavePage();
+  const { mutate, isPending } = useSavePage();
+
   const handleSavePage = (values) => {
+    console.log({ values });
     const pageData = {
-      theme_name: themeName,
+      theme_name: theme,
       page_name: values.page_name,
-      rows: Number(values.rows),
       columns: Number(values.columns),
-      blocks: values.blocks,
+      blocks: words.map((block) => ({
+        name: block.name,
+        table_name: block.table_name,
+        audio: Boolean(values.audio),
+        image: Boolean(values.image),
+        video: Boolean(values.video),
+      })),
     };
-    mutate(pageData);
+    console.log({ pageData });
+    // mutate(pageData);
   };
   return (
     <div className="mb-12 w-full">
@@ -41,15 +50,14 @@ const CreatePage = () => {
           />
         </Form.Item>
 
-        {/* SUB CATEGORY */}
         <div className="flex px-12">
           <CategoryAndSubSelection words={words} setWords={setWords} />
-          {/* MEDIA SELECTION */}
           {words.length > 0 && <MediaSelection words={words} />}
         </div>
-        {/* SUBMISSION */}
+
         <Form.Item className="mt-20 flex items-center justify-center">
           <Button
+            loading={isPending}
             size="large"
             htmlType="submit"
             className="h-[3.5rem] min-w-[15rem] border-gray-700 text-lg tracking-wide text-gray-600"

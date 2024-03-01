@@ -98,8 +98,8 @@ export const savePage = async (pageData) => {
       },
       body: JSON.stringify(pageData),
     });
-
     const successRes = await response.json();
+    console.log({ successRes });
     return successRes.success;
   } catch (error) {
     handleError(error);

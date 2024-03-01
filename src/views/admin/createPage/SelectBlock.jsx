@@ -36,10 +36,6 @@ const SelectBlock = ({ words }) => {
           name="rows"
           rules={[
             {
-              required: true,
-              message: "Number of rows is required",
-            },
-            {
               max: 2,
               message: "Invalid number of rows",
             },

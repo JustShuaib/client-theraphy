@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import AudioPlayer from "./AudioPlayer";
 
@@ -137,12 +136,12 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
   // );
 
   return (
-    <div className="w-full py-8 bg-purple-500 rounded-lg h-fit">
-      <h3 className="w-full text-2xl font-semibold text-center">{name}</h3>
+    <div className="h-fit w-full rounded-lg bg-purple-500 py-8">
+      <h3 className="mb-3 w-full text-center text-2xl font-semibold">{name}</h3>
       <div className="flex flex-row justify-between px-12">
         <div className="flex flex-col justify-center gap-4">
-          <div className="w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md">
-            <img className="object-contain w-full h-full" src={image} alt="" />
+          <div className="h-20 w-20 rounded-md bg-[#ADB5BD] bg-opacity-50">
+            <img className="h-full w-full object-contain" src={image} alt="" />
           </div>
           <input
             // value={2}
@@ -161,12 +160,12 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
           />
         </div>
         <div className="flex flex-col justify-center gap-4">
-          <div className="flex flex-row justify-center w-20 h-20 bg-[#ADB5BD] bg-opacity-50 rounded-md">
+          <div className="flex h-20 w-20 flex-row justify-center rounded-md bg-[#ADB5BD] bg-opacity-50">
             <img className="w-12" src="/play-svgrepo-com.svg" alt="audio svg" />
-            <video
-              className="absolute object-contain w-full h-full"
+            {/* <video
+              className="absolute h-fit w-full object-contain"
               src={video}
-            ></video>
+            ></video> */}
           </div>
           <input
             // value={9}
@@ -176,7 +175,7 @@ const SearchResult = ({ name, audio, image, video, handleOption }) => {
           />
         </div>
       </div>
-      <div className="flex flex-row justify-center w-full">
+      <div className="flex w-full flex-row justify-center">
         {handleOptions()}
       </div>
     </div>

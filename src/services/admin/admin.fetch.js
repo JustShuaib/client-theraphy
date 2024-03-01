@@ -126,3 +126,43 @@ export const searchText = async (text) => {
     handleError(error);
   }
 };
+export const performCategorySearch = async (query) => {
+  try {
+    const response = await fetch(API_URL + "perform_category_search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } else {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const fetchSubCategoryOrWord = async (body) => {
+  try {
+    const response = await fetch(API_URL + "fetch_next_subcategories_or_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } else {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    handleError(error);
+  }
+};

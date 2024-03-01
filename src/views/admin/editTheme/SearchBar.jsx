@@ -2,7 +2,7 @@ import { Divider, Input, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { useSearchText } from "../../../services/admin/admin.api";
 const { Search } = Input;
-import { IoCloseCircle } from "react-icons/io5";
+// import { IoCloseCircle } from "react-icons/io5";
 
 const SearchBar = ({
   searchResult,
@@ -44,11 +44,11 @@ const SearchBar = ({
     if (searchValue.trim() === "") setSearchResult([]);
     else search();
   };
-  const handleClear = () => {
-    console.log("is clearing");
-    setSearchValue("");
-    setSearchResult([]);
-  };
+  // const handleClear = () => {
+  //   console.log("is clearing");
+  //   setSearchValue("");
+  //   setSearchResult([]);
+  // };
   const handleClick = (search) => {
     //add to selected array
     setPickedSearch(...pickedSearch, {
@@ -61,7 +61,7 @@ const SearchBar = ({
     });
   };
   return (
-    <div className="relative w-full h-fit">
+    <div className="relative h-fit w-full">
       <span className="w-full">
         <Search
           onChange={(e) => setSearchValue(e.target.value)}
@@ -87,7 +87,7 @@ const SearchBar = ({
         )}
       </span>
       <Divider />
-      <div className="overflow-y-scroll h-[25rem]">
+      <div className="h-[25rem] overflow-y-scroll">
         {isPending ? (
           <div className="mt-6">
             <Skeleton active />
@@ -99,12 +99,12 @@ const SearchBar = ({
               <button
                 onClick={() => handleClick(search)}
                 key={search.name}
-                className="flex flex-row items-center justify-between w-full h-12 shadow px-2 border-b-2"
+                className="flex h-12 w-full flex-row items-center justify-between border-b-2 px-2 shadow"
               >
                 <p className="text-lg font-semibold capitalize">
                   {search.name}
                 </p>
-                <div className="flex flex-col justify-end h-full">
+                <div className="flex h-full flex-col justify-end">
                   <p className="text-sm opacity-55">
                     {" "}
                     from {search.table_name}

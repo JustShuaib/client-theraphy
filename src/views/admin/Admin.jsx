@@ -1,17 +1,17 @@
 // import { useState } from "react"
-import { Outlet } from "react-router-dom"
-import { Navbar } from "../../components/navbar"
+import { Outlet } from "react-router-dom";
+import { Navbar } from "../../components/navbar";
 
 const Admin = () => {
-    // const [mode, setMode] = useState('')
+  // const [mode, setMode] = useState('')
 
-    return (
-        <div className="flex flex-row bg-[#EBEDEF] font-open-sans max-h-screen h-screen w-screen">
-            {/*  #CED4DA */}
-            <Navbar />
-            <Outlet />
-        </div>
-    )
-}
+  return (
+    <div className="flex min-h-screen w-screen flex-row bg-[#EBEDEF] font-open-sans">
+      {/*  #CED4DA */}
+      <Navbar />
+      <Outlet />
+    </div>
+  );
+};
 
-export default Admin
+export default Admin;

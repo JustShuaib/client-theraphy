@@ -19,11 +19,9 @@ const ViewTheme = () => {
   if (isLoading) return <Loader />;
   if (error) return <ErrorMessage />;
   return (
-    <div className="w-[80%] h-screen pt-20 pl-8 mx-auto">
+    <div className="mx-auto h-screen w-[80%] pl-8 pt-20">
       <div className="flex justify-between pb-12 pr-20">
-        <h1
-          className={`text-4xl font-semibold w-[16rem] h-[3rem] bg-[#EBEDEF] placeholder:text-black focus:outline-none`}
-        >
+        <h1 className="h-[3rem] w-[16rem] bg-[#EBEDEF] text-4xl font-semibold placeholder:text-black focus:outline-none">
           {data.themeName || <Skeleton active />}
         </h1>
 
@@ -33,7 +31,7 @@ const ViewTheme = () => {
           onClick={deleteTheme}
           type="primary"
           size="large"
-          className="bg-red-500 h-[2.6rem] hover:scale-105 duration-200 hover:!bg-red-600 font-open-sans text-base"
+          className="h-[2.6rem] bg-red-500 font-open-sans text-base duration-200 hover:scale-105 hover:!bg-red-600"
         >
           Delete theme
         </Button>
@@ -43,14 +41,16 @@ const ViewTheme = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            navigate("/admin/thema/bladzijde/create");
+            navigate("/admin/thema/bladzijde/create", {
+              state: data?.themeName,
+            });
           }}
-          className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-purple-400 to-purple-700"
+          className="flex h-[8rem] w-[16rem] flex-col rounded-md bg-black bg-gradient-to-br from-purple-400 to-purple-700 text-white"
         >
           <div className="flex flex-row">
-            <div className="inline-block p-6 text-2xl font-semibold text-center">
+            <div className="inline-block p-6 text-center text-2xl font-semibold">
               Nieuwe pagina toevoegen{" "}
-              <LuPlusSquare className="inline-block w-10 h-10" />
+              <LuPlusSquare className="inline-block h-10 w-10" />
             </div>
           </div>
         </motion.button>
@@ -64,9 +64,9 @@ const ViewTheme = () => {
               onClick={() => {
                 navigate("/admin/thema/bladzijde/create");
               }}
-              className="flex flex-col w-[16rem] h-[8rem] rounded-md bg-black text-white bg-gradient-to-br from-sky-300 to-blue-700"
+              className="flex h-[8rem] w-[16rem] flex-col rounded-md bg-black bg-gradient-to-br from-sky-300 to-blue-700 text-white"
             >
-              <p className="p-6 text-2xl font-semibold text-center">
+              <p className="p-6 text-center text-2xl font-semibold">
                 {page.page_name}
               </p>
             </motion.button>

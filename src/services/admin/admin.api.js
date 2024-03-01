@@ -3,7 +3,9 @@ import {
   checkThemeExistence,
   deleteTheme,
   fetchAllThemes,
+  fetchSubCategoryOrWord,
   fetchThemePages,
+  performCategorySearch,
   savePage,
   saveTheme,
   searchText,
@@ -43,14 +45,26 @@ export const useFetchThemePages = (id) =>
     queryFn: () => fetchThemePages(id),
   });
 
-export const useSavePage = (pageData) => {
+export const useSavePage = () => {
   return useMutation({
     mutationKey: ["pages"],
-    mutationFn: () => savePage(pageData),
+    mutationFn: (pageData) => savePage(pageData),
   });
 };
 export const useSearchText = (text) => {
   return useMutation({
     mutationFn: () => searchText(text),
+  });
+};
+export const usePerformCategorySearch = () => {
+  return useMutation({
+    mutationKey: ["pages"],
+    mutationFn: (text) => performCategorySearch(text),
+  });
+};
+export const useFetchSubCategoryOrWord = () => {
+  return useMutation({
+    mutationKey: ["pages"],
+    mutationFn: (body) => fetchSubCategoryOrWord(body),
   });
 };
